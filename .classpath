@@ -2,6 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="src" path="Configuracion"/>
+	<classpathentry kind="src" path="Alumnos"/>
+	<classpathentry kind="src" path="Pagos"/>
+	<classpathentry kind="src" path="Cobros"/>
+	<classpathentry kind="src" path="Asistencia"/>
+	<classpathentry kind="src" path="Docentes"/>
+	<classpathentry kind="src" path="Calificaciones"/>
+	<classpathentry kind="src" path="Persona"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-16">
 		<attributes>
 			<attribute name="module" value="true"/>

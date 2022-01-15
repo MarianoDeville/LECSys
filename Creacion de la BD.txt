@@ -1,0 +1,312 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema LECSys
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema LECSys
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `LECSys` DEFAULT CHARACTER SET utf8 ;
+USE `LECSys` ;
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`persona`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`persona` (
+  `idPersona` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(20) NOT NULL,
+  `apellido` VARCHAR(20) NOT NULL,
+  `dni` VARCHAR(10) NOT NULL,
+  `dirección` VARCHAR(45) NOT NULL,
+  `fechaNacimiento` DATE NOT NULL,
+  `teléfono` VARCHAR(20) NOT NULL,
+  `email` VARCHAR(40) NULL,
+  PRIMARY KEY (`idPersona`),
+  INDEX `dni` (`dni` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`profesores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`profesores` (
+  `idProfesor` INT NOT NULL AUTO_INCREMENT,
+  `idPersona` INT NOT NULL,
+  `sueldo` FLOAT NULL,
+  `fechaIngreso` DATE NOT NULL,
+  `estado` INT NOT NULL,
+  PRIMARY KEY (`idProfesor`),
+  INDEX `idPersona_idx` (`idPersona` ASC) VISIBLE,
+  CONSTRAINT `idPersona`
+    FOREIGN KEY (`idPersona`)
+    REFERENCES `LECSys`.`persona` (`idPersona`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`curso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`curso` (
+  `idCurso` INT NOT NULL AUTO_INCREMENT,
+  `año` VARCHAR(15) NOT NULL,
+  `nivel` VARCHAR(15) NOT NULL,
+  `idProfesor` INT NULL,
+  `estado` INT NOT NULL,
+  PRIMARY KEY (`idCurso`),
+  INDEX `idProfesor_idx` (`idProfesor` ASC) VISIBLE,
+  CONSTRAINT `idProfesor`
+    FOREIGN KEY (`idProfesor`)
+    REFERENCES `LECSys`.`profesores` (`idProfesor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`grupoFamiliar`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`grupoFamiliar` (
+  `idGrupoFamiliar` INT NOT NULL AUTO_INCREMENT,
+  `nombreFamilia` VARCHAR(40) NOT NULL,
+  `integrantes` INT NOT NULL,
+  `deuda` INT NULL DEFAULT 0,
+  `estado` INT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`idGrupoFamiliar`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`alumnos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`alumnos` (
+  `idAlumno` INT NOT NULL AUTO_INCREMENT,
+  `idCurso` INT NOT NULL,
+  `idPersona` INT NOT NULL,
+  `fechaIngreso` DATE NOT NULL,
+  `estado` INT NOT NULL,
+  `idGrupoFamiliar` INT NULL,
+  `descuento` INT NULL,
+  PRIMARY KEY (`idAlumno`),
+  INDEX `idCurso_idx` (`idCurso` ASC) VISIBLE,
+  INDEX `idGrupoFamiliar_idx` (`idGrupoFamiliar` ASC) VISIBLE,
+  INDEX `idPersonas_idx` (`idPersona` ASC) VISIBLE,
+  CONSTRAINT `idCurso`
+    FOREIGN KEY (`idCurso`)
+    REFERENCES `LECSys`.`curso` (`idCurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idGrupoFamiliar`
+    FOREIGN KEY (`idGrupoFamiliar`)
+    REFERENCES `LECSys`.`grupoFamiliar` (`idGrupoFamiliar`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE,
+  CONSTRAINT `idPersonas`
+    FOREIGN KEY (`idPersona`)
+    REFERENCES `LECSys`.`persona` (`idPersona`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`cobros`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`cobros` (
+  `idCobros` INT NOT NULL AUTO_INCREMENT,
+  `idGrupoFamiliar` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `concepto` VARCHAR(45) NOT NULL,
+  `día` INT NOT NULL,
+  `mes` INT NOT NULL,
+  `año` INT NOT NULL,
+  `hora` TIME NOT NULL,
+  `monto` FLOAT NOT NULL,
+  `factura` VARCHAR(20) NULL,
+  PRIMARY KEY (`idCobros`),
+  INDEX `idGrupoFamiliar_idx` (`idGrupoFamiliar` ASC) VISIBLE,
+  CONSTRAINT `idGrupoFamilia`
+    FOREIGN KEY (`idGrupoFamiliar`)
+    REFERENCES `LECSys`.`grupoFamiliar` (`idGrupoFamiliar`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`usuarios` (
+  `idUsuarios` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(20) NOT NULL,
+  `contraseña` VARCHAR(20) NOT NULL,
+  `nivelAcceso` INT NOT NULL,
+  `estado` INT NOT NULL,
+  PRIMARY KEY (`idUsuarios`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`faltas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`faltas` (
+  `idFaltas` INT NOT NULL AUTO_INCREMENT,
+  `idAlumnos` INT NOT NULL,
+  `fecha` DATE NOT NULL,
+  `estado` INT NOT NULL,
+  `idCurso` INT NOT NULL,
+  PRIMARY KEY (`idFaltas`),
+  INDEX `idAlumnos_idx` (`idAlumnos` ASC) VISIBLE,
+  INDEX `idCurso_idx` (`idCurso` ASC) VISIBLE,
+  CONSTRAINT `idAlumnos`
+    FOREIGN KEY (`idAlumnos`)
+    REFERENCES `LECSys`.`alumnos` (`idAlumno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idCursoFaltas`
+    FOREIGN KEY (`idCurso`)
+    REFERENCES `LECSys`.`curso` (`idCurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`pagos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`pagos` (
+  `idPagos` INT NOT NULL AUTO_INCREMENT,
+  `idProfesores` INT NULL,
+  `nombre` VARCHAR(30) NULL,
+  `concepto` VARCHAR(45) NOT NULL,
+  `día` INT NOT NULL,
+  `mes` INT NOT NULL,
+  `año` INT NOT NULL,
+  `hora` TIME NOT NULL,
+  `monto` FLOAT NOT NULL,
+  `factura` VARCHAR(20) NULL,
+  `comentario` VARCHAR(45) NULL,
+  PRIMARY KEY (`idPagos`),
+  INDEX `idProfesores_idx` (`idProfesores` ASC) VISIBLE,
+  CONSTRAINT `idProfesores`
+    FOREIGN KEY (`idProfesores`)
+    REFERENCES `LECSys`.`profesores` (`idProfesor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`valorCuota`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`valorCuota` (
+  `idValorCuota` INT NOT NULL AUTO_INCREMENT,
+  `idCurso` INT NOT NULL,
+  `precio` FLOAT NOT NULL,
+  PRIMARY KEY (`idValorCuota`),
+  INDEX `fk_valorCuota_curso1_idx` (`idCurso` ASC) VISIBLE,
+  CONSTRAINT `idCurso1`
+    FOREIGN KEY (`idCurso`)
+    REFERENCES `LECSys`.`curso` (`idCurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`diasCursado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`diasCursado` (
+  `idDíasCursado` INT NOT NULL AUTO_INCREMENT,
+  `día` VARCHAR(10) NOT NULL,
+  `horario` VARCHAR(10) NOT NULL,
+  `duración` VARCHAR(10) NOT NULL,
+  `idCurso` INT NOT NULL,
+  PRIMARY KEY (`idDíasCursado`),
+  INDEX `idCursos_idx` (`idCurso` ASC) VISIBLE,
+  CONSTRAINT `idCursos`
+    FOREIGN KEY (`idCurso`)
+    REFERENCES `LECSys`.`curso` (`idCurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`registroActividad`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`registroActividad` (
+  `idRegistroActividad` INT NOT NULL AUTO_INCREMENT,
+  `idUsuarios` INT NULL DEFAULT NULL,
+  `fecha` DATE NOT NULL,
+  `hora` TIME NOT NULL,
+  `acción` VARCHAR(80) NOT NULL,
+  `modulo` VARCHAR(20) NOT NULL,
+  `ip` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idRegistroActividad`),
+  INDEX `idUsuarios_idx` (`idUsuarios` ASC) INVISIBLE,
+  CONSTRAINT `idUsuarios`
+    FOREIGN KEY (`idUsuarios`)
+    REFERENCES `LECSys`.`usuarios` (`idUsuarios`)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`examenes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`examenes` (
+  `idExamenes` INT NOT NULL AUTO_INCREMENT,
+  `idAlumno` INT NOT NULL,
+  `fecha` DATE NOT NULL,
+  `tipo` VARCHAR(25) NOT NULL,
+  `nota` INT NOT NULL,
+  `idProfesor` INT NOT NULL,
+  `idCurso` INT NOT NULL,
+  PRIMARY KEY (`idExamenes`),
+  INDEX `alumno_idx` (`idAlumno` ASC) VISIBLE,
+  INDEX `profesor_idx` (`idProfesor` ASC) VISIBLE,
+  INDEX `curso_idx` (`idCurso` ASC) VISIBLE,
+  CONSTRAINT `alumno`
+    FOREIGN KEY (`idAlumno`)
+    REFERENCES `LECSys`.`alumnos` (`idAlumno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `profesor`
+    FOREIGN KEY (`idProfesor`)
+    REFERENCES `LECSys`.`profesores` (`idProfesor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `curso`
+    FOREIGN KEY (`idCurso`)
+    REFERENCES `LECSys`.`curso` (`idCurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LECSys`.`estadísticas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys`.`estadísticas` (
+  `idEstadísticas` INT NOT NULL AUTO_INCREMENT,
+  `mes` INT NOT NULL,
+  `año` INT NOT NULL,
+  `estudiantesActivos` INT NULL,
+  `profesoresActivos` INT NULL,
+  `ingresosMes` INT NULL,
+  `egresosMes` INT NULL,
+  PRIMARY KEY (`idEstadísticas`))
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
