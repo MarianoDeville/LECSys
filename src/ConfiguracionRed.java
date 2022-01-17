@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import javax.swing.JOptionPane;
+
 public class ConfiguracionRed {
 
 	public String LeerConfiguracion() {
@@ -28,7 +30,8 @@ public class ConfiguracionRed {
 			}
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "No se encuentra archivo de configuración de red.");
+			//e.printStackTrace();
 		}finally{
 
 			try{
