@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Configuracion"/>
 	<classpathentry kind="src" path="Alumnos"/>
@@ -10,6 +14,6 @@
 	<classpathentry kind="src" path="Docentes"/>
 	<classpathentry kind="src" path="Calificaciones"/>
 	<classpathentry kind="src" path="Persona"/>
-	<classpathentry exported="true" kind="lib" path="Lib/mysql-connector-java-8.0.21.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.21.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
