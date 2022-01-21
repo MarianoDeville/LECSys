@@ -70,8 +70,8 @@ public class ABMCCurso {
 	public static boolean crearCurso(String valor[]) {
 		
 		boolean bandera = true;		
-		String comandoStatement = "INSERT INTO lecsys.curso (año, nivel, idProfesor, estado ) VALUES ('"
-								+ valor[0] + "', '" + valor[1] + "', '" + valor[2] + "', '" + "1" + "')";
+		String comandoStatement = "INSERT INTO lecsys.curso (año, nivel, idProfesor, estado, turno ) VALUES ('"
+								+ valor[0] + "', '" + valor[1] + "', '" + valor[2] + "', '" + "1" + "', '" + valor[3] + "')";
 		
 		try {
 			
@@ -162,8 +162,8 @@ public class ABMCCurso {
 				return null;
 			}
 
-			matriz = new String[cantRegistros][7];
-			comandoStatement = "SELECT curso.idCurso, año, nivel, curso.idProfesor, nombre, apellido, precio FROM lecsys.curso "
+			matriz = new String[cantRegistros][8];
+			comandoStatement = "SELECT curso.idCurso, año, nivel, curso.idProfesor, nombre, apellido, precio, turno FROM lecsys.curso "
 							 + "JOIN lecsys.profesores ON curso.idProfesor = profesores.idProfesor "
 							 + "JOIN lecsys.persona ON profesores.idPersona = persona.idPersona "
 							 + "JOIN lecsys.valorCuota on curso.idCurso = valorCuota.idCurso "
@@ -180,6 +180,7 @@ public class ABMCCurso {
 				matriz[i][3] = rs.getInt(4) + "";							// ID profesor
 				matriz[i][4] = rs.getString(5) + " " + rs.getString(6);		// Nombre y apellido
 				matriz[i][6] = rs.getInt(7) + "";							// Precio cuota
+				matriz[i][7] = rs.getString(8);								// Turno
 				boolean bandera = true;
 				
 				for(int e=0; e < tablaDias.length; e++) {

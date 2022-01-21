@@ -7,13 +7,13 @@ import javax.swing.JOptionPane;
 /*		Revisión:				1.00											*/
 /*		IDE:					Eclipse IDE Ver. 2021-09 (4.21.0).				*/
 /*		Lenguaje:				Java SE-1.8										*/
-/*		Versionado:				VisualSVN										*/
+/*		Versionado:				git - github.com								*/
 /*		Base de Datos:			MySQL Workbench 8.00 CE							*/
 /*		Plugin:					WindowBuilder 1.9.7								*/
 /*								UMLet 14.3										*/
-/*		Estado:					Pre-producción.									*/
+/*		Estado:					Instalado en el cliente.						*/
 /*		Fecha creación:			12/09/2020										*/
-/*		Última modificación:	13/01/2022										*/
+/*		Última modificación:	20/01/2022										*/
 /********************************************************************************/
 
 public class LECSys {
@@ -28,7 +28,7 @@ public class LECSys {
 		if(CheckUsuario.getNivelNivelAcceso() == 100)
 			System.exit(0);
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 160122.2205");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 200122.1608");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

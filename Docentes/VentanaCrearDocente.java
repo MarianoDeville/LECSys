@@ -269,6 +269,11 @@ public class VentanaCrearDocente extends JDialog {
 		{
 			i = false;
 			lblMensageError.setText("Error en el formato del teléfono (solamente números).");
+		}else if(txtSueldo.getText().length() < 2 ||
+				!isNumeric(txtSueldo.getText()))
+		{
+			i = false;
+			lblMensageError.setText("Error, ingrese sueldo.");
 		}
 		return i;
 	}

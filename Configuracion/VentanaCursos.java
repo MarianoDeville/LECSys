@@ -16,13 +16,14 @@ public class VentanaCursos extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tablaCursos;
+	private Object cuerpo[][];
 
 	public VentanaCursos() {
 
 		setTitle("LECSys - Cursos."+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 20, 680, 480);
+		setBounds(10, 20, 760, 480);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.controlHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -36,11 +37,11 @@ public class VentanaCursos extends JFrame {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(560, 400, 90, 23);
+		btnVolver.setBounds(640, 400, 90, 23);
 		contentPane.add(btnVolver);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
@@ -52,8 +53,8 @@ public class VentanaCursos extends JFrame {
 				}
 			}
 		});
-		btnBuscar.setBounds(560, 65, 90, 23);
-		contentPane.add(btnBuscar);
+		btnEditar.setBounds(640, 65, 90, 23);
+		contentPane.add(btnEditar);
 		
 		JButton btnCrear = new JButton("Agregar");
 		btnCrear.addActionListener(new ActionListener() {
@@ -68,49 +69,73 @@ public class VentanaCursos extends JFrame {
 				}
 			}
 		});
-		btnCrear.setBounds(560, 30, 90, 23);
+		btnCrear.setBounds(640, 30, 90, 23);
 		contentPane.add(btnCrear);
 		
 		JScrollPane scrollTabla = new JScrollPane();
-		scrollTabla.setBounds(5, 30, 530, 410);
+		scrollTabla.setBounds(5, 30, 620, 410);
 		contentPane.add(scrollTabla);
 		
-		String titulo[] = {"Año", "Nivel", "Profesor", "Día", "Precio"};
+		String titulo[] = {"Sel.", "Año", "Nivel", "Turno", "Profesor", "Días", "Cuota"};
 		String respuesta[][] = ABMCCurso.getListaCursos(true);
-		DefaultTableModel tablaModelo;
 		
 		if(respuesta != null) {
 			
+			cuerpo = new Object[respuesta.length][7];
+			
 			for(int i = 0; i < respuesta.length; i++)
 			{
-				respuesta[i][0] = respuesta[i][1];
-				respuesta[i][1] = respuesta[i][2];
-				respuesta[i][2] = respuesta[i][4];
-				respuesta[i][3] = respuesta[i][5];
-				respuesta[i][4] = respuesta[i][6];
+				cuerpo[i][1] = respuesta[i][1];
+				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][3] = respuesta[i][7];
+				cuerpo[i][4] = respuesta[i][4];
+				cuerpo[i][5] = respuesta[i][5];
+				cuerpo[i][6] = "$ " + respuesta[i][6];
+			}
+		} else
+			cuerpo = null;
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo) {
+			
+			boolean[] columnEditables = new boolean[] {
+				true, false, false, false, false, false, false
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
 			}
 			
-			tablaModelo = new DefaultTableModel(respuesta, titulo);
-		} else
-			tablaModelo = new DefaultTableModel(null, titulo);
-
+			private static final long serialVersionUID = 1L;
+			public Class<?> getColumnClass(int column) {
+				
+		        if(column == 0)
+		        	return Boolean.class;
+		        else
+		        	return String.class;
+		    }
+		};
 		tablaCursos = new JTable(tablaModelo);
-		tablaCursos.setEnabled(false);
-		tablaCursos.getColumnModel().getColumn(0).setPreferredWidth(100);
-		tablaCursos.getColumnModel().getColumn(0).setMinWidth(50);
-		tablaCursos.getColumnModel().getColumn(0).setMaxWidth(250);
-		tablaCursos.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaCursos.getColumnModel().getColumn(1).setMinWidth(50);
-		tablaCursos.getColumnModel().getColumn(1).setMaxWidth(250);
-		tablaCursos.getColumnModel().getColumn(2).setPreferredWidth(130);
-		tablaCursos.getColumnModel().getColumn(2).setMinWidth(70);
+		tablaCursos.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tablaCursos.getColumnModel().getColumn(0).setMinWidth(30);
+		tablaCursos.getColumnModel().getColumn(0).setMaxWidth(100);
+		tablaCursos.getColumnModel().getColumn(1).setPreferredWidth(50);
+		tablaCursos.getColumnModel().getColumn(1).setMinWidth(30);
+		tablaCursos.getColumnModel().getColumn(1).setMaxWidth(100);
+		tablaCursos.getColumnModel().getColumn(2).setPreferredWidth(80);
+		tablaCursos.getColumnModel().getColumn(2).setMinWidth(50);
 		tablaCursos.getColumnModel().getColumn(2).setMaxWidth(250);
-		tablaCursos.getColumnModel().getColumn(3).setPreferredWidth(150);
-		tablaCursos.getColumnModel().getColumn(3).setMinWidth(100);
+		tablaCursos.getColumnModel().getColumn(3).setPreferredWidth(80);
+		tablaCursos.getColumnModel().getColumn(3).setMinWidth(50);
 		tablaCursos.getColumnModel().getColumn(3).setMaxWidth(250);
-		tablaCursos.getColumnModel().getColumn(4).setPreferredWidth(150);
+		tablaCursos.getColumnModel().getColumn(4).setPreferredWidth(180);
 		tablaCursos.getColumnModel().getColumn(4).setMinWidth(100);
 		tablaCursos.getColumnModel().getColumn(4).setMaxWidth(250);
+		tablaCursos.getColumnModel().getColumn(5).setPreferredWidth(250);
+		tablaCursos.getColumnModel().getColumn(5).setMinWidth(100);
+		tablaCursos.getColumnModel().getColumn(5).setMaxWidth(250);
+		tablaCursos.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaCursos.getColumnModel().getColumn(6).setMinWidth(50);
+		tablaCursos.getColumnModel().getColumn(6).setMaxWidth(250);
 		scrollTabla.setViewportView(tablaCursos);
 		
 		JButton btnImprimir = new JButton("Imprimir");
@@ -124,7 +149,7 @@ public class VentanaCursos extends JFrame {
 				}
 			}
 		});
-		btnImprimir.setBounds(561, 100, 90, 23);
+		btnImprimir.setBounds(640, 100, 90, 23);
 		contentPane.add(btnImprimir);
 	}
 }

@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `LECSys`.`curso` (
   `nivel` VARCHAR(15) NOT NULL,
   `idProfesor` INT NULL,
   `estado` INT NOT NULL,
+  `turno` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`idCurso`),
   INDEX `idProfesor_idx` (`idProfesor` ASC) VISIBLE,
   CONSTRAINT `idProfesor`

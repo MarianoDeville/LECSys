@@ -35,6 +35,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 	private JComboBox<String> comboBoxProfesor;
 	private JComboBox<String> comboBoxAño;
 	private JComboBox<String> comboBoxNivel;
+	private JComboBox<String> comboBoxTurno;
 	private String respuesta[][];
 	
 	public VentanaCrearCurso() {
@@ -44,7 +45,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 20, 480, 300);
+		setBounds(10, 20, 480, 330);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
@@ -62,7 +63,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 				}
 			}
 		});
-		btnVolver.setBounds(356, 231, 89, 23);
+		btnVolver.setBounds(356, 260, 90, 23);
 		contentPane.add(btnVolver);
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -72,7 +73,8 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 				String valorCurso[] = {
 										(String)comboBoxAño.getSelectedItem(),
 										(String)comboBoxNivel.getSelectedItem(),
-										respuesta[comboBoxProfesor.getSelectedIndex()][0]
+										respuesta[comboBoxProfesor.getSelectedIndex()][0],
+										(String)comboBoxTurno.getSelectedItem()
 				};
 				boolean bandera = false;
 				
@@ -150,7 +152,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 				}
 			}
 		});
-		btnGuardar.setBounds(236, 231, 89, 23);
+		btnGuardar.setBounds(236, 260, 90, 23);
 		contentPane.add(btnGuardar);
 		
 		JLabel lblAo = new JLabel("Año:");
@@ -165,114 +167,118 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 		lblProfesor.setBounds(25, 65, 70, 20);
 		contentPane.add(lblProfesor);
 		
+		JLabel lblTurno = new JLabel("Turno:");
+		lblTurno.setBounds(25, 90, 70, 20);
+		contentPane.add(lblTurno);
+		
 		JLabel lblSchedule = new JLabel("Horario:");
-		lblSchedule.setBounds(25, 142, 60, 20);
+		lblSchedule.setBounds(25, 175, 60, 20);
 		contentPane.add(lblSchedule);
 		
 		JLabel lblDuration = new JLabel("Duración:");
-		lblDuration.setBounds(25, 162, 60, 20);
+		lblDuration.setBounds(25, 195, 60, 20);
 		contentPane.add(lblDuration);
 		
 		JLabel lblLunes = new JLabel("Lunes");
 		lblLunes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLunes.setBounds(85, 122, 60, 20);
+		lblLunes.setBounds(85, 155, 60, 20);
 		contentPane.add(lblLunes);
 		
 		txtLunesHorario = new JTextField();
 		txtLunesHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtLunesHorario.setColumns(10);
-		txtLunesHorario.setBounds(85, 142, 60, 20);
+		txtLunesHorario.setBounds(85, 175, 60, 20);
 		contentPane.add(txtLunesHorario);
 		
 		txtLunesDuracion = new JTextField();
 		txtLunesDuracion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtLunesDuracion.setColumns(10);
-		txtLunesDuracion.setBounds(85, 162, 60, 20);
+		txtLunesDuracion.setBounds(85, 195, 60, 20);
 		contentPane.add(txtLunesDuracion);
 		
 		JLabel lblMartes = new JLabel("Martes");
 		lblMartes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMartes.setBounds(145, 122, 60, 20);
+		lblMartes.setBounds(145, 155, 60, 20);
 		contentPane.add(lblMartes);
 		
 		txtMartesHorario = new JTextField();
 		txtMartesHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMartesHorario.setColumns(10);
-		txtMartesHorario.setBounds(145, 142, 60, 20);
+		txtMartesHorario.setBounds(145, 175, 60, 20);
 		contentPane.add(txtMartesHorario);
 		
 		txtMartesDuracion = new JTextField();
 		txtMartesDuracion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMartesDuracion.setColumns(10);
-		txtMartesDuracion.setBounds(145, 162, 60, 20);
+		txtMartesDuracion.setBounds(145, 195, 60, 20);
 		contentPane.add(txtMartesDuracion);
 		
 		JLabel lblMiercoles = new JLabel("Miércoles");
 		lblMiercoles.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMiercoles.setBounds(205, 122, 60, 20);
+		lblMiercoles.setBounds(205, 155, 60, 20);
 		contentPane.add(lblMiercoles);
 		
 		txtMiercolesHorario = new JTextField();
 		txtMiercolesHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMiercolesHorario.setColumns(10);
-		txtMiercolesHorario.setBounds(205, 142, 60, 20);
+		txtMiercolesHorario.setBounds(205, 175, 60, 20);
 		contentPane.add(txtMiercolesHorario);
 		
 		txtMiercolesDuracion = new JTextField();
 		txtMiercolesDuracion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMiercolesDuracion.setColumns(10);
-		txtMiercolesDuracion.setBounds(205, 162, 60, 20);
+		txtMiercolesDuracion.setBounds(205, 195, 60, 20);
 		contentPane.add(txtMiercolesDuracion);
 		
 		JLabel lblJueves = new JLabel("Jueves");
 		lblJueves.setHorizontalAlignment(SwingConstants.CENTER);
-		lblJueves.setBounds(265, 122, 60, 20);
+		lblJueves.setBounds(265, 155, 60, 20);
 		contentPane.add(lblJueves);
 		
 		txtJuevesHorario = new JTextField();
 		txtJuevesHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtJuevesHorario.setColumns(10);
-		txtJuevesHorario.setBounds(265, 142, 60, 20);
+		txtJuevesHorario.setBounds(266, 175, 60, 20);
 		contentPane.add(txtJuevesHorario);
 		
 		txtJuevesDuracion = new JTextField();
 		txtJuevesDuracion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtJuevesDuracion.setColumns(10);
-		txtJuevesDuracion.setBounds(265, 162, 60, 20);
+		txtJuevesDuracion.setBounds(265, 195, 60, 20);
 		contentPane.add(txtJuevesDuracion);
 		
 		JLabel lblViernes = new JLabel("Viernes");
 		lblViernes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblViernes.setBounds(325, 122, 60, 20);
+		lblViernes.setBounds(325, 155, 60, 20);
 		contentPane.add(lblViernes);
 		
 		txtViernesHorario = new JTextField();
 		txtViernesHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtViernesHorario.setColumns(10);
-		txtViernesHorario.setBounds(325, 142, 60, 20);
+		txtViernesHorario.setBounds(325, 175, 60, 20);
 		contentPane.add(txtViernesHorario);
 		
 		txtViernesDuracion = new JTextField();
 		txtViernesDuracion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtViernesDuracion.setColumns(10);
-		txtViernesDuracion.setBounds(325, 162, 60, 20);
+		txtViernesDuracion.setBounds(325, 195, 60, 20);
 		contentPane.add(txtViernesDuracion);
 		
 		JLabel lblSabado = new JLabel("Sábado");
 		lblSabado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSabado.setBounds(385, 122, 60, 20);
+		lblSabado.setBounds(385, 155, 60, 20);
 		contentPane.add(lblSabado);
 		
 		txtSabadoHorario = new JTextField();
 		txtSabadoHorario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSabadoHorario.setColumns(10);
-		txtSabadoHorario.setBounds(385, 142, 60, 20);
+		txtSabadoHorario.setBounds(385, 175, 60, 20);
 		contentPane.add(txtSabadoHorario);
 		
 		txtSabadoDuracion = new JTextField();
 		txtSabadoDuracion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSabadoDuracion.setColumns(10);
-		txtSabadoDuracion.setBounds(385, 162, 60, 20);
+		txtSabadoDuracion.setBounds(385, 195, 60, 20);
 		contentPane.add(txtSabadoDuracion);
 		
 		JButton btnNuevoProfesor = new JButton("Nuevo docente");
@@ -307,17 +313,22 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 		comboBoxAño.setBounds(95, 40, 120, 20);
 		contentPane.add(comboBoxAño);
 		
+		comboBoxTurno = new JComboBox<String>();
+		comboBoxTurno.setModel(new DefaultComboBoxModel<String>(new String[] {"Mañana", "Tarde", "Noche"}));
+		comboBoxTurno.setBounds(95, 90, 120, 20);
+		contentPane.add(comboBoxTurno);
+		
 		lblMensageError = new JLabel("");
 		lblMensageError.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMensageError.setBounds(25, 200, 420, 20);
+		lblMensageError.setBounds(25, 225, 420, 20);
 		contentPane.add(lblMensageError);
 		
 		JLabel lblCuota = new JLabel("Valor cuota:");
-		lblCuota.setBounds(25, 90, 70, 20);
+		lblCuota.setBounds(25, 115, 70, 20);
 		contentPane.add(lblCuota);
 		
 		txtCuota = new JTextField();
-		txtCuota.setBounds(95, 90, 120, 20);
+		txtCuota.setBounds(95, 115, 120, 20);
 		contentPane.add(txtCuota);
 		txtCuota.setColumns(10);
 	}

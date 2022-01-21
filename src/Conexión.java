@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 public class Conexión {
 	
 	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
-//	private static final String URL = "jdbc:mysql://192.168.1.9:3306/lecsys?serverTimezone=UTC";
 	private static final String USUARIO = "aplicacion";
 	private static final String CLAVE = "proyectoLEC";
 
