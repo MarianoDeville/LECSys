@@ -46,7 +46,7 @@ public class VentanaCursos extends JFrame {
 				
 				dispose();
 				try {
-					VentanaBuscarCurso frame = new VentanaBuscarCurso();
+					VentanaEditarCurso frame = new VentanaEditarCurso();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

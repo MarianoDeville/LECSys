@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
-public class VentanaBuscarCurso extends JDialog {
+public class VentanaEditarCurso extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -32,15 +32,15 @@ public class VentanaBuscarCurso extends JDialog {
 	private JTextField txtHorarioSabado;
 	private JTextField txtDuracionSabado;
 	private JTextField txtCuota;
-	private JComboBox<String> comboBoxCurso;
 	private JComboBox<String> comboBoxProfesor;
 	private String idCurso;
 	private String respuestaCurso[][];
 	private String respuestaProfesor[][];
 	private JButton btnGuardar;
 	private JCheckBox chckbxBorrar;
+	private JTextField txtCurso;
 	
-	public VentanaBuscarCurso() {
+	public VentanaEditarCurso() {
 	
 		setTitle("LECSys - Buscar y editar cursos."+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
@@ -174,11 +174,6 @@ public class VentanaBuscarCurso extends JDialog {
 		{
 			listaCursos[i] = respuestaCurso[i][1] + " " + respuestaCurso[i][2];
 		}
-		
-		comboBoxCurso = new JComboBox<String>();
-		comboBoxCurso.setModel(new DefaultComboBoxModel<String>(listaCursos));
-		comboBoxCurso.setBounds(95, 15, 200, 20);
-		contentPanel.add(comboBoxCurso);
 
 		respuestaProfesor = ABMCDocentes.getProfesores(true);
 		String listaProfesores[] = new String[respuestaProfesor.length];
@@ -311,16 +306,6 @@ public class VentanaBuscarCurso extends JDialog {
 		txtDuracionSabado.setBounds(385, 147, 60, 20);
 		contentPanel.add(txtDuracionSabado);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				mostrarBusqueda(comboBoxCurso.getSelectedIndex());
-			}
-		});
-		btnBuscar.setBounds(335, 15, 90, 20);
-		contentPanel.add(btnBuscar);
-		
 		chckbxBorrar = new JCheckBox("Borrar");
 		chckbxBorrar.setEnabled(false);
 		chckbxBorrar.setSelected(false);
@@ -335,62 +320,12 @@ public class VentanaBuscarCurso extends JDialog {
 		txtCuota.setColumns(10);
 		txtCuota.setBounds(95, 65, 120, 20);
 		contentPanel.add(txtCuota);
-	}
-
-	private void mostrarBusqueda(int indexIdCurso) {
-
-		limpiarCampos();
-		btnGuardar.setEnabled(true);
-		chckbxBorrar.setEnabled(true);
-		String idProfesor = respuestaCurso[indexIdCurso][3];
-		idCurso = respuestaCurso[indexIdCurso][0];
 		
-		for(int i=0 ; i<respuestaProfesor.length ; i++) {
-
-			if(respuestaProfesor[i][0].equals(idProfesor)) {
-				comboBoxProfesor.setSelectedIndex(i);
-				break;
-			}
-		}
-		
-		txtCuota.setText(ABMCValorCuota.buscarValorCuota(idCurso));
-		String resDiasCursado[][] = ABMCDiasCurso.buscarDiasCursado(idCurso);
-		int u=0;
-		
-		while(u < resDiasCursado.length) {
-			
-			if(resDiasCursado[u][0].equals("Lunes")) {
-				
-				txtHorarioLunes.setText(resDiasCursado[u][1]);
-				txtDuracionLunes.setText(resDiasCursado[u][2]);
-			}
-			if(resDiasCursado[u][0].equals("Martes")) {
-				
-				txtHorarioMartes.setText(resDiasCursado[u][1]);
-				txtDuracionMartes.setText(resDiasCursado[u][2]);
-			}
-			if(resDiasCursado[u][0].equals("Miércoles")) {
-				
-				txtHorarioMiercoles.setText(resDiasCursado[u][1]);
-				txtDuracionMiercoles.setText(resDiasCursado[u][2]);
-			}
-			if(resDiasCursado[u][0].equals("Jueves")) {
-				
-				txtHorarioJueves.setText(resDiasCursado[u][1]);
-				txtDuracionJueves.setText(resDiasCursado[u][2]);
-			}
-			if(resDiasCursado[u][0].equals("Viernes")) {
-				
-				txtHorarioViernes.setText(resDiasCursado[u][1]);
-				txtDuracionViernes.setText(resDiasCursado[u][2]);
-			}
-			if(resDiasCursado[u][0].equals("Sábado")) {
-				
-				txtHorarioSabado.setText(resDiasCursado[u][1]);
-				txtDuracionSabado.setText(resDiasCursado[u][2]);
-			}
-			u++;
-		}
+		txtCurso = new JTextField();
+		txtCurso.setEditable(false);
+		txtCurso.setBounds(95, 15, 200, 20);
+		contentPanel.add(txtCurso);
+		txtCurso.setColumns(10);
 	}
 	
 	private void limpiarCampos() {
