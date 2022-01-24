@@ -59,9 +59,9 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
 					VentanaCrearAlumno frame = new VentanaCrearAlumno();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
-
 			}
 		});
 		btnAgregar.setBounds(890, 35, 90, 23);
@@ -79,6 +79,7 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
 					dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -94,18 +95,19 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
 					
 					if((boolean)tablaAlumnos.getValueAt(i, 0)) {
 
+						dispose();
+						
 						try {
+
 							VentanaEditarAlumno frame = new VentanaEditarAlumno(respuesta[i][0]);
 							frame.setVisible(true);
 						} catch (Exception e) {
+							
 							e.printStackTrace();
 						}
-						dispose();
 						break;
 					}
 				}
-				
-				
 			}
 		});
 		btnEditar.setBounds(890, 105, 90, 23);
@@ -133,6 +135,7 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
 					
 					tablaAlumnos.print();
 				} catch (PrinterException e) {
+					
 					e.printStackTrace();
 				}
 			}

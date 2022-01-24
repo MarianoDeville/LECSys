@@ -220,9 +220,11 @@ public class VentanaPagar extends JFrame implements ItemListener {
 	private static boolean isNumeric(String cadena){
 		
 		try {
+			
 			Double.parseDouble(cadena);
 			return true;
 		} catch (NumberFormatException e){
+			
 			return false;
 		}
 	}

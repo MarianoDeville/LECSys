@@ -64,6 +64,7 @@ public class VentanaAusentes extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				dispose();
 			}
 		});
@@ -78,6 +79,7 @@ public class VentanaAusentes extends JFrame {
 					
 					tablaAusentes.print();
 				} catch (PrinterException e1) {
+					
 					e1.printStackTrace();
 				}
 			}
@@ -85,6 +87,4 @@ public class VentanaAusentes extends JFrame {
 		btnPrint.setBounds(573, 335, 89, 23);
 		contentPane.add(btnPrint);
 	}
-
-
 }

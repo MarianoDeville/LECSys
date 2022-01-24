@@ -82,10 +82,13 @@ public class Estadisticas {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla estadisticas (1).");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos Estadisticas (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return true;
@@ -116,10 +119,13 @@ public class Estadisticas {
 				resultado[6] = rs.getInt(7)+"";
 			}
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla estadisticas (2).");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos Estadisticas (2).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return resultado;
@@ -175,10 +181,13 @@ public class Estadisticas {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla estadisticas (3).");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos Estadisticas (3).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 	}
@@ -217,10 +226,13 @@ public class Estadisticas {
 			}
 
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla estadisticas (4).");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos Estadisticas (4).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -237,6 +249,7 @@ public class Estadisticas {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
+			
 			System.err.println("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}

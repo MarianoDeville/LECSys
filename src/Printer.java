@@ -9,13 +9,15 @@ import java.awt.print.PrinterException;
 public class Printer implements Printable {
        final Component comp;
 
-       public Printer(Component comp){
+       public Printer(Component comp) {
+    	   
            this.comp = comp;
        }
 
        @Override
        public int print(Graphics g, PageFormat format, int page_index) 
                throws PrinterException {
+    	   
            if (page_index > 0) {
                return Printable.NO_SUCH_PAGE;
            }

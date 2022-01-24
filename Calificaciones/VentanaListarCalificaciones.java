@@ -43,8 +43,10 @@ public class VentanaListarCalificaciones extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					tablaCalificaciones.print();
 				} catch (PrinterException e) {
+					
 					JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 				}
 			}
@@ -78,6 +80,5 @@ public class VentanaListarCalificaciones extends JFrame {
 		tablaCalificaciones.getColumnModel().getColumn(5).setPreferredWidth(40);
 		tablaCalificaciones.getColumnModel().getColumn(5).setMinWidth(30);
 		scrollTabla.setViewportView(tablaCalificaciones);
-		
 	}
 }

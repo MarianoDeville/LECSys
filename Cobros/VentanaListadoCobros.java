@@ -98,8 +98,10 @@ public class VentanaListadoCobros extends JFrame implements ItemListener {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					tablaCobros.print();
 				} catch (PrinterException d) {
+					
 					d.printStackTrace();
 				}
 			}

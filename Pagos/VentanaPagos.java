@@ -28,9 +28,11 @@ public class VentanaPagos extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					VentanaPagar frame = new VentanaPagar();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -43,9 +45,11 @@ public class VentanaPagos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					VentanaListadoPagos frame = new VentanaListadoPagos();
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -63,6 +67,5 @@ public class VentanaPagos extends JFrame {
 		});
 		btnVolver.setBounds(351, 311, 89, 23);
 		contentPane.add(btnVolver);
-		
 	}
 }

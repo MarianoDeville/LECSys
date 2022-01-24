@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,7 +26,6 @@ public class VentanaEstadisticas extends JFrame implements ItemListener {
 	private JTextField txtIngresosTotales;
 	private JTextField txtEgresosTotales;
 	
-
 	public VentanaEstadisticas() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
@@ -41,8 +42,12 @@ public class VentanaEstadisticas extends JFrame implements ItemListener {
 		lblResumirInformacinPor.setBounds(31, 33, 130, 23);
 		contentPane.add(lblResumirInformacinPor);
 		
+		Calendar fechaSistema = new GregorianCalendar();
+		int año = fechaSistema.get(Calendar.YEAR);
+		String años[] = {año+"",(año-1)+"",(año-2)+"",(año-3)+"",(año-4)+""};
+		
 		comboBoxAño = new JComboBox<String>();
-		comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"2021", "2022"}));
+		comboBoxAño.setModel(new DefaultComboBoxModel<String>(años));
 		comboBoxAño.setSelectedIndex(0);
 		comboBoxAño.setEnabled(true);
 		comboBoxAño.setBounds(160, 33, 90, 23);
@@ -106,9 +111,8 @@ public class VentanaEstadisticas extends JFrame implements ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 		
 		if (e.getSource() == comboBoxAño) {
+			
 			actualizarTabla();
 		}
-		
-		
 	}
 }

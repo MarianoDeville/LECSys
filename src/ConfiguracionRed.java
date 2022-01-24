@@ -18,8 +18,8 @@ public class ConfiguracionRed {
 			archivo = new File ("C:\\LECSys\\configuracion.txt");
 			fr = new FileReader (archivo);
 			br = new BufferedReader(fr);
-			
 			String lineaLeida;
+			
 			while((lineaLeida=br.readLine())!=null) {
 				
 				if(lineaLeida.startsWith("IP:")) {
@@ -28,18 +28,20 @@ public class ConfiguracionRed {
 					urlLeido = output[1];
 				}
 			}
-		}
-		catch(Exception e){
+		} catch(Exception e){
+			
 			JOptionPane.showMessageDialog(null, "No se encuentra archivo de configuración de red.");
 			//e.printStackTrace();
-		}finally{
+		} finally {
 
-			try{
+			try {
 				
-				if( null != fr ){   
+				if( null != fr ) {   
+					
 					fr.close();     
 				}                  
-			}catch (Exception e2){ 
+			} catch (Exception e2) {
+				
 				e2.printStackTrace();
 			}
 		}

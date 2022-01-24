@@ -26,7 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-public class VentanaEditarAlumno extends JFrame implements ItemListener{
+public class VentanaEditarAlumno extends JFrame implements ItemListener {
 	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -61,12 +61,11 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 	private JLabel lblMensageError;
 	private String estadoAnterior;
 	private String respuestaCurso[][];
-	private String informacion[];
-	
+		
 	public VentanaEditarAlumno(String legajo) {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
-		setTitle("LECSys - Búsqueda de alumnos."+ CheckUsuario.getNombreUsuario());
+		setTitle("LECSys - Edición de alumnos."+ CheckUsuario.getNombreUsuario());
 		setBounds(10, 20, 480, 510);
 		setResizable(false);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -74,15 +73,9 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
-		informacion = ABMCAlumnos.buscarAlumno("ID", legajo);
+	
+		String informacion[] = ABMCAlumnos.buscarAlumno("ID", legajo);
 
-		lblMensageError = new JLabel("");
-		lblMensageError.setBounds(25, 365, 440, 25);
-		lblMensageError.setForeground(Color.RED);
-		lblMensageError.setBackground(Color.LIGHT_GRAY);
-		contentPanel.add(lblMensageError);
-		
 		JLabel lblLegajo = new JLabel("Legajo:");
 		lblLegajo.setBounds(25, 15, 90, 20);
 		contentPanel.add(lblLegajo);
@@ -147,7 +140,7 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 		txtDireccion.setEnabled(true);
 		txtDireccion.setText(informacion[5]);
 		contentPanel.add(txtDireccion);
-		txtDireccion.setBounds(115, 140, 240, 20);
+		txtDireccion.setBounds(115, 140, 280, 20);
 		configurarJTextField(txtDireccion, 45);
 		
 		txtTelefono = new JTextField();
@@ -161,7 +154,7 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 		txtEmail.setEnabled(true);
 		txtEmail.setText(informacion[7]);
 		contentPanel.add(txtEmail);
-		txtEmail.setBounds(115, 165, 240, 20);
+		txtEmail.setBounds(115, 165, 280, 20);
 		configurarJTextField(txtEmail, 40);
 		
 		String[] parts = informacion[4].split("-");
@@ -358,27 +351,29 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 
 		respuestaCurso = ABMCCurso.getListaCursos(true);
 		String listaCursos[] = new String[respuestaCurso.length]; 
-		
+		int index=0;
 		for(int i=0 ; i < respuestaCurso.length ; i++) {
 			
-			listaCursos[i] = respuestaCurso[i][1] + " " + respuestaCurso[i][2] + " - " + respuestaCurso[i][4];
+			listaCursos[i] = respuestaCurso[i][1] + " " + respuestaCurso[i][2] + " - " + respuestaCurso[i][4] + " - " + respuestaCurso[i][7];
+			
+			if(informacion[11].contains(respuestaCurso[i][0]))
+				index = i;
 		}
 							
 		comboBoxCurso = new JComboBox<String>();
 		comboBoxCurso.setEnabled(true);
-		comboBoxCurso.setBounds(115, 240, 240, 20);
+		comboBoxCurso.setBounds(115, 240, 280, 20);
 		comboBoxCurso.addItemListener(this);
 		comboBoxCurso.setModel(new DefaultComboBoxModel<String>(listaCursos));
 		
 		try {
 			
-			comboBoxCurso.setSelectedIndex(0);	
+			comboBoxCurso.setSelectedIndex(index); 	
 		} catch (IllegalArgumentException e) {
+			
 			lblMensageError.setForeground(Color.RED);
 			lblMensageError.setText("No hay cursos cargados.");
 		}
-
-		comboBoxCurso.setSelectedIndex(Integer.parseInt(informacion[11])-1); 
 		contentPanel.add(comboBoxCurso);
 				
 		JButton btnVolver = new JButton("Volver");
@@ -388,26 +383,27 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 				dispose();
 
 				try {
+					
 					VentanaAlumnos frame = new VentanaAlumnos();
 					frame.setVisible(true);
 				} catch (Exception f) {
+					
 					f.printStackTrace();
 				}
 			}
 		});
-		btnVolver.setBounds(325, 435, 110, 23);
+		btnVolver.setBounds(325, 435, 100, 23);
 		contentPanel.add(btnVolver);
 		
-		btnGuardar = new JButton("Guardar");
-		btnGuardar.setEnabled(true);
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				gurdarCambios();
-			}
-		});
-		btnGuardar.setBounds(155, 435, 110, 23);
-		contentPanel.add(btnGuardar);
+		estadoAnterior = informacion[9];
+		actualizoTablaDias(Integer.parseInt(informacion[11]));
+		
+		lblMensageError = new JLabel("");
+		lblMensageError.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMensageError.setBounds(25, 365, 440, 25);
+		lblMensageError.setForeground(Color.RED);
+		lblMensageError.setBackground(Color.LIGHT_GRAY);
+		contentPanel.add(lblMensageError);
 		
 		btnAsistencia = new JButton("Asistencia");
 		btnAsistencia.addActionListener(new ActionListener() {
@@ -418,13 +414,14 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 					VentanaHistorialAsistencia frame = new VentanaHistorialAsistencia(txtLegajo.getText());
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 				}
 			}
 		});
 		btnAsistencia.setEnabled(false);
 		btnAsistencia.setVisible(false);	// Está invisible porque no está correctamente implementado aún. ////////////////////////////////////////////////////////////////
-		btnAsistencia.setBounds(180, 400, 110, 23);
+		btnAsistencia.setBounds(180, 400, 100, 23);
 		contentPanel.add(btnAsistencia);
 		
 		btnImprimir = new JButton("Imprimir");
@@ -450,8 +447,10 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 				if (imprimir.printDialog()) {
 					
 					try {
+						
 							imprimir.print();
 					} catch (PrinterException e) {
+						
 							JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 					}
 				}
@@ -466,11 +465,19 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 				btnImprimir.setVisible(true);
 			}
 		});
-		btnImprimir.setBounds(10, 435, 110, 23);
+		btnImprimir.setBounds(35, 435, 100, 23);
 		contentPanel.add(btnImprimir);
 		
-		estadoAnterior = informacion[9];
-		actualizoTablaDias(Integer.parseInt(informacion[11]));
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.setEnabled(true);
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				gurdarCambios();
+			}
+		});
+		btnGuardar.setBounds(180, 435, 100, 23);
+		contentPanel.add(btnGuardar);
 	}
 	
 	private void gurdarCambios() {
@@ -576,6 +583,7 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener{
 			Double.parseDouble(cadena);
 			return true;
 		} catch (NumberFormatException e){
+			
 			return false;
 		}
 	}

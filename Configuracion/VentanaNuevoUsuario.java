@@ -25,6 +25,7 @@ public class VentanaNuevoUsuario extends JFrame {
 	ABMCConfiguracion usuario = new ABMCConfiguracion();
 
 	public VentanaNuevoUsuario() {
+		
 		setResizable(false);
 		setTitle("LECSys - Agregar usuario."+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
@@ -40,10 +41,13 @@ public class VentanaNuevoUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
+				
 				try {
+					
 					VentanaUsuarios frame = new VentanaUsuarios();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -55,8 +59,8 @@ public class VentanaNuevoUsuario extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(checkCampos())
-				{
+				if(checkCampos()) {
+					
 					String acceso = (comboBoxAcceso.getSelectedIndex()+1)+"";
 
 					@SuppressWarnings("deprecation")
@@ -64,11 +68,13 @@ public class VentanaNuevoUsuario extends JFrame {
 											pwdPassword.getText(),
 											acceso};
 					limpiarCampos();
-					if(usuario.crearUsuario(infoUsuario))
-					{
+					
+					if(usuario.crearUsuario(infoUsuario)) {
+						
 						lblMensageError.setForeground(Color.BLUE);
 						lblMensageError.setText("Usuario agregado.");				
 					} else {
+						
 						lblMensageError.setForeground(Color.RED);
 						lblMensageError.setText("Error al agregar el usuario.");
 					}
@@ -114,6 +120,7 @@ public class VentanaNuevoUsuario extends JFrame {
 	}
 
 	private void limpiarCampos() {
+		
 		txtUserName.setText(null);
 		pwdPassword.setText(null);
 		pwdRePassword.setText(null);
@@ -127,10 +134,12 @@ public class VentanaNuevoUsuario extends JFrame {
 		String respuesta[] = usuario.buscarUsuario("NOMBRE", txtUserName.getText());
 
 		if(txtUserName.getText().length() < 3 || pwdPassword.getText().length() < 3) {
+			
 			lblMensageError.setForeground(Color.RED);
 			lblMensageError.setText("Nombre de usuario o contraseña muy corto.");
 			bandera = false;			
 		} else if(!pwdPassword.getText().contentEquals(pwdRePassword.getText())) {
+			
 			pwdPassword.setText(null);
 			pwdRePassword.setText(null);
 			lblMensageError.setForeground(Color.RED);
@@ -141,6 +150,7 @@ public class VentanaNuevoUsuario extends JFrame {
 		try {
 			
 			if(respuesta[1].contentEquals(txtUserName.getText())) {
+				
 				lblMensageError.setForeground(Color.RED);
 				lblMensageError.setText("El nombre de usuario ya está en uso.");
 				pwdPassword.setText(null);
@@ -151,7 +161,6 @@ public class VentanaNuevoUsuario extends JFrame {
 		} catch (NullPointerException e) {
 
 		}
-
 		return bandera;
 	}
 }

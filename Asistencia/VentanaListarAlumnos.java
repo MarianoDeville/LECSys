@@ -19,6 +19,7 @@ public class VentanaListarAlumnos extends JFrame {
 	private DefaultTableModel tablaModelo;
 
 	public VentanaListarAlumnos(String idCurso) {
+		
 		setTitle("LECSys - Lista de estudiantes."+ CheckUsuario.getNombreUsuario());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
@@ -43,8 +44,10 @@ public class VentanaListarAlumnos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 				try {
+					
 					tablaAlumnos.print();
 				} catch (PrinterException e1) {
+					
 					e1.printStackTrace();
 				}
 			}

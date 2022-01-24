@@ -29,7 +29,6 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 	private int valorCuotas;
 	private int descuento;
 	private Calendar fechaSistema = new GregorianCalendar();
-	private JTextField txtDescuento;
 	
 	public VentanaEfectuarCobro(String informacion[]) {
 
@@ -71,20 +70,23 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 						dispose();
 						
 						try {
-							VentanaCobrar frame1 = new VentanaCobrar();
+							
+							VentanaCobrarCuota frame1 = new VentanaCobrarCuota();
 							frame1.setVisible(true);
 							VentanaReciboCobro frame2 = new VentanaReciboCobro(cuerpo);
 							frame2.setVisible(true);
 						} catch (Exception f) {
+							
 							f.printStackTrace();
 						}
 
-					
 					} else {
+						
 						lblMensageError.setText("Error al intentar guardar en la base de datos.");
 					}
 						
 				} else {
+					
 					lblMensageError.setText("Falta información para efectuar el cobro.");
 				}
 			}
@@ -99,9 +101,11 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 				dispose();
 				
 				try {
-					VentanaCobrar frame = new VentanaCobrar();
+					
+					VentanaCobrarCuota frame = new VentanaCobrarCuota();
 					frame.setVisible(true);
 				} catch (Exception f) {
+					
 					f.printStackTrace();
 				}
 			}
@@ -172,7 +176,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		lblDescuento.setBounds(25, 135, 130, 20);
 		contentPane.add(lblDescuento);
 		
-		txtDescuento = new JTextField(informacion[5]);
+		JTextField txtDescuento = new JTextField(informacion[5]);
 		txtDescuento.setEditable(false);
 		txtDescuento.setBounds(155, 135, 100, 20);
 		contentPane.add(txtDescuento);

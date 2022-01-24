@@ -39,6 +39,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 	private String respuesta[][];
 	
 	public VentanaCrearCurso() {
+		
 		setTitle("LECSys - Crear nuevo curso."+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
@@ -54,11 +55,15 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				dispose();
+				
 				try {
+					
 					VentanaCursos frame = new VentanaCursos();
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -92,48 +97,48 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 					String valorCuota[] = {idCurso, txtCuota.getText()};
 					ABMCValorCuota.nuevaCuota(valorCuota);
 											
-					if(txtLunesHorario.getText().length() != 0 && bandera)
-					{
+					if(txtLunesHorario.getText().length() != 0 && bandera) {
+						
 						valorDiasCursado[0] = "Lunes";
 						valorDiasCursado[1] = txtLunesHorario.getText();
 						valorDiasCursado[2] = txtLunesDuracion.getText();
 						valorDiasCursado[3] = idCurso;
 						bandera = ABMCDiasCurso.crearDiasCurso(valorDiasCursado);
 					}
-					if(txtMartesHorario.getText().length() != 0 && bandera)
-					{
+					if(txtMartesHorario.getText().length() != 0 && bandera) {
+						
 						valorDiasCursado[0] = "Martes";
 						valorDiasCursado[1] = txtMartesHorario.getText();
 						valorDiasCursado[2] = txtMartesDuracion.getText();
 						valorDiasCursado[3] = idCurso;
 						bandera = ABMCDiasCurso.crearDiasCurso(valorDiasCursado);
 					}
-					if(txtMiercolesHorario.getText().length() != 0 && bandera)
-					{
+					if(txtMiercolesHorario.getText().length() != 0 && bandera) {
+						
 						valorDiasCursado[0] = "Miércoles";
 						valorDiasCursado[1] = txtMiercolesHorario.getText();
 						valorDiasCursado[2] = txtMiercolesDuracion.getText();
 						valorDiasCursado[3] = idCurso;
 						bandera = ABMCDiasCurso.crearDiasCurso(valorDiasCursado);
 					}
-					if(txtJuevesHorario.getText().length() != 0 && bandera)
-					{
+					if(txtJuevesHorario.getText().length() != 0 && bandera) {
+						
 						valorDiasCursado[0] = "Jueves";
 						valorDiasCursado[1] = txtJuevesHorario.getText();
 						valorDiasCursado[2] = txtJuevesDuracion.getText();
 						valorDiasCursado[3] = idCurso;
 						bandera = ABMCDiasCurso.crearDiasCurso(valorDiasCursado);
 					}
-					if(txtViernesHorario.getText().length() != 0 && bandera)
-					{
+					if(txtViernesHorario.getText().length() != 0 && bandera) {
+						
 						valorDiasCursado[0] = "Viernes";
 						valorDiasCursado[1] = txtViernesHorario.getText();
 						valorDiasCursado[2] = txtViernesDuracion.getText();
 						valorDiasCursado[3] = idCurso;
 						bandera = ABMCDiasCurso.crearDiasCurso(valorDiasCursado);
 					}
-					if(txtSabadoHorario.getText().length() != 0 && bandera)
-					{
+					if(txtSabadoHorario.getText().length() != 0 && bandera) {
+						
 						valorDiasCursado[0] = "Sábado";
 						valorDiasCursado[1] = txtSabadoHorario.getText();
 						valorDiasCursado[2] = txtSabadoDuracion.getText();
@@ -142,11 +147,12 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 					}
 				}
 				limpiarCampos();
-				if(bandera)
-				{
+				if(bandera) {
+					
 					lblMensageError.setForeground(Color.BLUE);
 					lblMensageError.setText("Carga correcta");
 				} else {
+					
 					lblMensageError.setForeground(Color.RED);
 					lblMensageError.setText("Error al intentar cargar los datos.");
 				}
@@ -286,9 +292,11 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					VentanaCrearDocente frame = new VentanaCrearDocente(false);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 				cargarListaProfesores();
@@ -334,6 +342,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 	}
 	
 	private void limpiarCampos() {
+		
 		txtLunesHorario.setText(null);
 		txtMartesHorario.setText(null);
 		txtMiercolesHorario.setText(null);
@@ -350,15 +359,15 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 		lblMensageError.setText(null);
 	}
 	
-	private void cargarListaProfesores()
-	{
+	private void cargarListaProfesores() {
+		
 		respuesta = ABMCDocentes.getProfesores(true);
 		if(respuesta != null) {
 			
 			String listaProfesores[] = new String[respuesta.length]; 
 			
-			for(int i=0 ; i < respuesta.length ; i++)
-			{
+			for(int i=0 ; i < respuesta.length ; i++) {
+				
 				listaProfesores[i] = respuesta[i][1] + " " +respuesta[i][2];
 			}
 			DefaultComboBoxModel<String> comboBoxModelo = new DefaultComboBoxModel<String>(listaProfesores);
@@ -369,6 +378,7 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 	@Override
 	public void itemStateChanged(ItemEvent e) {
         if (e.getSource()==comboBoxNivel) {
+        	
             if(comboBoxNivel.getSelectedItem().equals("Children"))
             	comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"First", "Second", "Third"}));
             else if(comboBoxNivel.getSelectedItem().equals("Teens"))
@@ -376,6 +386,5 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
             else
             	comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"First", "Second", "Third", "Fourth", "Fifth", "Sixth"}));
         }
-		
 	}
 }

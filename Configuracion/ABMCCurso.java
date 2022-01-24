@@ -11,37 +11,50 @@ public class ABMCCurso {
 	private static Statement stm = null;
 	private static ResultSet rs = null;
 	
-	public static String [] buscarCurso(String campo, String valor) {
+	public static String [][] busarCursos(String valor) {
 		
-		String temporal[] = new String[4];
-		String comandoStatement = "SELECT * FROM lecsys.curso ";
-
-		if(campo == "PROFESOR")
-			comandoStatement += "WHERE idProfesor = " + valor;
-		else
-			comandoStatement += "WHERE idCurso = " + valor;
-		
+		String matriz[][] = null;
+		int cantRegistros=0;
+		String armoWhere = "WHERE idProfesor = " + valor + " AND estado = 1";
+		String comandoStatement = "SELECT count(*) FROM lecsys.curso " + armoWhere;
+				
 		try {
 			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			rs = stm.executeQuery(comandoStatement);
-		
-			if(rs.next()) {
 				
-				temporal[0] = rs.getInt(1) + "";
-				temporal[1] = rs.getString(2);
-				temporal[2] = rs.getString(3);
-				temporal[3] = rs.getString(4);
+			if(rs.next())
+				cantRegistros = rs.getInt(1);
+			
+			if(cantRegistros == 0) {
+				
+				cerrarConexiones();
+				return null;
+			}
+	
+			comandoStatement = "SELECT año, nivel, turno FROM lecsys.curso " + armoWhere;
+			matriz = new String[cantRegistros][3];
+			rs = stm.executeQuery(comandoStatement);
+			int i =0;
+			
+			while(rs.next()) {
+				
+				matriz[i][0] = rs.getString(1);
+				matriz[i][1] = rs.getString(2);
+				matriz[i][2] = rs.getString(3);
+				i++;
 			}
 		} catch (SQLException e) {
 			System.out.println("Error al acceder a la tabla curso(1).");
+			System.out.println(comandoStatement);
 		} catch (NullPointerException e) {
 			System.out.println("Error al acceder a la base de datos curso(1).");
+			System.out.println(comandoStatement);
 		} finally {
 			cerrarConexiones();
 		}
-		return temporal;
+		return matriz;
 	}
 	
 	public static int getUltimoId() {
@@ -94,7 +107,6 @@ public class ABMCCurso {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Nuevo curso: " + valor[0] + " " + valor[1], "Cursos"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;
 	}
 	
@@ -117,6 +129,7 @@ public class ABMCCurso {
 			comandoStatement = "UPDATE lecsys.curso SET "
 					+ "idProfesor = '" + valor[1]
 					+ "', estado = '" + valor[2]
+					+ "', turno = '" + valor[3]		
 					+ "' WHERE idCurso = " + valor[0];
 			stm.executeLargeUpdate(comandoStatement);
 
@@ -135,7 +148,6 @@ public class ABMCCurso {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Modificar curso: " + temporal, "Cursos"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;
 	}
 	
@@ -162,8 +174,8 @@ public class ABMCCurso {
 				return null;
 			}
 
-			matriz = new String[cantRegistros][8];
-			comandoStatement = "SELECT curso.idCurso, año, nivel, curso.idProfesor, nombre, apellido, precio, turno FROM lecsys.curso "
+			matriz = new String[cantRegistros][9];
+			comandoStatement = "SELECT curso.idCurso, año, nivel, curso.idProfesor, nombre, apellido, precio, turno, valorCuota.idValorCuota FROM lecsys.curso "
 							 + "JOIN lecsys.profesores ON curso.idProfesor = profesores.idProfesor "
 							 + "JOIN lecsys.persona ON profesores.idPersona = persona.idPersona "
 							 + "JOIN lecsys.valorCuota on curso.idCurso = valorCuota.idCurso "
@@ -181,6 +193,7 @@ public class ABMCCurso {
 				matriz[i][4] = rs.getString(5) + " " + rs.getString(6);		// Nombre y apellido
 				matriz[i][6] = rs.getInt(7) + "";							// Precio cuota
 				matriz[i][7] = rs.getString(8);								// Turno
+				matriz[i][8] = rs.getString(9);								// ID cuota
 				boolean bandera = true;
 				
 				for(int e=0; e < tablaDias.length; e++) {
@@ -280,5 +293,4 @@ public class ABMCCurso {
 			e2.printStackTrace();
 		}
 	}
-
 }

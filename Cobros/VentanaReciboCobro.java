@@ -68,10 +68,10 @@ public class VentanaReciboCobro extends JFrame {
 					try {
 							imprimir.print();
 					} catch (PrinterException d) {
+						
 							JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 					}
 				}
-				
 				dispose();
 			}
 		});
@@ -93,19 +93,19 @@ public class VentanaReciboCobro extends JFrame {
 		
 		lblNombre = new JLabel("");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNombre.setBounds(25, 237, 373, 25);
+		lblNombre.setBounds(25, 250, 373, 25);
 		lblNombre.setText("Recibí de " + cuerpo[1]);
 		contentPane.add(lblNombre);
 		
 		lblConcepto = new JLabel("");
 		lblConcepto.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblConcepto.setBounds(25, 273, 373, 25);
+		lblConcepto.setBounds(25, 275, 373, 25);
 		lblConcepto.setText("En concepto de: " + cuerpo[2]);
 		contentPane.add(lblConcepto);
 		
 		lblMontoTotal = new JLabel("");
 		lblMontoTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMontoTotal.setBounds(25, 309, 405, 25);
+		lblMontoTotal.setBounds(25, 300, 405, 25);
 		lblMontoTotal.setText("La suma de pesos " + cuerpo[7]);
 		contentPane.add(lblMontoTotal);
 		
@@ -128,9 +128,11 @@ public class VentanaReciboCobro extends JFrame {
 		lblEnglishInstitute.setBounds(25, 40, 250, 25);
 		contentPane.add(lblEnglishInstitute);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setIcon(new ImageIcon("C:\\LECSys\\Images\\LEC.jpg"));
-		btnNewButton.setBounds(57, 73, 120, 130);
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setIcon(new ImageIcon(LECSys.rutaImagenes + "LEC - Min.jpg"));
+		btnNewButton.setBounds(40, 73, 150, 150);
 		contentPane.add(btnNewButton);
 	}
 	

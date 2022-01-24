@@ -112,6 +112,7 @@ public class VentanaIngresoUsuario extends JDialog {
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 	}

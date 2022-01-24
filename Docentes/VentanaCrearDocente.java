@@ -34,6 +34,7 @@ public class VentanaCrearDocente extends JDialog {
 	private JTextField txtAño;
 
 	public VentanaCrearDocente(boolean volver) {
+		
 		setTitle("LECSys - Crear un nuevo registro de docente."+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -124,25 +125,24 @@ public class VentanaCrearDocente extends JDialog {
 								"1"};
 				
 				ABMCDocentes nuevoProfe = new ABMCDocentes();
-				String respuesta[] = nuevoProfe.buscarProfesor("DNI", txtDni.getText());
+				String respuesta[] = ABMCDocentes.buscarProfesor("DNI", txtDni.getText());
 				
-				if(respuesta[0] == null)
-				{
-					if(checkCampos())
-					{
+				if(respuesta[0] == null) {
+					
+					if(checkCampos()) {
+						
 						limpiarCampos();
-						if(nuevoProfe.crearProfesor(cuerpo) == true)
-						{
+						
+						if(nuevoProfe.crearProfesor(cuerpo) == true) {
+							
 							lblMensageError.setForeground(Color.BLUE);
 							lblMensageError.setText("Registro creado.");
-						}
-						else
-						{
+						} else {
 							lblMensageError.setForeground(Color.RED);
 							lblMensageError.setText("Error al guardar.");
 						}
 					}
-				}else {
+				} else {
 					lblMensageError.setForeground(Color.RED);
 					lblMensageError.setText("Error, el DNI ya existe en un registro guardado.");
 				}
@@ -158,6 +158,7 @@ public class VentanaCrearDocente extends JDialog {
 				dispose();
 				
 				if(volver) {
+					
 					VentanaDocentes interfaceProfesores = new VentanaDocentes();
 					interfaceProfesores.abrirVentana();
 				}
@@ -217,12 +218,12 @@ public class VentanaCrearDocente extends JDialog {
 		contentPane.add(lblFormato);
 	}
 	
-	private void configurarJTextField(Component nombre, int cantidadCaracteres)
-	{
+	private void configurarJTextField(Component nombre, int cantidadCaracteres) {
+		
 		((JTextField) nombre).setColumns(10);
 		nombre.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e)
-			{
+			public void keyTyped(KeyEvent e) {
+				
 				if(((JTextField) nombre).getText().length() >= cantidadCaracteres)
 					e.consume();
 			}
@@ -230,6 +231,7 @@ public class VentanaCrearDocente extends JDialog {
 	}
 	
 	private void limpiarCampos() {
+		
 		txtNombre.setText(null);
 		txtApellido.setText(null);
 		txtDni.setText(null);
@@ -243,35 +245,35 @@ public class VentanaCrearDocente extends JDialog {
 		lblMensageError.setText(null);
 	}
 	
-	private boolean checkCampos()
-	{
+	private boolean checkCampos() {
+		
 		boolean i = true;
 		lblMensageError.setForeground(Color.RED);
-		if(txtNombre.getText().length() < 3)
-		{
+		if(txtNombre.getText().length() < 3) {
+			
 			i = false;
 			lblMensageError.setText("El nombre debe tener más de dos caracteres.");
-		}else if(txtApellido.getText().length() < 2)
-		{
+		}else if(txtApellido.getText().length() < 2) {
+			
 			i = false;
 			lblMensageError.setText("El apellido debe tener más de dos caracteres.");
 		}else if(txtDni.getText().length() < 7 ||
-				!isNumeric(txtDni.getText()))
-		{
+				!isNumeric(txtDni.getText())) {
+			
 			i = false;
 			lblMensageError.setText("Error en el formato del DNI (solamente números).");
-		}else if(txtDireccion.getText().length() == 0)
-		{
+		}else if(txtDireccion.getText().length() == 0) {
+			
 			i = false;
 			lblMensageError.setText("La dirección no puede estar vacía.");
 		}else if(txtTelefono.getText().length() == 0 ||
-				!isNumeric(txtTelefono.getText()))
-		{
+				!isNumeric(txtTelefono.getText())) {
+			
 			i = false;
 			lblMensageError.setText("Error en el formato del teléfono (solamente números).");
 		}else if(txtSueldo.getText().length() < 2 ||
-				!isNumeric(txtSueldo.getText()))
-		{
+				!isNumeric(txtSueldo.getText())) {
+			
 			i = false;
 			lblMensageError.setText("Error, ingrese sueldo.");
 		}
@@ -279,10 +281,13 @@ public class VentanaCrearDocente extends JDialog {
 	}
 		
 	private static boolean isNumeric(String cadena){
+		
 		try {
+			
 			Double.parseDouble(cadena);
 			return true;
 		} catch (NumberFormatException e){
+			
 			return false;
 		}
 	}

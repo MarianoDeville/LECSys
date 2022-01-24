@@ -21,7 +21,6 @@ public class VentanaGrupoFamiliar extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable tablaAlumnos;
 	private JTextField txtNombreFamilia;
 	private JLabel lblMensageError;
 	private JTextField txtValorInscripción;
@@ -33,6 +32,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 	private JTextField txtDescuento;
 
 	public VentanaGrupoFamiliar(String lista[][]) {
+		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobrar a grupo familiar."+ CheckUsuario.getNombreUsuario());
@@ -55,6 +55,15 @@ public class VentanaGrupoFamiliar extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
+				
+				try {
+					
+					VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
+					frame.setVisible(true);
+				} catch (Exception d) {
+					
+					d.printStackTrace();
+				}
 			}
 		});
 		btnVolver.setBounds(450, 415, 130, 23);
@@ -132,9 +141,9 @@ public class VentanaGrupoFamiliar extends JFrame {
 		
 		txtValorInscripción = new JTextField();
 		txtValorInscripción.setBounds(145, 350, 70, 20);
-		txtValorInscripción.addActionListener(new ActionListener(){
+		txtValorInscripción.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
             	
             	checkCampos();
             	inscripcion *= cantIntegrantes;
@@ -145,7 +154,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 		JScrollPane scrollTabla = new JScrollPane();
 		scrollTabla.setBounds(1, 30, 680, 284);
 		contentPane.add(scrollTabla);
-		tablaAlumnos = new JTable();
+		JTable tablaAlumnos = new JTable();
 		tablaAlumnos.setEnabled(false);
 		tablaAlumnos.setRowSelectionAllowed(false);
 		String titulo [] = {"Legajo", "Nombre", "Apellido", "DNI", "Curso", "Valor cuota"};
@@ -188,9 +197,9 @@ public class VentanaGrupoFamiliar extends JFrame {
 		
 		txtDescuento = new JTextField();
 		txtDescuento.setBounds(500, 325, 25, 20);
-		txtDescuento.addActionListener(new ActionListener(){
+		txtDescuento.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
             	
             	checkCampos();
             	inscripcion *= cantIntegrantes;
@@ -205,6 +214,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 	}
 	
 	private boolean checkCampos() {
+		
 		boolean bandera = true;
 		lblMensageError.setForeground(Color.RED);
 		
@@ -226,6 +236,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 			descuento = Integer.parseInt(txtDescuento.getText());
 			descuento = (totalCuota*descuento)/100;
 		}catch (Exception f) {
+			
 			bandera = false;
 			lblMensageError.setText("El campo descuento debe ser un número entre 0 y 99");
 		}
@@ -234,6 +245,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 			
 			inscripcion = Integer.parseInt(txtValorInscripción.getText());
 		}catch (Exception f) {
+			
 			bandera = false;
 			lblMensageError.setText("El campo Inscripción no puede estar vacío y debe ser un número");
 		}

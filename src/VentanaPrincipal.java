@@ -42,19 +42,22 @@ public class VentanaPrincipal {
 		btnABMAlumnos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(CheckUsuario.getNivelNivelAcceso() < 3) {
+				if(CheckUsuario.getNivelNivelAcceso() < 4) {
 					
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
 							try {
+								
 								VentanaAlumnos frame = new VentanaAlumnos();
 								frame.setVisible(true);
 							} catch (Exception e) {
+								
 								e.printStackTrace();
 							}
 						}
 					});
 				} else {
+					
 					mensageNoAutorizado();
 				}
 			}
@@ -76,15 +79,19 @@ public class VentanaPrincipal {
 					
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
+							
 							try {
+								
 								VentanaDocentes frame = new VentanaDocentes();
 								frame.setVisible(true);
 							} catch (Exception e) {
+								
 								e.printStackTrace();
 							}
 						}
 					});
 				} else {
+					
 					mensageNoAutorizado();
 				}
 			}
@@ -125,15 +132,19 @@ public class VentanaPrincipal {
 					
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
+							
 							try {
-								VentanaCobroCuota frame = new VentanaCobroCuota();
+								
+								VentanaCobros frame = new VentanaCobros();
 								frame.setVisible(true);
 							} catch (Exception e) {
+								
 								e.printStackTrace();
 							}
 						}
 					});
 				} else {
+					
 					mensageNoAutorizado();
 				}
 			}
@@ -156,15 +167,19 @@ public class VentanaPrincipal {
 					EventQueue.invokeLater(new Runnable() {
 						@Override
 						public void run() {
+							
 							try {
+								
 								VentanaPagos frame = new VentanaPagos();
 								frame.setVisible(true);
 							} catch (Exception e) {
+								
 								e.printStackTrace();
 							}
 						}
 					});
 				} else {
+					
 					mensageNoAutorizado();
 				}
 			}

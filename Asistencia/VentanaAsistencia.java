@@ -36,6 +36,7 @@ public class VentanaAsistencia extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				dispose();
 			}
 		});
@@ -49,8 +50,8 @@ public class VentanaAsistencia extends JFrame {
 		listadoCursos = ABMCCurso.getListaCursos(true);
 		String listaCursos[] = new String[listadoCursos.length]; 
 		
-		for(int i=0 ; i < listaCursos.length ; i++)
-		{
+		for(int i=0 ; i < listaCursos.length ; i++) {
+			
 			listaCursos[i] = listadoCursos[i][1] + " " + listadoCursos[i][2] + " - " + listadoCursos[i][3];
 		}
 		
@@ -64,10 +65,13 @@ public class VentanaAsistencia extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				cursoElegido = listadoCursos[comboBoxCurso.getSelectedIndex()][0];
+				
 				try {
+					
 					VentanaTomarAsistencia frame = new VentanaTomarAsistencia(cursoElegido);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -80,10 +84,13 @@ public class VentanaAsistencia extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				cursoElegido = listadoCursos[comboBoxCurso.getSelectedIndex()][0];
+				
 				try {
+					
 					VentanaAusentes frame = new VentanaAusentes(cursoElegido);
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					System.err.println("Error al entrar en VentanaAusentes.");
 				}
 			}
@@ -96,10 +103,13 @@ public class VentanaAsistencia extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				cursoElegido = listadoCursos[comboBoxCurso.getSelectedIndex()][0];
+				
 				try {
+					
 					VentanaListarAlumnos frame = new VentanaListarAlumnos(cursoElegido);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -112,19 +122,23 @@ public class VentanaAsistencia extends JFrame {
 		
 		int nivelAcceso = CheckUsuario.getNivelNivelAcceso();
 		
-		if(nivelAcceso < 5)
-		{
+		if(nivelAcceso < 5) {
+			
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
+					
 					try {
+						
 						VentanaAsistencia frame = new VentanaAsistencia();
 						frame.setVisible(true);
 					} catch (Exception e) {
+						
 						e.printStackTrace();
 					}
 				}
 			});
 		} else {
+			
 			JOptionPane.showMessageDialog(null, "No tiene suficientes privilegios para esta operación.");
 		}
 	}

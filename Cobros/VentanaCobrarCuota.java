@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.awt.event.ActionEvent;
 
-public class VentanaCobrar extends JFrame {
+public class VentanaCobrarCuota extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -19,7 +19,7 @@ public class VentanaCobrar extends JFrame {
 	private Object cuerpo[][];
 	private String respuesta[][];
 
-	public VentanaCobrar() {
+	public VentanaCobrarCuota() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobrar"+ CheckUsuario.getNombreUsuario());
@@ -51,15 +51,12 @@ public class VentanaCobrar extends JFrame {
 					
 					if((boolean)tablaFlia.getValueAt(i, 6)) {
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////// Debo armar la información para realizar el cobro. 
-///////////////////////////// nombre, cantidad de cuotas, valor cuotas, cantidad de integrantes, descuento 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-						
 						try {
+							
 							VentanaEfectuarCobro frame = new VentanaEfectuarCobro(respuesta[i]);
 							frame.setVisible(true);
 						} catch (Exception e) {
+							
 							e.printStackTrace();
 						}
 						dispose();
@@ -76,8 +73,10 @@ public class VentanaCobrar extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					tablaFlia.print();
 				} catch (PrinterException d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -101,9 +100,9 @@ public class VentanaCobrar extends JFrame {
 						}
 					}
 				} else {
+					
 					JOptionPane.showMessageDialog(null, "No tiene suficientes privilegios.");
 				}
-
 			}
 		});
 		btnBorrarDeuda.setBounds(241, 525, 110, 23);
@@ -137,6 +136,7 @@ public class VentanaCobrar extends JFrame {
 				cuerpo[i][6] = false;
 			}
 		} else
+			
 			cuerpo = null;
 		
 		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo) {

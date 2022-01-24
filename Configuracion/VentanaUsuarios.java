@@ -39,6 +39,7 @@ public class VentanaUsuarios extends JFrame {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				dispose();
 			}
 		});
@@ -52,19 +53,19 @@ public class VentanaUsuarios extends JFrame {
 		ABMCConfiguracion obtenerDatos = new ABMCConfiguracion();
 		String respuesta[][] =  obtenerDatos.getUsuarios();
 
-		if(respuesta != null)
-		{
+		if(respuesta != null) {
+			
 			matriz = new Object[respuesta.length][3];
 
-			for(int i = 0 ; i < respuesta.length ; i++)
-			{
+			for(int i = 0 ; i < respuesta.length ; i++) {
+				
 				matriz[i][0] = respuesta[i][0];
 				matriz[i][1] = respuesta[i][1];
 				matriz[i][2] = false;
 			}
 		}
 		
-		tablaModelo = new DefaultTableModel(matriz, titulo){
+		tablaModelo = new DefaultTableModel(matriz, titulo) {
 			
 			private static final long serialVersionUID = 1L;
 			public Class<?> getColumnClass(int column) {
@@ -98,10 +99,13 @@ public class VentanaUsuarios extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
+				
 				try {
+					
 					VentanaNuevoUsuario frame = new VentanaNuevoUsuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -116,22 +120,25 @@ public class VentanaUsuarios extends JFrame {
 				String idUsuario=null;
 				boolean bandera = false;
 				
-				for(int i = 0 ; i < tablaUsuarios.getRowCount() ; i++)
-				{
-					if((boolean)tablaUsuarios.getValueAt(i, 2))
-					{
+				for(int i = 0 ; i < tablaUsuarios.getRowCount() ; i++) {
+					
+					if((boolean)tablaUsuarios.getValueAt(i, 2)) {
+						
 						idUsuario = respuesta[i][2];
 						bandera = true;
 					}
 				}
 				
-				if(bandera)
-				{
+				if(bandera) {
+					
 					dispose();
+					
 					try {
+						
 						VentanaEditarUsuario frame = new VentanaEditarUsuario(idUsuario);
 						frame.setVisible(true);
 					} catch (Exception e) {
+						
 						e.printStackTrace();
 					}
 				} else {

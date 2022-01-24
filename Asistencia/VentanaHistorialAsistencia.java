@@ -27,6 +27,7 @@ public class VentanaHistorialAsistencia extends JFrame {
 	private ABMCAsistencia asistencia = new ABMCAsistencia();
 	
 	public VentanaHistorialAsistencia(String idAlumno) {
+		
 		setTitle("LECSys - Asistencia"+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setResizable(false);
@@ -58,8 +59,8 @@ public class VentanaHistorialAsistencia extends JFrame {
 		tablaFaltas.getColumnModel().getColumn(2).setMaxWidth(150);
 		scrollTabla.setViewportView(tablaFaltas);
 		
-		for(int i = 0 ; i < matriz.length ; i++)
-		{
+		for(int i = 0 ; i < matriz.length ; i++) {
+			
 			if(matriz[i][2].contentEquals("Ausente"))
 				cantidadAusentes++;
 			else if(matriz[i][2].contentEquals("Presente"))
@@ -119,8 +120,10 @@ public class VentanaHistorialAsistencia extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					tablaFaltas.print();
 				} catch (PrinterException d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -131,6 +134,5 @@ public class VentanaHistorialAsistencia extends JFrame {
 		JLabel lblTarde = new JLabel("Tarde:");
 		lblTarde.setBounds(255, 75, 50, 20);
 		contentPane.add(lblTarde);
-		
 	}
 }

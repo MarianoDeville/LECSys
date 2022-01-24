@@ -23,6 +23,7 @@ public class ABMCPersona {
 								+ "', '" + valor[4] + "', '" + valor[5] + "', '" + valor[6] + "')";
 								
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -37,22 +38,26 @@ public class ABMCPersona {
 				registro = rs.getInt(1);
 		
 		} catch (SQLException e) {
+			
 			System.out.println("Error al acceder a la tabla persona(1).");
 			System.out.println(comandoStatement);
 			registro = 0;
 		} catch (NullPointerException e) {
+			
 			System.out.println("Error al acceder a la base de datos  ABMCPersona(1).");
 			System.out.println(comandoStatement);
 			registro = 0;
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
 		return registro;
 	}
 	
 	private static void cerrarConexiones() {
+		
 		try {
+			
 			if (rs != null)
 				rs.close();
 			if (stm != null)
@@ -60,6 +65,7 @@ public class ABMCPersona {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
+			
 			System.err.println("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}

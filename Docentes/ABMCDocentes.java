@@ -70,7 +70,7 @@ public class ABMCDocentes {
 			return matriz;
 		}
 
-	public String [] buscarProfesor(String campo, String valor) {
+	public static String [] buscarProfesor(String campo, String valor) {
 
 		String temporal[] = new String[12];
 		String comandoStatement = "SELECT idProfesor, nombre, apellido, dni, dirección, teléfono, email, sueldo, fechaIngreso, estado, fechaNacimiento FROM lecsys.profesores "
@@ -93,17 +93,17 @@ public class ABMCDocentes {
 
 			if(rs.next()) {
 				
-				temporal[0] = rs.getInt(1) + "";
-				temporal[1] = rs.getString(2);
-				temporal[2] = rs.getString(3);
-				temporal[3] = rs.getString(4);
-				temporal[4] = rs.getString(5);
-				temporal[5] = rs.getString(6);
-				temporal[6] = rs.getString(7);
-				temporal[7] = rs.getInt(8) + "";
-				temporal[8] = rs.getDate(9) + "";
-				temporal[9] = rs.getInt(10) + "";
-				temporal[10] = rs.getDate(11) + "";
+				temporal[0] = rs.getInt(1) + "";		// IdProfesor
+				temporal[1] = rs.getString(2);			// Nombre
+				temporal[2] = rs.getString(3);			// Apellido
+				temporal[3] = rs.getString(4);			// DNI
+				temporal[4] = rs.getString(5);			// Dirección
+				temporal[5] = rs.getString(6);			// Teléfono
+				temporal[6] = rs.getString(7);			// Email
+				temporal[7] = rs.getInt(8) + "";		// Sueldo
+				temporal[8] = rs.getDate(9) + "";		// Fecha de ingreso
+				temporal[9] = rs.getInt(10) + "";		// Estado
+				temporal[10] = rs.getDate(11) + "";		// Fecha nacimiento
 			}
 			
 		} catch (SQLException e) {

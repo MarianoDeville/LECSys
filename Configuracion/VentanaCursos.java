@@ -17,6 +17,7 @@ public class VentanaCursos extends JFrame {
 	private JPanel contentPane;
 	private JTable tablaCursos;
 	private Object cuerpo[][];
+	private String respuesta[][];
 
 	public VentanaCursos() {
 
@@ -30,61 +31,21 @@ public class VentanaCursos extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setResizable(false);
-		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-			}
-		});
-		btnVolver.setBounds(640, 400, 90, 23);
-		contentPane.add(btnVolver);
-		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				dispose();
-				try {
-					VentanaEditarCurso frame = new VentanaEditarCurso();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		btnEditar.setBounds(640, 65, 90, 23);
-		contentPane.add(btnEditar);
-		
-		JButton btnCrear = new JButton("Agregar");
-		btnCrear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				dispose();
-				try {
-					VentanaCrearCurso frame = new VentanaCrearCurso();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		btnCrear.setBounds(640, 30, 90, 23);
-		contentPane.add(btnCrear);
-		
+
 		JScrollPane scrollTabla = new JScrollPane();
 		scrollTabla.setBounds(5, 30, 620, 410);
 		contentPane.add(scrollTabla);
 		
 		String titulo[] = {"Sel.", "Año", "Nivel", "Turno", "Profesor", "Días", "Cuota"};
-		String respuesta[][] = ABMCCurso.getListaCursos(true);
+		respuesta = ABMCCurso.getListaCursos(true);
 		
 		if(respuesta != null) {
 			
 			cuerpo = new Object[respuesta.length][7];
 			
-			for(int i = 0; i < respuesta.length; i++)
-			{
+			for(int i = 0; i < respuesta.length; i++) {
+				
+				cuerpo[i][0] = false;
 				cuerpo[i][1] = respuesta[i][1];
 				cuerpo[i][2] = respuesta[i][2];
 				cuerpo[i][3] = respuesta[i][7];
@@ -138,18 +99,75 @@ public class VentanaCursos extends JFrame {
 		tablaCursos.getColumnModel().getColumn(6).setMaxWidth(250);
 		scrollTabla.setViewportView(tablaCursos);
 		
+		JButton btnCrear = new JButton("Agregar");
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				dispose();
+				
+				try {
+					
+					VentanaCrearCurso frame = new VentanaCrearCurso();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+			}
+		});
+		btnCrear.setBounds(640, 30, 90, 23);
+		contentPane.add(btnCrear);
+		
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				for(int i = 0 ; i < tablaCursos.getRowCount() ; i++) {
+
+					if((boolean)tablaCursos.getValueAt(i, 0)) {
+					
+						dispose();
+						
+						try {
+							
+							VentanaEditarCurso frame = new VentanaEditarCurso(respuesta[i]);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
+			}
+		});
+		btnEditar.setBounds(640, 65, 90, 23);
+		contentPane.add(btnEditar);
+		
 		JButton btnImprimir = new JButton("Imprimir");
 		btnImprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					tablaCursos.print();
 				} catch (PrinterException e) {
+					
 					e.printStackTrace();
 				}
 			}
 		});
 		btnImprimir.setBounds(640, 100, 90, 23);
 		contentPane.add(btnImprimir);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				dispose();
+			}
+		});
+		btnVolver.setBounds(640, 400, 90, 23);
+		contentPane.add(btnVolver);
 	}
 }

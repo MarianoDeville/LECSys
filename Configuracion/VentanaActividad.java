@@ -18,6 +18,7 @@ public class VentanaActividad extends JFrame {
 	private JTable tablaActividad;
 
 	public VentanaActividad() {
+		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Configuración."+ CheckUsuario.getNombreUsuario());
@@ -73,8 +74,10 @@ public class VentanaActividad extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					tablaActividad.print();
 				} catch (PrinterException e1) {
+					
 					e1.printStackTrace();
 				}
 			}

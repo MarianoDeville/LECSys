@@ -97,7 +97,9 @@ public class VentanaListadoPagos extends JFrame implements ItemListener {
 				
 				try {
 					tablaPagos.print();
+					
 				} catch (PrinterException d) {
+					
 					d.printStackTrace();
 				}
 			}

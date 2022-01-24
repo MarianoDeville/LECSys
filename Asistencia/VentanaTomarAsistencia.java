@@ -34,6 +34,7 @@ public class VentanaTomarAsistencia extends JFrame {
 		btnVolver.setBounds(572, 398, 90, 23);
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				dispose();
 			}
 		});
@@ -106,8 +107,8 @@ public class VentanaTomarAsistencia extends JFrame {
 				
 				if(!asistencia.asistenciaRepetida(idCurso, fechaActual)) {
 					
-					for(int i=0 ; i < matriz.length ; i++)
-					{
+					for(int i=0 ; i < matriz.length ; i++) {
+						
 						aGuardar[0] = (String) matriz[i][0];
 						aGuardar[1] = fechaActual;
 						aGuardar[2] = idCurso;

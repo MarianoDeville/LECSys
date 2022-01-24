@@ -17,11 +17,7 @@ public class VentanaCuotaIndividual extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblMensageError;
-	private JLabel lblInscripción;
-	private JLabel lblTotalAPagar;
 	private JTextField txtValorInscripción;
-	private JTextField txtTotalPagar;
-	private JTextField txtNombreApellido;
 	private int inscripcion = 0;
 	private int totalCuota = 0;
 	private Calendar fechaSistema = new GregorianCalendar();
@@ -50,34 +46,34 @@ public class VentanaCuotaIndividual extends JFrame {
 		lblNombreYApellido.setBounds(56, 48, 120, 20);
 		contentPane.add(lblNombreYApellido);
 		
-		txtNombreApellido = new JTextField();
+		JTextField txtNombreApellido = new JTextField();
 		txtNombreApellido.setEditable(false);
 		txtNombreApellido.setBounds(173, 45, 200, 20);
 		contentPane.add(txtNombreApellido);
 		txtNombreApellido.setText(lista[0][1] + " " + lista[0][2]);
 		txtNombreApellido.setColumns(10);
 		
-		lblTotalAPagar = new JLabel("Total a pagar:");
+		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
 		lblTotalAPagar.setBounds(56, 126, 120, 20);
 		contentPane.add(lblTotalAPagar);
 		
-		txtTotalPagar = new JTextField();
+		JTextField txtTotalPagar = new JTextField();
 		txtTotalPagar.setEditable(false);
 		txtTotalPagar.setColumns(10);
 		txtTotalPagar.setBounds(183, 123, 110, 20);
 		txtTotalPagar.setText(totalCuota + "");
 		contentPane.add(txtTotalPagar);
 		
-		lblInscripción = new JLabel("Inscripción");
+		JLabel lblInscripción = new JLabel("Inscripción");
 		lblInscripción.setBounds(56, 79, 120, 20);
 		contentPane.add(lblInscripción);
 		
 		txtValorInscripción = new JTextField();
 		txtValorInscripción.setColumns(10);
 		txtValorInscripción.setBounds(183, 79, 70, 20);
-		txtValorInscripción.addActionListener(new ActionListener(){
+		txtValorInscripción.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
             	
             	inscripcion = Integer.parseInt(txtValorInscripción.getText());
             	txtTotalPagar.setText((inscripcion + totalCuota) + "");
@@ -89,6 +85,15 @@ public class VentanaCuotaIndividual extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
+				
+				try {
+					
+					VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
+					frame.setVisible(true);
+				} catch (Exception d) {
+					
+					d.printStackTrace();
+				}
 			}
 		});
 		btnVolver.setBounds(301, 230, 140, 23);
@@ -157,6 +162,7 @@ public class VentanaCuotaIndividual extends JFrame {
 			
 			inscripcion = Integer.parseInt(txtValorInscripción.getText());
 		}catch (Exception f) {
+			
 			bandera = false;
 			lblMensageError.setText("El campo Inscripción no puede estar vacío y debe ser un número");
 		}

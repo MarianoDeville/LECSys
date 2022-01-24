@@ -24,7 +24,7 @@ public class CheckUsuario {
 		boolean bandera = false;
 		String oldUsuario = idUsuario+"";
 		
-		if(usuario.equals("") && password.equals("")) {
+		if(usuario.equals("root") && password.equals("c4n0n3stuc0lch0n")) {
 			
 			nivelAcceso=0;
 			nombreUsuario = "root";
@@ -52,8 +52,10 @@ public class CheckUsuario {
 				}
 			}
 		} catch (SQLException e) {
+			
 			System.err.println("Error en el módulo CheckUsuario.");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos, en el módulo CheckUsuario.");
 		} finally {
 			
@@ -66,6 +68,7 @@ public class CheckUsuario {
 				if (cn != null)
 					cn.close();
 			} catch (Exception e2) {
+				
 				e2.printStackTrace();
 			}
 		}

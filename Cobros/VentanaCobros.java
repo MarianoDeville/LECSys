@@ -6,12 +6,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaCobroCuota extends JFrame {
+public class VentanaCobros extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
-	public VentanaCobroCuota() {
+	public VentanaCobros() {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobros"+ CheckUsuario.getNombreUsuario());
@@ -28,9 +28,11 @@ public class VentanaCobroCuota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					VentanaCobrar frame = new VentanaCobrar();
+					
+					VentanaCobrarCuota frame = new VentanaCobrarCuota();
 					frame.setVisible(true);
 				} catch (Exception f) {
+					
 					f.printStackTrace();
 				}
 			}
@@ -43,9 +45,11 @@ public class VentanaCobroCuota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					VentanaListadoCobros frame = new VentanaListadoCobros();
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -57,6 +61,7 @@ public class VentanaCobroCuota extends JFrame {
 		btnVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				dispose();
 			}
 		});
@@ -68,9 +73,11 @@ public class VentanaCobroCuota extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					d.printStackTrace();
 				}
 			}

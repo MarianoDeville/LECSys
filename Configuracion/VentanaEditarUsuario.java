@@ -26,6 +26,7 @@ public class VentanaEditarUsuario extends JFrame {
 
 
 	public VentanaEditarUsuario(String idUsuario) {
+		
 		setTitle("LECSys - Editar usuarios."+ CheckUsuario.getNombreUsuario());
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setResizable(false);
@@ -41,10 +42,13 @@ public class VentanaEditarUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
+				
 				try {
+					
 					VentanaUsuarios frame = new VentanaUsuarios();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -56,19 +60,20 @@ public class VentanaEditarUsuario extends JFrame {
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(checkCampos())
-				{
+				if(checkCampos()) {
+					
 					String acceso = (comboBoxAccessLevel.getSelectedIndex()+1)+"";
 					@SuppressWarnings("deprecation")
 					String infoUsuario[] = {idUsuario,
 											pwdPassword.getText(),
 											acceso};
 					
-					if(usuario.actualizarUsuario(infoUsuario))
-					{
+					if(usuario.actualizarUsuario(infoUsuario)) {
+						
 						lblMensageError.setForeground(Color.BLUE);
 						lblMensageError.setText("Usuario guardado.");				
 					} else {
+						
 						lblMensageError.setForeground(Color.RED);
 						lblMensageError.setText("Error al guardar la información.");
 					}
@@ -83,14 +88,19 @@ public class VentanaEditarUsuario extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(usuario.borrarUsuario(idUsuario)) {
+					
 					dispose();
+					
 					try {
+						
 						VentanaUsuarios frame = new VentanaUsuarios();
 						frame.setVisible(true);
 					} catch (Exception e) {
+						
 						e.printStackTrace();
 					}
 				} else {
+					
 					lblMensageError.setForeground(Color.RED);
 					lblMensageError.setText("Error al borrar el usuario.");
 				}
@@ -145,15 +155,15 @@ public class VentanaEditarUsuario extends JFrame {
 	private boolean checkCampos() {
 		boolean bandera = true;
 
-		if(txtUserName.getText().length() < 3 || pwdPassword.getText().length() < 3)
-		{
+		if(txtUserName.getText().length() < 3 || pwdPassword.getText().length() < 3) {
+			
 			lblMensageError.setForeground(Color.RED);
 			lblMensageError.setText("Nombre de usuario muy corto.");
 			bandera = false;			
 		}
 		
-		if(!pwdPassword.getText().contentEquals(pwdRePassword.getText()))
-		{
+		if(!pwdPassword.getText().contentEquals(pwdRePassword.getText())) {
+			
 			pwdPassword.setText(null);
 			pwdRePassword.setText(null);
 			lblMensageError.setForeground(Color.RED);

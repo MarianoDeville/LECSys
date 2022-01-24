@@ -249,6 +249,7 @@ public class VentanaCargarCalificaciones extends JFrame {
 						
 						temp = Integer.parseInt((String) tablaExamenes.getValueAt(e, 3));
 					} catch (NumberFormatException e2) {
+						
 						notas = false;
 					}
 				}

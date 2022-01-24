@@ -48,8 +48,8 @@ public class VentanaCalificaciones extends JFrame {
 		listadoCursos = ABMCCurso.getListaCursos(true);
 		String listaCursos[] = new String[listadoCursos.length]; 
 		
-		for(int i=0 ; i < listaCursos.length ; i++)
-		{
+		for(int i=0 ; i < listaCursos.length ; i++) {
+			
 			listaCursos[i] = listadoCursos[i][1] + " " + listadoCursos[i][2] + " - " + listadoCursos[i][4];
 		}
 		
@@ -69,6 +69,7 @@ public class VentanaCalificaciones extends JFrame {
 					VentanaCargarCalificaciones frame = new VentanaCargarCalificaciones(cursoElegido);
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 				
@@ -84,12 +85,13 @@ public class VentanaCalificaciones extends JFrame {
 				cursoElegido = listadoCursos[comboBoxCurso.getSelectedIndex()][0];
 				
 				try {
+					
 					VentanaListarCalificaciones frame = new VentanaListarCalificaciones(cursoElegido);
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					d.printStackTrace();
 				}
-				
 			}
 		});
 		btnListarNotas.setBounds(237, 78, 150, 23);
@@ -100,14 +102,17 @@ public class VentanaCalificaciones extends JFrame {
 		
 		int nivelAcceso = CheckUsuario.getNivelNivelAcceso();
 		
-		if(nivelAcceso < 5)
-		{
+		if(nivelAcceso < 5) {
+			
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
+					
 					try {
+						
 						VentanaCalificaciones frame = new VentanaCalificaciones();
 						frame.setVisible(true);
 					} catch (Exception e) {
+						
 						e.printStackTrace();
 					}
 				}

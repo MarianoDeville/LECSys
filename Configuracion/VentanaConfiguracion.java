@@ -48,9 +48,11 @@ public class VentanaConfiguracion extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					VentanaUsuarios frame = new VentanaUsuarios();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -64,9 +66,11 @@ public class VentanaConfiguracion extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
+					
 					VentanaCursos frame = new VentanaCursos();
 					frame.setVisible(true);
 				} catch (Exception d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -111,9 +115,11 @@ public class VentanaConfiguracion extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					VentanaActividad frame = new VentanaActividad();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
@@ -132,9 +138,11 @@ public class VentanaConfiguracion extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					
 					VentanaConfirmacionFinalización frame = new VentanaConfirmacionFinalización();
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}			
 			}
@@ -153,8 +161,8 @@ public class VentanaConfiguracion extends JFrame {
 		int nivelAcceso = CheckUsuario.getNivelNivelAcceso();
 		recuperar = false;
 		
-		if(nivelAcceso > 1)
-		{
+		if(nivelAcceso > 1) {
+			
 			CheckUsuario.guardarEstado();
 			recuperar = true;
 			VentanaIngresoUsuario entrando = new VentanaIngresoUsuario();
@@ -162,22 +170,23 @@ public class VentanaConfiguracion extends JFrame {
 			nivelAcceso = CheckUsuario.getNivelNivelAcceso();
 		}
 	
-		if(nivelAcceso < 2)
-		{
+		if(nivelAcceso < 2) {
+			
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					
 					try {
+						
 						VentanaConfiguracion frame = new VentanaConfiguracion();
 						frame.setVisible(true);
 					} catch (Exception e) {
+						
 						e.printStackTrace();
 					}
 				}
 			});
-		}
-		else
-		{
+		} else {
+			
 			JOptionPane.showMessageDialog(null, "No tiene suficientes privilegios.");
 		}
 	}

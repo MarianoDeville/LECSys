@@ -60,10 +60,12 @@ public class VentanaHabilitarCobrar extends JFrame {
 						VentanaGrupoFamiliar frame = new VentanaGrupoFamiliar(itemsSeleccionados());
 						frame.setVisible(true);
 					} catch (Exception e) {
+						
 						e.printStackTrace();
 					}
 					dispose();
 				} else {
+					
 					lblMensageError.setText("Debe seleccionar por lo menos un item.");
 				}
 			}
@@ -82,10 +84,12 @@ public class VentanaHabilitarCobrar extends JFrame {
 						VentanaCuotaIndividual frame = new VentanaCuotaIndividual(itemsSeleccionados());
 						frame.setVisible(true);
 					} catch (Exception e1) {
+						
 						e1.printStackTrace();
 					}
 					dispose();
 				} else {
+					
 					lblMensageError.setText("Debe seleccionar un item.");
 				}
 			}
@@ -101,6 +105,7 @@ public class VentanaHabilitarCobrar extends JFrame {
 					
 					tablaAlumnos.print();
 				} catch (PrinterException d) {
+					
 					d.printStackTrace();
 				}
 			}
@@ -160,6 +165,7 @@ public class VentanaHabilitarCobrar extends JFrame {
 					cantidadElementos++;
 			}
 		} catch (NullPointerException e) {
+			
 			return null;
 		}
 				
@@ -218,7 +224,7 @@ public class VentanaHabilitarCobrar extends JFrame {
 		} else
 			cuerpo = null;
 		
-		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo) {
 			
 			private static final long serialVersionUID = 1L;
 			public Class<?> getColumnClass(int column) {

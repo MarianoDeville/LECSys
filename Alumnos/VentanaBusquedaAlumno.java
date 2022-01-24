@@ -364,7 +364,7 @@ public class VentanaBusquedaAlumno extends JDialog implements ItemListener{
 		
 		for(int i=0 ; i < respuestaCurso.length ; i++) {
 			
-			listaCursos[i] = respuestaCurso[i][1] + " " + respuestaCurso[i][2] + " - " + respuestaCurso[i][4];
+			listaCursos[i] = respuestaCurso[i][1] + " " + respuestaCurso[i][2] + " - " + respuestaCurso[i][4] + " - " + respuestaCurso[i][7];
 		}
 							
 		comboBoxCurso = new JComboBox<String>();
@@ -377,6 +377,7 @@ public class VentanaBusquedaAlumno extends JDialog implements ItemListener{
 			
 			comboBoxCurso.setSelectedIndex(0);	
 		} catch (IllegalArgumentException e) {
+			
 			lblMensageError.setForeground(Color.RED);
 			lblMensageError.setText("No hay cursos cargados.");
 		}
@@ -390,9 +391,11 @@ public class VentanaBusquedaAlumno extends JDialog implements ItemListener{
 				dispose();
 
 				try {
+					
 					VentanaAlumnos frame = new VentanaAlumnos();
 					frame.setVisible(true);
 				} catch (Exception f) {
+					
 					f.printStackTrace();
 				}
 			}
@@ -430,6 +433,7 @@ public class VentanaBusquedaAlumno extends JDialog implements ItemListener{
 					VentanaHistorialAsistencia frame = new VentanaHistorialAsistencia(txtLegajo.getText());
 					frame.setVisible(true);
 				} catch (Exception e) {
+					
 					JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 				}
 			}
@@ -465,8 +469,10 @@ public class VentanaBusquedaAlumno extends JDialog implements ItemListener{
 				if (imprimir.printDialog()) {
 					
 					try {
+						
 							imprimir.print();
 					} catch (PrinterException e) {
+						
 							JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 					}
 				}
@@ -698,6 +704,7 @@ public class VentanaBusquedaAlumno extends JDialog implements ItemListener{
 			Double.parseDouble(cadena);
 			return true;
 		} catch (NumberFormatException e){
+			
 			return false;
 		}
 	}

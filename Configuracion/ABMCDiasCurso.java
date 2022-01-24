@@ -17,6 +17,8 @@ public class ABMCDiasCurso {
 	private static int getRegistrosDiasCurso(String valorId) {
 		
 		int cantColumnas=0;
+		if(valorId == null)
+			System.out.println("Dirección del registro igual a null.");
 		try {
 			cn = conexion.conectar();
 			
@@ -24,7 +26,7 @@ public class ABMCDiasCurso {
 				return 0;
 			
 			stm = cn.createStatement();
-			rs = stm.executeQuery("SELECT * FROM diascursado");
+			rs = stm.executeQuery("SELECT * FROM lecsys.diascursado");
 			
 			while (rs.next()) {
 				String temporal = rs.getInt(5) + "";	// idCurso
@@ -34,7 +36,6 @@ public class ABMCDiasCurso {
 
 		} catch (SQLException e) {
 			System.out.println("Error al acceder a la tabla diascursado(1).");
-			e.printStackTrace();
 		} catch (NullPointerException e) {
 			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(1).");
 		} finally {
@@ -58,7 +59,7 @@ public class ABMCDiasCurso {
 				return null;
 			
 			stm = cn.createStatement();
-			rs = stm.executeQuery("SELECT * FROM diascursado");
+			rs = stm.executeQuery("SELECT * FROM lecsys.diascursado");
 		
 			while (rs.next()) {
 				temporal[0] = rs.getInt(1) + "";	// idDíaCurso
@@ -93,7 +94,7 @@ public class ABMCDiasCurso {
 		try {
 			cn = conexion.conectar();
 			stm = cn.createStatement();
-			rs = stm.executeQuery("SELECT * FROM diascursado WHERE idCurso = " + valor);
+			rs = stm.executeQuery("SELECT * FROM lecsys.diascursado WHERE idCurso = " + valor);
 			
 			matriz = new String[numero][3];
 			int i=0;
@@ -127,7 +128,7 @@ public class ABMCDiasCurso {
 				return null;
 			
 			stm = cn.createStatement();
-			rs = stm.executeQuery("SELECT * FROM diascursado");
+			rs = stm.executeQuery("SELECT * FROM lecsys.diascursado");
 			matriz = new String[numero][5];
 			int i=0;
 			
@@ -153,7 +154,7 @@ public class ABMCDiasCurso {
 	public static boolean crearDiasCurso(String valor[]) {
 
 		boolean bandera = true;		
-		String comandoStatement = "INSERT INTO diascursado (día, horario, duración, idCurso) VALUES ('"
+		String comandoStatement = "INSERT INTO lecsys.diascursado (día, horario, duración, idCurso) VALUES ('"
 				+ valor[0] + "', '" + valor[1] + "', '" + valor[2] + "', '" + valor[3] + "')";
 		
 		try {
@@ -181,7 +182,7 @@ public class ABMCDiasCurso {
 	public static boolean borrarDiasCurso(String valor) {
 
 		boolean bandera = true;		
-		String comandoStatement = "DELETE FROM diascursado WHERE "
+		String comandoStatement = "DELETE FROM lecsys.diascursado WHERE "
 				+ "idCurso = "
 				+ valor
 				+ " ORDER BY idCurso LIMIT 10";
