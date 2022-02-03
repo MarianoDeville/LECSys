@@ -100,7 +100,13 @@ public class VentanaReciboCobro extends JFrame {
 		lblConcepto = new JLabel("");
 		lblConcepto.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblConcepto.setBounds(25, 275, 373, 25);
-		lblConcepto.setText("En concepto de: " + cuerpo[2]);
+		
+		if(cuerpo[9].contentEquals("0"))
+			
+			lblConcepto.setText("En concepto de: " + cuerpo[2]);
+		else
+			
+			lblConcepto.setText("En concepto de: " + cuerpo[2] + " y recargo por mora.");
 		contentPane.add(lblConcepto);
 		
 		lblMontoTotal = new JLabel("");

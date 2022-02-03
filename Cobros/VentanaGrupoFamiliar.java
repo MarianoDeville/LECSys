@@ -85,7 +85,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 							ABMCAlumnos.actualizarGrupoFamiliar(lista[i][0], registroCreado + "", txtDescuento.getText());
 						}
 
-						String cuerpo[] = new String [9];
+						String cuerpo[] = new String [10];
 						cuerpo[0] = registroCreado + "";
 						cuerpo[1] = txtNombreFamilia.getText();
 						cuerpo[2] = "Inscripción : " + inscripcion * cantIntegrantes + " primer cuota: " + (totalCuota - descuento);
@@ -95,6 +95,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 						cuerpo[6] = fechaSistema.get(Calendar.HOUR) +":" +fechaSistema.get(Calendar.MINUTE);
 						cuerpo[7] = txtTotalPagar.getText();
 						cuerpo[8] = "";
+						cuerpo[9] = "0";
 						ABMCCobros.nuevoCobro(cuerpo);
 						
 						try {

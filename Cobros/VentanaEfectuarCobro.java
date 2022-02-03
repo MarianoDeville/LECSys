@@ -19,23 +19,24 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtIntegrantes;
+	private JTextField txtRecargo;
 	private JTextField txtCalculoMontoPagar;
-	private JTextField txtValorCuota;
-	private JTextField txtFactura;
 	private JLabel lblMensageError;
 	private JComboBox<String> comboBoxCantCuotas;
 	private int montoCalculado;
 	private int valorCuotas;
 	private int descuento;
+	private boolean debe;
+	private int recargo;
 	private Calendar fechaSistema = new GregorianCalendar();
+	
 	
 	public VentanaEfectuarCobro(String informacion[]) {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobrar"+ CheckUsuario.getNombreUsuario());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 400, 370);
+		setBounds(100, 100, 400, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,13 +47,103 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		descuento = Integer.parseInt(informacion[5]) * valorCuotas /100;
 		informacion[5] = descuento + "";
 
+		JLabel lblNombre = new JLabel(informacion[1]);
+		lblNombre.setBounds(25, 25, 350, 25);
+		contentPane.add(lblNombre);
+		
+		JLabel lblCantidadDeCuotas = new JLabel("Concepto:");
+		lblCantidadDeCuotas.setBounds(25, 60, 130, 20);
+		contentPane.add(lblCantidadDeCuotas);
+
+		comboBoxCantCuotas = new JComboBox<String>();
+		comboBoxCantCuotas.setModel(new DefaultComboBoxModel<String>(listadoDeuda(Integer.parseInt(informacion[3]))));
+		comboBoxCantCuotas.setBounds(155, 60, 180, 20);
+		comboBoxCantCuotas.addItemListener(this);
+		contentPane.add(comboBoxCantCuotas);
+		
+		JLabel lblCantIntegrantes = new JLabel("Cantidad integrantes:");
+		lblCantIntegrantes.setBounds(25, 85, 130, 20);
+		contentPane.add(lblCantIntegrantes);
+		
+		JTextField txtIntegrantes = new JTextField(informacion[2]);
+		txtIntegrantes.setEditable(false);
+		txtIntegrantes.setBounds(155, 85, 40, 20);
+		contentPane.add(txtIntegrantes);
+		txtIntegrantes.setColumns(10);
+		
+		JLabel lblValorCuota = new JLabel("Valor cuota:");
+		lblValorCuota.setBounds(25, 110, 130, 20);
+		contentPane.add(lblValorCuota);
+		
+		JTextField txtValorCuota = new JTextField(informacion[4]);
+		txtValorCuota.setEditable(false);
+		txtValorCuota.setBounds(155, 110, 100, 20);
+		contentPane.add(txtValorCuota);
+		txtValorCuota.setColumns(10);
+		
+		JLabel lblDescuento = new JLabel("Descuento:");
+		lblDescuento.setBounds(25, 135, 130, 20);
+		contentPane.add(lblDescuento);
+		
+		JTextField txtDescuento = new JTextField(informacion[5]);
+		txtDescuento.setEditable(false);
+		txtDescuento.setBounds(155, 135, 100, 20);
+		contentPane.add(txtDescuento);
+		txtDescuento.setColumns(10);
+		
+		JLabel lblRecargo = new JLabel("Recargo:");
+		lblRecargo.setBounds(25, 160, 130, 20);
+		contentPane.add(lblRecargo);
+		
+		txtRecargo = new JTextField();
+		txtRecargo.setText("10");
+		txtRecargo.setBounds(155, 160, 60, 20);
+		txtRecargo.addActionListener(new java.awt.event.ActionListener() {
+			
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				
+				actualizoMonto();
+			}
+		});
+		txtRecargo.setColumns(10);
+		contentPane.add(txtRecargo);
+		
+		JLabel lblSigno = new JLabel("%");
+		lblSigno.setBounds(220, 160, 30, 20);
+		contentPane.add(lblSigno);
+		
+		JLabel lblMontoPagar = new JLabel("Monto a pagar:");
+		lblMontoPagar.setBounds(25, 185, 130, 20);
+		contentPane.add(lblMontoPagar);
+		
+		txtCalculoMontoPagar = new JTextField();
+		txtCalculoMontoPagar.setEditable(false);
+		txtCalculoMontoPagar.setBounds(155, 185, 100, 20);
+		contentPane.add(txtCalculoMontoPagar);
+		txtCalculoMontoPagar.setColumns(10);
+
+		JLabel lblFactura = new JLabel("Factura:");
+		lblFactura.setBounds(25, 210, 130, 20);
+		contentPane.add(lblFactura);
+		
+		JTextField txtFactura = new JTextField();
+		txtFactura.setBounds(155, 210, 100, 20);
+		contentPane.add(txtFactura);
+		txtFactura.setColumns(10);
+
+		lblMensageError = new JLabel("");
+		lblMensageError.setForeground(Color.RED);
+		lblMensageError.setBackground(Color.LIGHT_GRAY);
+		lblMensageError.setBounds(25, 235, 350, 25);
+		contentPane.add(lblMensageError);
+		
 		JButton btnCobrar = new JButton("Cobrar");
 		btnCobrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(!txtCalculoMontoPagar.getText().contentEquals("")) {
 
-					String cuerpo[] = new String [9];
+					String cuerpo[] = new String [10];
 					cuerpo[0] = informacion[0];
 					cuerpo[1] = informacion[1];
 					cuerpo[2] = (String) comboBoxCantCuotas.getSelectedItem();
@@ -63,6 +154,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 					cuerpo[6] += ":" +fechaSistema.get(Calendar.MINUTE);
 					cuerpo[7] = txtCalculoMontoPagar.getText();
 					cuerpo[8] = txtFactura.getText();
+					cuerpo[9] = recargo + "";
 
 					if(ABMCCobros.nuevoCobro(cuerpo)) {
 
@@ -112,78 +204,16 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		});
 		btnVolver.setBounds(246, 270, 89, 23);
 		contentPane.add(btnVolver);
-		
-		JLabel lblNombre = new JLabel(informacion[1]);
-		lblNombre.setBounds(25, 25, 350, 25);
-		contentPane.add(lblNombre);
-		
-		JLabel lblCantidadDeCuotas = new JLabel("Concepto:");
-		lblCantidadDeCuotas.setBounds(25, 60, 130, 20);
-		contentPane.add(lblCantidadDeCuotas);
-
-		comboBoxCantCuotas = new JComboBox<String>();
-		comboBoxCantCuotas.setModel(new DefaultComboBoxModel<String>(listadoDeuda(Integer.parseInt(informacion[3]))));
-		comboBoxCantCuotas.setBounds(155, 60, 180, 20);
-		comboBoxCantCuotas.addItemListener(this);
-		contentPane.add(comboBoxCantCuotas);
-		
-		JLabel lblCantIntegrantes = new JLabel("Cantidad integrantes:");
-		lblCantIntegrantes.setBounds(25, 85, 130, 20);
-		contentPane.add(lblCantIntegrantes);
-		
-		txtIntegrantes = new JTextField(informacion[2]);
-		txtIntegrantes.setEditable(false);
-		txtIntegrantes.setBounds(155, 85, 40, 20);
-		contentPane.add(txtIntegrantes);
-		txtIntegrantes.setColumns(10);
-		
-		JLabel lblMontoPagar = new JLabel("Monto a pagar:");
-		lblMontoPagar.setBounds(25, 160, 130, 20);
-		contentPane.add(lblMontoPagar);
-		
-		txtCalculoMontoPagar = new JTextField();
-		txtCalculoMontoPagar.setEditable(false);
-		txtCalculoMontoPagar.setBounds(155, 160, 100, 20);
-		contentPane.add(txtCalculoMontoPagar);
-		txtCalculoMontoPagar.setColumns(10);
-				
-		lblMensageError = new JLabel("");
-		lblMensageError.setForeground(Color.RED);
-		lblMensageError.setBackground(Color.LIGHT_GRAY);
-		lblMensageError.setBounds(25, 235, 350, 25);
-		contentPane.add(lblMensageError);
-		
-		JLabel lblValorCuota = new JLabel("Valor cuota:");
-		lblValorCuota.setBounds(25, 110, 130, 20);
-		contentPane.add(lblValorCuota);
-		
-		txtValorCuota = new JTextField(informacion[4]);
-		txtValorCuota.setEditable(false);
-		txtValorCuota.setBounds(155, 110, 100, 20);
-		contentPane.add(txtValorCuota);
-		txtValorCuota.setColumns(10);
-		
-		JLabel lblFactura = new JLabel("Factura:");
-		lblFactura.setBounds(25, 185, 130, 20);
-		contentPane.add(lblFactura);
-		
-		txtFactura = new JTextField();
-		txtFactura.setBounds(155, 185, 100, 20);
-		contentPane.add(txtFactura);
-		txtFactura.setColumns(10);
-		
-		JLabel lblDescuento = new JLabel("Descuento");
-		lblDescuento.setBounds(25, 135, 130, 20);
-		contentPane.add(lblDescuento);
-		
-		JTextField txtDescuento = new JTextField(informacion[5]);
-		txtDescuento.setEditable(false);
-		txtDescuento.setBounds(155, 135, 100, 20);
-		contentPane.add(txtDescuento);
-		txtDescuento.setColumns(10);
 	}
 	
 	private String [] listadoDeuda(int cantMeses) {
+		
+		if(cantMeses > 1)
+
+			debe = true;
+		else
+			
+			debe = false;
 		
 		String meses[]= {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 		String listaCuotasDeuda[] = new String[cantMeses + 1];
@@ -217,14 +247,28 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		return listaCuotasDeuda;
 	}
 	
+	private void actualizoMonto() {
+		
+		int cantMeses = comboBoxCantCuotas.getSelectedIndex();
+       	montoCalculado = (valorCuotas - descuento);
+       	recargo = 0;
+       	
+       	if(debe) {
+       		
+       		recargo = montoCalculado * Integer.parseInt(txtRecargo.getText()) / 100;
+       		montoCalculado += recargo;
+       	}
+       	
+       	montoCalculado *= cantMeses;
+    	txtCalculoMontoPagar.setText(montoCalculado+"");
+    	lblMensageError.setText(null);
+	}
+	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		if (e.getSource()==comboBoxCantCuotas) {
 		
-	       	int cantMeses = comboBoxCantCuotas.getSelectedIndex();
-	       	montoCalculado = (valorCuotas - descuento) * cantMeses;
-	    	txtCalculoMontoPagar.setText(montoCalculado+"");
-	    	lblMensageError.setText(null);
+			actualizoMonto();
 		}
 	}
 }

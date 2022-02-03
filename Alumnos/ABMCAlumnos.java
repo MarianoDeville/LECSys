@@ -14,21 +14,30 @@ public class ABMCAlumnos {
 
 		int cantRegistros = 0;
 		String matriz[][] = null;
-		String comandoStatement = "SELECT count(*) FROM lecsys.alumnos";
-		String armoWhere = " WHERE (estado=";
+		String comandoStatement = "SELECT count(*) FROM lecsys.alumnos ";
+		String armoWhere = "JOIN lecsys.curso ON curso.idCurso = alumnos.idCurso " 
+				 		 + "JOIN lecsys.profesores ON profesores.idProfesor = curso.idProfesor " 
+				 		 + "WHERE (alumnos.estado = ";
 		armoWhere += estado? "1" : "0";
 		
 		if(campo == "" || valor == "")
+			
 			armoWhere += ")";
 		else {
 			
 			armoWhere += " && ";
 			
 			if(campo.contentEquals("ID"))
-				armoWhere += "idAlumno = " + valor + ") ";
+				armoWhere += "alumnos.idAlumno = " + valor + ") ";
 
 			if(campo.contentEquals("CURSO"))
-				armoWhere += "idCurso = " + valor + ") ";
+				armoWhere += "alumnos.idCurso = " + valor + ") ";
+			
+			if(campo.contentEquals("PROFESOR")) {
+				
+				armoWhere += " profesores.idProfesor = " + valor + ") ";
+
+			}
 			
 			if(campo.contentEquals("GRUPOFAMILIAR"))
 				armoWhere += valor.contentEquals("0")? "idGrupoFamiliar IS NULL)" : "idGrupoFamiliar =" + valor + ") ";
@@ -52,32 +61,35 @@ public class ABMCAlumnos {
 				return null;
 			}
 
-			comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, estado, idCurso, idGrupoFamiliar FROM lecsys.alumnos "
-							 + "JOIN lecsys.persona on alumnos.idPersona = persona.idPersona"
+			comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, "
+							 + "email, alumnos.estado, alumnos.idCurso, idGrupoFamiliar FROM lecsys.alumnos "
+							 + "JOIN lecsys.persona on alumnos.idPersona = persona.idPersona "
 							 + armoWhere + " ORDER BY " + ordenado;
 			rs = stm.executeQuery(comandoStatement);
-			matriz = new String[cantRegistros][10];
+			matriz = new String[cantRegistros][11];
 			int i=0;
-			
+
 			while (rs.next()) {
 				
-				matriz[i][0] = rs.getInt(1)+"";
-				matriz[i][1] = rs.getString(2);
-				matriz[i][2] = rs.getString(3);
-				matriz[i][3] = rs.getString(4);
-				matriz[i][4] = rs.getString(5);
-				matriz[i][5] = rs.getString(6);
-				matriz[i][6] = rs.getString(7);
-				matriz[i][7] = (rs.getInt(8) == 1)? "Activo":"Inactivo";
-				matriz[i][8] = rs.getInt(9)+"";
-				matriz[i][9] = rs.getInt(10)+"";
+				matriz[i][0] = rs.getInt(1)+"";								// Legajo / idAlumno
+				matriz[i][1] = rs.getString(2);								// nombre
+				matriz[i][2] = rs.getString(3);								// apellido
+				matriz[i][3] = rs.getString(4);								// dni
+				matriz[i][4] = rs.getString(5);								// direccion
+				matriz[i][5] = rs.getString(6);								// teléfono
+				matriz[i][6] = rs.getString(7);								// email
+				matriz[i][7] = (rs.getInt(8) == 1)? "Activo":"Inactivo";	// estado
+				matriz[i][8] = rs.getInt(9)+"";								// idCurso
+				matriz[i][9] = rs.getInt(10)+"";							// idGrupoFamiliar
 				i++;
 			}
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla alumnos (1).");
 			System.err.println(comandoStatement);
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCAlumnos (1).");
 		} finally {
 			cerrarConexiones();

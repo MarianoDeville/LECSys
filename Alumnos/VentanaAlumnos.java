@@ -36,17 +36,20 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		comboBoxOrden = new JComboBox<String>();
+		comboBoxOrden.setModel(new DefaultComboBoxModel<String>(new String[] {"Ordenar por", "Legajo", "Apellido", "Nombre", "DNI", "Dirección", "Fecha ingreso"}));
+		comboBoxOrden.setSelectedIndex(0);
+		comboBoxOrden.setBounds(890, 210, 90, 20);
+		comboBoxOrden.addItemListener(this);
+		contentPane.add(comboBoxOrden);
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				dispose();
-			}
-		});
-		btnVolver.setBounds(890, 520, 90, 23);
-		contentPane.add(btnVolver);
+		JScrollPane scrollTabla = new JScrollPane();
+		scrollTabla.setBounds(1, 30, 880, 517);
+		contentPane.add(scrollTabla);
+		tablaAlumnos = new JTable();
+		actualizarTabla(true);
+		scrollTabla.setViewportView(tablaAlumnos);
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
@@ -113,20 +116,6 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
 		btnEditar.setBounds(890, 105, 90, 23);
 		contentPane.add(btnEditar);
 		
-		comboBoxOrden = new JComboBox<String>();
-		comboBoxOrden.setModel(new DefaultComboBoxModel<String>(new String[] {"Ordenar por", "Legajo", "Apellido", "Nombre", "DNI", "Dirección", "Fecha ingreso"}));
-		comboBoxOrden.setSelectedIndex(0);
-		comboBoxOrden.setBounds(890, 210, 90, 20);
-		comboBoxOrden.addItemListener(this);
-		contentPane.add(comboBoxOrden);
-		
-		JScrollPane scrollTabla = new JScrollPane();
-		scrollTabla.setBounds(1, 30, 880, 517);
-		contentPane.add(scrollTabla);
-		tablaAlumnos = new JTable();
-		actualizarTabla(true);
-		scrollTabla.setViewportView(tablaAlumnos);
-		
 		JButton bntImprimir = new JButton("Imprimir");
 		bntImprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -161,9 +150,20 @@ public class VentanaAlumnos extends JFrame implements ItemListener {
             }
         });
 		contentPane.add(chckbxActivos);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				dispose();
+			}
+		});
+		btnVolver.setBounds(890, 520, 90, 23);
+		contentPane.add(btnVolver);
 	}
 
-	private void actualizarTabla(boolean estado){
+	private void actualizarTabla(boolean estado) {
 		
 		String titulo [] = {"S","Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "e-mail"};
 		String ordenado[] = {"idAlumno","idAlumno", "apellido", "nombre", "dni", "dirección", "fechaIngreso"};

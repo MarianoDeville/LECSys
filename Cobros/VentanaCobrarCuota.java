@@ -24,24 +24,19 @@ public class VentanaCobrarCuota extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobrar"+ CheckUsuario.getNombreUsuario());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 10, 800, 600);
+		setBounds(10, 10, 940, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JScrollPane scrollTabla = new JScrollPane();
+		scrollTabla.setBounds(1, 11, 770, 540);
+		contentPane.add(scrollTabla);
+		tablaFlia = new JTable();
 		actualizoTabla();
-		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				dispose();
-			}
-		});
-		btnVolver.setBounds(628, 525, 110, 23);
-		contentPane.add(btnVolver);
+		scrollTabla.setViewportView(tablaFlia);	
 		
 		JButton btnCobrar = new JButton("Cobrar");
 		btnCobrar.addActionListener(new ActionListener() {
@@ -65,24 +60,8 @@ public class VentanaCobrarCuota extends JFrame {
 				}
 			}
 		});
-		btnCobrar.setBounds(60, 525, 110, 23);
+		btnCobrar.setBounds(796, 35, 110, 23);
 		contentPane.add(btnCobrar);
-		
-		JButton btnImprimir = new JButton("Imprimir");
-		btnImprimir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					
-					tablaFlia.print();
-				} catch (PrinterException d) {
-					
-					d.printStackTrace();
-				}
-			}
-		});
-		btnImprimir.setBounds(432, 525, 110, 23);
-		contentPane.add(btnImprimir);
 		
 		JButton btnBorrarDeuda = new JButton("Borrar deuda");
 		btnBorrarDeuda.addActionListener(new ActionListener() {
@@ -105,17 +84,39 @@ public class VentanaCobrarCuota extends JFrame {
 				}
 			}
 		});
-		btnBorrarDeuda.setBounds(241, 525, 110, 23);
+		btnBorrarDeuda.setBounds(796, 70, 110, 23);
 		contentPane.add(btnBorrarDeuda);
+		
+		JButton btnImprimir = new JButton("Imprimir");
+		btnImprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					
+					tablaFlia.print();
+				} catch (PrinterException d) {
+					
+					d.printStackTrace();
+				}
+			}
+		});
+		btnImprimir.setBounds(796, 105, 110, 23);
+		contentPane.add(btnImprimir);
+
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				dispose();
+			}
+		});
+		btnVolver.setBounds(796, 520, 110, 23);
+		contentPane.add(btnVolver);
 	}
 	
 	private void actualizoTabla() {
 		
-		JScrollPane scrollTabla = new JScrollPane();
-		scrollTabla.setBounds(1, 11, 773, 503);
-		contentPane.add(scrollTabla);
-		tablaFlia = new JTable();
-		String titulo [] = {"Nombre", "Cant. integrantes", "Cant. cuotas", "Valor cuota", "Descuento" , "Monto total", "Seleccionar"};
+		String titulo [] = {"Nombre", "Integrantes", "Cuotas", "Valor cuota", "Descuento" , "Monto total", "Sel."};
 		respuesta = ABMCGrupoFamiliar.getGruposFamilias();
 				
 		if(respuesta != null) {
@@ -160,6 +161,26 @@ public class VentanaCobrarCuota extends JFrame {
 		};
 		tablaFlia.setModel(tablaModelo);
 		tablaFlia.isCellEditable(0,1);
-		scrollTabla.setViewportView(tablaFlia);	
+		tablaFlia.getColumnModel().getColumn(0).setMinWidth(100);
+		tablaFlia.getColumnModel().getColumn(0).setPreferredWidth(200);
+		tablaFlia.getColumnModel().getColumn(0).setMaxWidth(300);
+		tablaFlia.getColumnModel().getColumn(1).setMinWidth(30);
+		tablaFlia.getColumnModel().getColumn(1).setPreferredWidth(40);
+		tablaFlia.getColumnModel().getColumn(1).setMaxWidth(60);
+		tablaFlia.getColumnModel().getColumn(2).setMinWidth(30);
+		tablaFlia.getColumnModel().getColumn(2).setPreferredWidth(40);
+		tablaFlia.getColumnModel().getColumn(2).setMaxWidth(60);
+		tablaFlia.getColumnModel().getColumn(3).setMinWidth(50);
+		tablaFlia.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tablaFlia.getColumnModel().getColumn(3).setMaxWidth(150);
+		tablaFlia.getColumnModel().getColumn(4).setMinWidth(50);
+		tablaFlia.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaFlia.getColumnModel().getColumn(4).setMaxWidth(150);
+		tablaFlia.getColumnModel().getColumn(5).setMinWidth(50);
+		tablaFlia.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tablaFlia.getColumnModel().getColumn(5).setMaxWidth(150);
+		tablaFlia.getColumnModel().getColumn(6).setMinWidth(20);
+		tablaFlia.getColumnModel().getColumn(6).setPreferredWidth(30);
+		tablaFlia.getColumnModel().getColumn(6).setMaxWidth(50);
 	}
 }

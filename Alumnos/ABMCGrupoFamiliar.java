@@ -35,7 +35,8 @@ public class ABMCGrupoFamiliar {
 								"JOIN lecsys.curso ON alumnos.idCurso = curso.idCurso " + 
 								"JOIN lecsys.valorCuota ON curso.idCurso = valorCuota.idCurso " + 
 								armoWhere +
-								"GROUP BY grupoFamiliar.idGrupoFamiliar ";
+								"GROUP BY grupoFamiliar.idGrupoFamiliar " +
+								"ORDER BY grupoFamiliar.nombreFamilia";
 			rs = stm.executeQuery(comandoStatement);
 			int i=0;
 			
@@ -51,14 +52,15 @@ public class ABMCGrupoFamiliar {
 			}
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (1).");
 			System.err.println(comandoStatement);
 		} catch (NullPointerException e) {
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
 		return matriz;
 	}
 	
@@ -79,10 +81,12 @@ public class ABMCGrupoFamiliar {
 				resultado = rs.getInt(1);
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (2).");
 			System.err.println(comandoStatement);
 			resultado = 0;
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar(2).");
 			resultado = 0;
 		} finally {
@@ -111,13 +115,14 @@ public class ABMCGrupoFamiliar {
 			}
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (3).");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (3).");
 		} finally {
 			cerrarConexiones();
 		}
-		
 		return respuesta;
 	}
 	
@@ -151,14 +156,15 @@ public class ABMCGrupoFamiliar {
 			}
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (4).");
 			System.out.println(comandoStatement);
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (4).");
 		} finally {
 			cerrarConexiones();
 		}
-		
 		return true;
 	}
 
@@ -173,13 +179,14 @@ public class ABMCGrupoFamiliar {
 			stm.executeLargeUpdate("UPDATE lecsys.grupofamiliar SET deuda=deuda" + accion + cantidadMeses + armoWhere);
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (5).");
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (5).");
 		} finally {
 			cerrarConexiones();
 		}
-		
 		return true;
 	}
 
@@ -199,12 +206,15 @@ public class ABMCGrupoFamiliar {
 				nombre = rs.getString(1);
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (6).");
 			bandera = false;
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (6).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -213,7 +223,6 @@ public class ABMCGrupoFamiliar {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Se eliminó la deuda de: " + nombre, "Cobros"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return true;
 	}
 	
@@ -232,14 +241,17 @@ public class ABMCGrupoFamiliar {
 				bandera = true;
 			
 		} catch (SQLException e) {
+			
 			System.err.println("Error al acceder a la tabla grupoFamiliar (7).");
 			System.out.println(armoQuery);
 			bandera = false;
 		} catch (NullPointerException e) {
+			
 			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (7).");
 			System.out.println(armoQuery);
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return bandera;
@@ -256,6 +268,7 @@ public class ABMCGrupoFamiliar {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
+			
 			System.err.println("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}

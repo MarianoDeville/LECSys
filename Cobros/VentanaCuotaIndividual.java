@@ -111,14 +111,14 @@ public class VentanaCuotaIndividual extends JFrame {
 					
 					if(idGrupoFamiliar == 0) {
 						
-						String familia[] = {lista[0][1] + " " + lista[0][2],"1","0","1"};
+						String familia[] = {lista[0][2] + ", " + lista[0][1],"1","0","1"};
 						idGrupoFamiliar = ABMCGrupoFamiliar.crearGrupoFamilia(familia);						
 					}
 					
 					if(idGrupoFamiliar > 0) {
 						
 						ABMCAlumnos.actualizarGrupoFamiliar(lista[0][0], idGrupoFamiliar + "", "0");
-						String cuerpo[] = new String [9];
+						String cuerpo[] = new String [10];
 						cuerpo[0] = idGrupoFamiliar + "";
 						cuerpo[1] = lista[0][1] + " " + lista[0][2];
 						cuerpo[2] = "Inscripción : " + inscripcion + " primer cuota: " + totalCuota;
@@ -128,6 +128,7 @@ public class VentanaCuotaIndividual extends JFrame {
 						cuerpo[6] = fechaSistema.get(Calendar.HOUR) +":" +fechaSistema.get(Calendar.MINUTE);
 						cuerpo[7] = txtTotalPagar.getText();
 						cuerpo[8] = "";
+						cuerpo[9] = "0";
 						ABMCCobros.nuevoCobro(cuerpo);
 						
 						try {

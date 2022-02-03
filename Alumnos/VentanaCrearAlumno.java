@@ -36,8 +36,7 @@ public class VentanaCrearAlumno extends JDialog {
 	private JTextField txtDni;
 	private JLabel lblMensageError;
 	private JComboBox<String> comboBoxCurso;
-	private String respuestaCurso[][];
-	
+		
 	public VentanaCrearAlumno() {
 		
 		setResizable(false);
@@ -147,7 +146,7 @@ public class VentanaCrearAlumno extends JDialog {
 		lblCurso.setBounds(25, 200, 70, 20);
 		contentPane.add(lblCurso);
 
-		respuestaCurso = ABMCCurso.getListaCursos(true);
+		String respuestaCurso[][] = ABMCCurso.getListaCursos(true);
 		String listaCursos[] = new String[respuestaCurso.length]; 
 		
 		for(int i=0 ; i < respuestaCurso.length ; i++) {
