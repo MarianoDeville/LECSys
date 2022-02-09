@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 /*								UMLet 14.3										*/
 /*		Estado:					Instalado en el cliente.						*/
 /*		Fecha creación:			12/09/2020										*/
-/*		Última modificación:	02/02/2022										*/
+/*		Última modificación:	09/02/2022										*/
 /********************************************************************************/
 
 public class LECSys {
@@ -28,7 +28,7 @@ public class LECSys {
 		if(CheckUsuario.getNivelNivelAcceso() == 100)
 			System.exit(0);
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 030222.0323");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 070222.0049");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

@@ -55,11 +55,16 @@ public class ABMCActividad {
 			stm = cn.createStatement();
 			stm.executeLargeUpdate(comandoStatement);
 		} catch (SQLException e) {
+			
+			LogErrores.escribirLog("Error al acceder a la tabla actividad (1).");
 			System.err.println("Error al acceder a la tabla actividad (1).");
 			System.out.println(comandoStatement);
 		} catch (NullPointerException e) {
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCActividad(1).");
 			System.err.println("Error al acceder a la base de datos ABMCActividad(1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 	}
@@ -110,14 +115,18 @@ public class ABMCActividad {
 			}
 			
 		} catch (SQLException e) {
+			
+			LogErrores.escribirLog("Error al acceder a la tabla actividad (2).");
 			System.err.println("Error al acceder a la tabla actividad (2).");
 			System.out.println(comandoStatement);
 		} catch (NullPointerException e) {
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCActividad(2).");
 			System.err.println("Error al acceder a la base de datos ABMCActividad(2).");
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
 		return matriz;
 	}
 	
@@ -132,6 +141,8 @@ public class ABMCActividad {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			System.err.println("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}

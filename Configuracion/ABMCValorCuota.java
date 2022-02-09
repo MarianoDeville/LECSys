@@ -24,13 +24,14 @@ public class ABMCValorCuota {
 				temporal = rs.getInt(1) + "";
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla valorcuota(2).");
+			
+			System.out.println("Error al acceder a la tabla valorcuota(1).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCValorCuota(2).");
+			
+			System.out.println("Error al acceder a la base de datos ABMCValorCuota(1).");
 		} finally {
 			cerrarConexiones();
 		}
-		
 		return temporal;
 	}
 	
@@ -48,13 +49,15 @@ public class ABMCValorCuota {
 				temporal = rs.getInt(1) + "";
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla valorcuota(3).");
+			
+			System.out.println("Error al acceder a la tabla valorcuota(2).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCValorCuota(3).");
+			
+			System.out.println("Error al acceder a la base de datos ABMCValorCuota(2).");
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
 		return temporal;
 	}
 	
@@ -77,11 +80,11 @@ public class ABMCValorCuota {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla valorcuota (4).");
+			System.out.println("Error al acceder a la tabla valorcuota (3).");
 			System.out.println(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCValorcuota (4).");
+			System.out.println("Error al acceder a la base de datos ABMCValorcuota (3).");
 			bandera = false;
 		} finally {
 			cerrarConexiones();
@@ -92,7 +95,6 @@ public class ABMCValorCuota {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Nuevo valor de cuota: " + valor[0],"Valor cuota"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;
 	}
 
@@ -109,13 +111,16 @@ public class ABMCValorCuota {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla valorcuota (5).");
+			
+			System.out.println("Error al acceder a la tabla valorcuota (4).");
 			System.out.println(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCValorcuota (5).");
+			
+			System.out.println("Error al acceder a la base de datos ABMCValorcuota (4).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -124,7 +129,6 @@ public class ABMCValorCuota {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Cambio del valor de la cuota: ", "Valor cuota"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;
 	}
 	
@@ -139,6 +143,7 @@ public class ABMCValorCuota {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
+			
 			System.err.println("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}

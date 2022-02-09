@@ -22,8 +22,7 @@ public class Conexión {
 	public Connection conectar() {
 		
 		Connection conexion = null;
-		ConfiguracionRed SetUp = new ConfiguracionRed();
-		String URL= "jdbc:mysql://" + SetUp.LeerConfiguracion() + ":3306/lecsys?serverTimezone=UTC";
+		String URL= "jdbc:mysql://" + Configuracion.LeerConfiguracion("IP:") + ":3306/lecsys?serverTimezone=UTC";
 	
 		try {
 			

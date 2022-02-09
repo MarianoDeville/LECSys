@@ -49,15 +49,23 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 		contentPane.add(comboBoxCriterio);
 		
 		respuesta = ABMCCurso.getListaCursos(true);
-		String listaCursos[] = new String[respuesta.length]; 
+		String listaCursos[]; 
 		
-		for(int i=0 ; i < respuesta.length ; i++) {
+		if(respuesta != null) {
 			
-			listaCursos[i] = respuesta[i][1] + " " + respuesta[i][2] + " - " + respuesta[i][4] + " - " + respuesta[i][7];
+			listaCursos = new String[respuesta.length]; 
+			
+			for(int i=0 ; i < respuesta.length ; i++) {
+				
+				listaCursos[i] = respuesta[i][1] + " " + respuesta[i][2] + " - " + respuesta[i][4] + " - " + respuesta[i][7];
+			}
+			listado = new DefaultComboBoxModel<String>(listaCursos);
+		} else {
+			
+			listado = new DefaultComboBoxModel<String>(new String[] {""});
 		}
 		
 		comboBoxValor = new JComboBox<String>();
-		listado = new DefaultComboBoxModel<String>(listaCursos);
 		comboBoxValor.setModel(listado);
 		comboBoxValor.setSelectedIndex(0);
 		comboBoxValor.setBounds(155, 35, 350, 20);
@@ -79,7 +87,9 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 		contentPane.add(scrollTabla);
 		tablaAlumnos = new JTable();
 		tablaAlumnos.setRowSelectionAllowed(false);
-		actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
+		if(respuesta != null)
+			actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
+		
 		scrollTabla.setViewportView(tablaAlumnos);
 		
 		
@@ -146,32 +156,45 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 			if(comboBoxCriterio.getSelectedItem().equals("CURSO")) {
 			
 				respuesta = ABMCCurso.getListaCursos(true);
-				String listaCursos[] = new String[respuesta.length];
-			
-				for(int i=0 ; i < respuesta.length ; i++) {
+				
+				if(respuesta != null) {
+					String listaCursos[] = new String[respuesta.length];
+				
+					for(int i=0 ; i < respuesta.length ; i++) {
+						
+						listaCursos[i] = respuesta[i][1] + " " + respuesta[i][2] + " - " + respuesta[i][4] + " - " + respuesta[i][7];
+					}
+					listado = new DefaultComboBoxModel<String>(listaCursos);
+				} else
 					
-					listaCursos[i] = respuesta[i][1] + " " + respuesta[i][2] + " - " + respuesta[i][4] + " - " + respuesta[i][7];
-				}
-				listado = new DefaultComboBoxModel<String>(listaCursos);
+					listado = new DefaultComboBoxModel<String>(new String[] {""});
 			} else {
 				
 				respuesta = ABMCDocentes.getProfesores(true);
-				String listaCursos[] = new String[respuesta.length];
 				
-				for(int i=0 ; i < respuesta.length ; i++) {
+				if(respuesta != null) {
+					String listaCursos[] = new String[respuesta.length];
 					
-					listaCursos[i] = respuesta[i][1] + " " + respuesta[i][2];
-				}
-				listado = new DefaultComboBoxModel<String>(listaCursos);
+					for(int i=0 ; i < respuesta.length ; i++) {
+						
+						listaCursos[i] = respuesta[i][1] + " " + respuesta[i][2];
+					}
+					listado = new DefaultComboBoxModel<String>(listaCursos);
+				} else
+					
+					listado = new DefaultComboBoxModel<String>(new String[] {""}); 
 			}
-
 			comboBoxValor.setModel(listado);
-			actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
+			
+			if(respuesta != null)
+				actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
 		}
 		
 		if (e.getSource()==comboBoxValor || e.getSource()==comboBoxCriterio) {
 
-			actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
+			if(respuesta != null)
+			
+				actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
 		}
 	}
 }

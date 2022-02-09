@@ -1,0 +1,4 @@
+LECSys
+//IP:192.168.1.9
+IP:localhost
+LOG:C:\\LECSys\\log.txt

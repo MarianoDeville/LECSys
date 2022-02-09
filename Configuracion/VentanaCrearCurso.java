@@ -88,8 +88,8 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 					txtMiercolesHorario.getText().length() != 0 ||
 					txtJuevesHorario.getText().length() != 0 ||
 					txtViernesHorario.getText().length() != 0 ||
-					txtSabadoHorario.getText().length() != 0 ||
-					txtCuota.getText().length() !=0) {
+					txtSabadoHorario.getText().length() != 0 &&
+					!txtCuota.getText().contentEquals("")) {
 
 					bandera = ABMCCurso.crearCurso(valorCurso);
 					String idCurso = ABMCCurso.getUltimoId() + "";			// Obtengo el id del registro que acabo de cargar.
@@ -146,9 +146,9 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 						bandera = ABMCDiasCurso.crearDiasCurso(valorDiasCursado);
 					}
 				}
-				limpiarCampos();
 				if(bandera) {
 					
+					limpiarCampos();
 					lblMensageError.setForeground(Color.BLUE);
 					lblMensageError.setText("Carga correcta");
 				} else {
@@ -311,13 +311,13 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 		cargarListaProfesores();
 		
 		comboBoxNivel = new JComboBox<String>();
-		comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String[] {"Children", "Junior", "Teens", "Adults"}));
+		comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String[] {"Kinder", "Children", "Junior", "Teens", "Adults"}));
 		comboBoxNivel.setBounds(95, 15, 120, 20);
 		comboBoxNivel.addItemListener(this);
 		contentPane.add(comboBoxNivel);
 		
 		comboBoxAño = new JComboBox<String>();
-		comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"I", "II", "III"}));
+		comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {" ", "PRE"}));
 		comboBoxAño.setBounds(95, 40, 120, 20);
 		contentPane.add(comboBoxAño);
 		
@@ -379,11 +379,17 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 	public void itemStateChanged(ItemEvent e) {
         if (e.getSource()==comboBoxNivel) {
         	
-            if(comboBoxNivel.getSelectedItem().equals("Children"))
+        	if(comboBoxNivel.getSelectedItem().equals("Kinder"))
+        		
+        		comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {" ", "PRE"}));
+        	else if(comboBoxNivel.getSelectedItem().equals("Children"))
+        		
             	comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"First", "Second", "Third"}));
             else if(comboBoxNivel.getSelectedItem().equals("Teens"))
+            	
             	comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"I", "II", "III"}));
             else
+            	
             	comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String[] {"First", "Second", "Third", "Fourth", "Fifth", "Sixth"}));
         }
 	}
