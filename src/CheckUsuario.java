@@ -53,10 +53,11 @@ public class CheckUsuario {
 			}
 		} catch (SQLException e) {
 			
-			System.err.println("Error en el módulo CheckUsuario.");
+			LogErrores.escribirLog("Error en el módulo CheckUsuario.");
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos, en el módulo CheckUsuario.");
+			LogErrores.escribirLog("Error al acceder a la base de datos, en el módulo CheckUsuario.");
+			nivel = 200;
 		} finally {
 			
 			try {
@@ -69,6 +70,7 @@ public class CheckUsuario {
 					cn.close();
 			} catch (Exception e2) {
 				
+				LogErrores.escribirLog("Error al intentar cerrar usuarios módulo CheckUsuario.");
 				e2.printStackTrace();
 			}
 		}

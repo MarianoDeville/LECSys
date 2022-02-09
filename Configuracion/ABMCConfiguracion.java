@@ -20,6 +20,7 @@ public class ABMCConfiguracion {
 		String matriz[][] = null;
 		
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -31,8 +32,8 @@ public class ABMCConfiguracion {
 			if(rs.next())
 				cantRegistros = rs.getInt(1);
 			
-			if(cantRegistros == 0)
-			{
+			if(cantRegistros == 0) {
+				
 				cerrarConexiones();
 				return null;
 			}
@@ -47,22 +48,28 @@ public class ABMCConfiguracion {
 				String nombre = rs.getString(2);
 				int nivelAcceso = rs.getInt(4);
 				matriz[i][0] = nombre;
+				
 				if(nivelAcceso==0)
 					matriz[i][1]="Root";
 				else if(nivelAcceso==1)
+					
 					matriz[i][1]="Administrator";
 				else if(nivelAcceso==2)
+					
 					matriz[i][1]="Secretary";
 				else if(nivelAcceso>=2)
+					
 					matriz[i][1]="Teacher";
 				matriz[i][2] = idUsuario;
 				i++;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla usuarios (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla usuarios (1).");
 			e.printStackTrace();
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCConfiguración (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCConfiguración (1).");
 		} finally {
 			cerrarConexiones();
 		}
@@ -76,17 +83,22 @@ public class ABMCConfiguracion {
 								+ valor[0] + "', '" + valor[1] + "', '" + valor[2] + "', 1)";
 		
 		try {
+			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			stm.executeLargeUpdate(comandoStatement);
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla usuarios (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla usuarios (2).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCConfiguración (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCConfiguración (2).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		String cuerpo[] = {CheckUsuario.getIdUsuario(),"Nuevo usuario: " + valor[0],"Usuarios"};
@@ -119,10 +131,14 @@ public class ABMCConfiguracion {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla usuarios (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla usuarios (3).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCConfiguración (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCConfiguración (3).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return temporal;
@@ -152,15 +168,20 @@ public class ABMCConfiguracion {
 			stm.executeLargeUpdate(comandoStatement);
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla usuarios (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla usuarios (4).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCConfiguración (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCConfiguración (4).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		if(bandera) {
+			
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Borrar usuario: " + nombre ,"Usuarios"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
@@ -181,12 +202,16 @@ public class ABMCConfiguracion {
 			stm = cn.createStatement();
 			stm.executeLargeUpdate(comandoStatement);
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla usuarios (5).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla usuarios (5).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCConfiguración (5).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCConfiguración (5).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return bandera;
@@ -201,7 +226,8 @@ public class ABMCConfiguracion {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

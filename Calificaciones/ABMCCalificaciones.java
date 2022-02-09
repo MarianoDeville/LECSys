@@ -58,10 +58,13 @@ public class ABMCCalificaciones {
 				i++;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla examenes (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla examenes (1).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCCalificaciones (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCalificaciones (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -86,12 +89,15 @@ public class ABMCCalificaciones {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla calificaciones (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla calificaciones (2).");
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCCalificaciones(2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCalificaciones(2).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return bandera;
@@ -108,7 +114,8 @@ public class ABMCCalificaciones {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

@@ -57,12 +57,10 @@ public class ABMCActividad {
 		} catch (SQLException e) {
 			
 			LogErrores.escribirLog("Error al acceder a la tabla actividad (1).");
-			System.err.println("Error al acceder a la tabla actividad (1).");
-			System.out.println(comandoStatement);
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
 			
 			LogErrores.escribirLog("Error al acceder a la base de datos ABMCActividad(1).");
-			System.err.println("Error al acceder a la base de datos ABMCActividad(1).");
 		} finally {
 			
 			cerrarConexiones();
@@ -117,12 +115,10 @@ public class ABMCActividad {
 		} catch (SQLException e) {
 			
 			LogErrores.escribirLog("Error al acceder a la tabla actividad (2).");
-			System.err.println("Error al acceder a la tabla actividad (2).");
-			System.out.println(comandoStatement);
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
 			
 			LogErrores.escribirLog("Error al acceder a la base de datos ABMCActividad(2).");
-			System.err.println("Error al acceder a la base de datos ABMCActividad(2).");
 		} finally {
 			
 			cerrarConexiones();
@@ -143,7 +139,6 @@ public class ABMCActividad {
 		} catch (Exception e2) {
 			
 			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
-			System.err.println("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

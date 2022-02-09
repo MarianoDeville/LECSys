@@ -1,7 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 public class Conexión {
 	
@@ -15,7 +14,7 @@ public class Conexión {
 			
 			Class.forName(CONTROLADOR);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error al cargar el controlador.");
+			LogErrores.escribirLog("Error al cargar el controlador.");
 		}
 	}
 	
@@ -29,9 +28,8 @@ public class Conexión {
 			conexion = DriverManager.getConnection(URL,USUARIO,CLAVE);
 		} catch (SQLException e) {
 			
-			System.err.println("Error de loging.");
-			JOptionPane.showMessageDialog(null,"Error al acceder a la base de datos.");
-			return null;
+			LogErrores.escribirLog("Error al acceder a la base de datos.");
+			LogErrores.escribirLog(URL);
 		}
 		return conexion;
 	}

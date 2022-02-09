@@ -27,6 +27,7 @@ public class ABMCPagos {
 		armoWhere = "WHERE(" + armoWhere + "año = " + año + ")";
 	
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -38,8 +39,8 @@ public class ABMCPagos {
 			if(rs.next())
 				cantRegistros = rs.getInt(1);
 
-			if(cantRegistros == 0)
-			{
+			if(cantRegistros == 0) {
+				
 				cerrarConexiones();
 				return null;
 			}
@@ -64,10 +65,14 @@ public class ABMCPagos {
 			}
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla pagos (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla pagos (1).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCPagos (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCPagos (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 
@@ -99,12 +104,16 @@ public class ABMCPagos {
 			stm.executeLargeUpdate(comandoStatement);
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla pagos (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla pagos (2).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCPagos (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCPagos (2).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -133,12 +142,16 @@ public class ABMCPagos {
 			stm.executeLargeUpdate(comandoStatement);
 		
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla pagos (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla pagos (3).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCPagos (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCPagos (3).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -151,7 +164,9 @@ public class ABMCPagos {
 	}
 	
 	private static void cerrarConexiones() {
+		
 		try {
+			
 			if (rs != null)
 				rs.close();
 			if (stm != null)
@@ -159,7 +174,8 @@ public class ABMCPagos {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

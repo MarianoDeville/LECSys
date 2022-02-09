@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Configuracion {
@@ -16,7 +18,7 @@ public class Configuracion {
 
 		try {
 
-			archivo = new File ("C:\\LECSys\\configuracion.txt");
+			archivo = new File ("C:\\LECSys\\LECSys.ini");
 			fr = new FileReader (archivo);
 			br = new BufferedReader(fr);
 			String lineaLeida;
@@ -40,10 +42,9 @@ public class Configuracion {
 
 			try {
 				
-				if( null != fr ) {   
-					
+				if( null != fr )   
 					fr.close();     
-				}                  
+           
 			} catch (Exception e2) {
 				
 				e2.printStackTrace();
@@ -57,5 +58,44 @@ public class Configuracion {
 			JOptionPane.showMessageDialog(null, "No se encuentra configuración de red.");
 
 		return respuesta;
+	}
+	
+	static public void generoIni() {
+		
+		BufferedWriter bw = null;
+	    FileWriter fw = null;
+
+
+	    try {
+	    	
+	        File archivo = new File("C:\\LECSys\\LECSys.ini");
+
+	        if (!archivo.exists()) {
+	        	
+	        	archivo.createNewFile();
+		        fw = new FileWriter(archivo.getAbsoluteFile());
+		        bw = new BufferedWriter(fw);
+		        bw.write("LECSys - Archivo de configuración.\r\n"
+		        		+ "IP:localhost\r\n"
+		        		+ "// Si el archivo no existe se genera una nuevo, pero la carpeta debe existir.\r\n"
+		        		+ "LOG:C:\\LECSys\\log.txt");
+		        
+	        }
+	    } catch (IOException e) {
+	    	
+	    	System.err.println("No se pudo escribir en el archivo.");
+	    } finally {
+	    	
+	        try {
+
+	            if (bw != null)
+	                bw.close();
+	            if (fw != null)
+	                fw.close();
+	        } catch (IOException ex) {
+	        	
+	            ex.printStackTrace();
+	        }
+	    }
 	}
 }

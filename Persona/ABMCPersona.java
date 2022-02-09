@@ -39,13 +39,12 @@ public class ABMCPersona {
 		
 		} catch (SQLException e) {
 			
-			System.out.println("Error al acceder a la tabla persona(1).");
-			System.out.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la tabla persona(1).");
+			LogErrores.escribirLog(comandoStatement);
 			registro = 0;
 		} catch (NullPointerException e) {
 			
-			System.out.println("Error al acceder a la base de datos  ABMCPersona(1).");
-			System.out.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la base de datos  ABMCPersona(1).");
 			registro = 0;
 		} finally {
 			
@@ -66,7 +65,7 @@ public class ABMCPersona {
 				cn.close();
 		} catch (Exception e2) {
 			
-			System.err.println("Error al intentar cerrar las conexiones.");
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

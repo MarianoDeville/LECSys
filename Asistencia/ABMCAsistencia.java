@@ -35,10 +35,13 @@ public class ABMCAsistencia {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla faltas (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla faltas (1).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCAsistencia (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAsistencia (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 
@@ -68,12 +71,16 @@ public class ABMCAsistencia {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla faltas (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla faltas (2).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCAsistencia (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAsistencia (2).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return bandera;
@@ -87,18 +94,20 @@ public class ABMCAsistencia {
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			rs = stm.executeQuery("SELECT * FROM faltas");
-
 			int pos=0;
 			matriz = new String[numero][5];
 			String temporal[] = new String[5];
 
 			if(campo == "ALUMNO")
 				pos=1;
+			
 			if(campo == "CURSO")
 				pos=4;
 			
 			int i=0;
+			
 			while (rs.next() && i < numero) {
+				
 				temporal[0] = rs.getInt(1)+"";
 				temporal[1] = rs.getInt(2)+"";
 				temporal[2] = rs.getString(3);
@@ -110,8 +119,7 @@ public class ABMCAsistencia {
 				
 				temporal[4] = rs.getInt(5)+"";
 			
-				if((temporal[pos].contentEquals(valor) || valor.contentEquals("")) && temporal[3].contentEquals("Absent"))
-				{
+				if((temporal[pos].contentEquals(valor) || valor.contentEquals("")) && temporal[3].contentEquals("Absent")) {
 				
 					matriz[i][0] = temporal[0];
 					matriz[i][1] = temporal[1];
@@ -123,13 +131,15 @@ public class ABMCAsistencia {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla faltas (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla faltas (3).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCAsistencia (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAsistencia (3).");
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
 		return matriz;
 	}
 	
@@ -139,11 +149,12 @@ public class ABMCAsistencia {
 		matriz = new String[numero][5];
 		
 		try {
+			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			rs = stm.executeQuery("SELECT * FROM faltas");
-
 			int i=0;
+			
 			while (rs.next() && i < numero) {
 				String id = rs.getInt(2)+"";
 				String fecha = rs.getString(3);
@@ -166,13 +177,15 @@ public class ABMCAsistencia {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla faltas (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla faltas (4).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCAsistencia (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAsistencia (4).");
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
 		return matriz;
 	}	
 	
@@ -201,10 +214,13 @@ public class ABMCAsistencia {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla faltas (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla faltas (5).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCAsistencia (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAsistencia (5).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return cantColumnas;
@@ -215,6 +231,7 @@ public class ABMCAsistencia {
 		int cantColumnas=0;
 				
 		try {
+			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			rs = stm.executeQuery("SELECT * FROM faltas");
@@ -228,10 +245,13 @@ public class ABMCAsistencia {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla faltas (5).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla faltas (6).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCAsistencia (5).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAsistencia (6).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return cantColumnas;
@@ -246,7 +266,8 @@ public class ABMCAsistencia {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

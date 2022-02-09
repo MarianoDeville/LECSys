@@ -25,11 +25,12 @@ public class ABMCValorCuota {
 			
 		} catch (SQLException e) {
 			
-			System.out.println("Error al acceder a la tabla valorcuota(1).");
+			LogErrores.escribirLog("Error al acceder a la tabla valorcuota(1).");
 		} catch (NullPointerException e) {
 			
-			System.out.println("Error al acceder a la base de datos ABMCValorCuota(1).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCValorCuota(1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return temporal;
@@ -50,10 +51,10 @@ public class ABMCValorCuota {
 			
 		} catch (SQLException e) {
 			
-			System.out.println("Error al acceder a la tabla valorcuota(2).");
+			LogErrores.escribirLog("Error al acceder a la tabla valorcuota(2).");
 		} catch (NullPointerException e) {
 			
-			System.out.println("Error al acceder a la base de datos ABMCValorCuota(2).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCValorCuota(2).");
 		} finally {
 			
 			cerrarConexiones();
@@ -80,13 +81,16 @@ public class ABMCValorCuota {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla valorcuota (3).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla valorcuota (3).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCValorcuota (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCValorcuota (3).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -112,12 +116,12 @@ public class ABMCValorCuota {
 
 		} catch (SQLException e) {
 			
-			System.out.println("Error al acceder a la tabla valorcuota (4).");
-			System.out.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la tabla valorcuota (4).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
 			
-			System.out.println("Error al acceder a la base de datos ABMCValorcuota (4).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCValorcuota (4).");
 			bandera = false;
 		} finally {
 			
@@ -144,7 +148,7 @@ public class ABMCValorCuota {
 				cn.close();
 		} catch (Exception e2) {
 			
-			System.err.println("Error al intentar cerrar las conexiones.");
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

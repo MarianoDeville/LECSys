@@ -33,11 +33,8 @@ public class ABMCAlumnos {
 			if(campo.contentEquals("CURSO"))
 				armoWhere += "alumnos.idCurso = " + valor + ") ";
 			
-			if(campo.contentEquals("PROFESOR")) {
-				
+			if(campo.contentEquals("PROFESOR"))
 				armoWhere += " profesores.idProfesor = " + valor + ") ";
-
-			}
 			
 			if(campo.contentEquals("GRUPOFAMILIAR"))
 				armoWhere += valor.contentEquals("0")? "idGrupoFamiliar IS NULL)" : "idGrupoFamiliar =" + valor + ") ";
@@ -86,12 +83,13 @@ public class ABMCAlumnos {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla alumnos (1).");
-			System.err.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (1).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos (1).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -134,10 +132,12 @@ public class ABMCAlumnos {
 			}
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla alumnos (2).");
-			System.err.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (2).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos (2).");
 		} finally {
 			cerrarConexiones();
 		}
@@ -151,6 +151,7 @@ public class ABMCAlumnos {
 		String comandoStatement = "SELECT idPersona FROM lecsys.alumnos WHERE idAlumno = " + valor[0];
 		
 		try {
+			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			rs = stm.executeQuery(comandoStatement);
@@ -175,13 +176,16 @@ public class ABMCAlumnos {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla alumnos (3).");
-			System.err.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (3).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos(3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos(3).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -190,7 +194,6 @@ public class ABMCAlumnos {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Modificar datos del alumno: " + valor[1] + " " + valor[2] , "Alumnos"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;
 	}
 	
@@ -208,22 +211,24 @@ public class ABMCAlumnos {
 			stm.executeLargeUpdate(comandoStatement);
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla alumnos (4).");
-			System.err.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (4).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos(4).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos(4).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
-		
+
 		if(bandera) {
 			
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Nuevo alumno: " + valor[0] + " " + valor[1] , "Alumnos"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;
 	}
 	
@@ -244,11 +249,14 @@ public class ABMCAlumnos {
 				nombre = rs.getString(1) + " " + rs.getString(2);
 
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla alumnos (5).");
-			System.err.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (5).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos (5).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos (5).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return nombre;	
@@ -276,13 +284,16 @@ public class ABMCAlumnos {
 			stm.executeLargeUpdate(comandoStatement);
 		
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla alumnos (6).");
-			System.err.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (6).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos(6).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos(6).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -306,12 +317,15 @@ public class ABMCAlumnos {
 			stm.executeLargeUpdate("UPDATE lecsys.grupoFamiliar SET deuda = 0");
 
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla alumnos (7).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla alumnos (7).");
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCAlumnos (7).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCAlumnos (7).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -334,7 +348,8 @@ public class ABMCAlumnos {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

@@ -92,7 +92,6 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 		
 		scrollTabla.setViewportView(tablaAlumnos);
 		
-		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,6 +128,7 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 		if(respuesta != null) {
 			
 			cuerpo = new Object[respuesta.length][6];
+			txtCantAlumnos.setText(respuesta.length + "");
 			
 			for(int i = 0 ; i < respuesta.length ; i++) {
 				
@@ -139,13 +139,15 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 				cuerpo[i][4] = respuesta[i][5];
 				cuerpo[i][5] = respuesta[i][6];
 			}
-		} else
+		} else {
+			
 			cuerpo = null;	
+			txtCantAlumnos.setText("0");
+		}
 			
 		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo);
 		tablaAlumnos.setModel(tablaModelo);
 		tablaAlumnos.setEnabled(false);
-		txtCantAlumnos.setText(respuesta.length + "");
 	}
 	
 	@Override

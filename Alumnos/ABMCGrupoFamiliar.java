@@ -53,10 +53,11 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (1).");
-			System.err.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (1).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar (1).");
 		} finally {
 			
 			cerrarConexiones();
@@ -82,14 +83,15 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (2).");
-			System.err.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (2).");
+			LogErrores.escribirLog(comandoStatement);
 			resultado = 0;
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar(2).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar(2).");
 			resultado = 0;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return resultado;
@@ -116,11 +118,12 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (3).");
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (3).");
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (3).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar (3).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return respuesta;
@@ -157,12 +160,13 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (4).");
-			System.out.println(comandoStatement);
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (4).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (4).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar (4).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return true;
@@ -180,11 +184,12 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (5).");
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (5).");
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (5).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar (5).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return true;
@@ -207,11 +212,11 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (6).");
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (6).");
 			bandera = false;
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (6).");
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar (6).");
 			bandera = false;
 		} finally {
 			
@@ -242,13 +247,12 @@ public class ABMCGrupoFamiliar {
 			
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla grupoFamiliar (7).");
-			System.out.println(armoQuery);
+			LogErrores.escribirLog("Error al acceder a la tabla grupoFamiliar (7).");
+			LogErrores.escribirLog(armoQuery);
 			bandera = false;
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos ABMCGrupoFamiliar (7).");
-			System.out.println(armoQuery);
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCGrupoFamiliar (7).");
 			bandera = false;
 		} finally {
 			
@@ -269,7 +273,7 @@ public class ABMCGrupoFamiliar {
 				cn.close();
 		} catch (Exception e2) {
 			
-			System.err.println("Error al intentar cerrar las conexiones.");
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

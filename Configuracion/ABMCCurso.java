@@ -46,12 +46,15 @@ public class ABMCCurso {
 				i++;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso(1).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso(1).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos curso(1).");
-			System.out.println(comandoStatement);
+			
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos curso(1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -71,9 +74,11 @@ public class ABMCCurso {
 				resultado = rs.getInt(1);
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso(2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso(2).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos curso(2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos curso(2).");
 		} finally {
 			cerrarConexiones();
 		}
@@ -93,12 +98,16 @@ public class ABMCCurso {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso (3).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCCurso (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCurso (3).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -134,12 +143,16 @@ public class ABMCCurso {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso (4).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCCurso (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCurso (4).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -212,12 +225,14 @@ public class ABMCCurso {
 				i++;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso (5).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso (5).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCCurso (5).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCurso (5).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -242,10 +257,14 @@ public class ABMCCurso {
 				datosProfesor[1] = rs.getString(2) + " " + rs.getString(3);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso(6).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso(6).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos curso(6).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos curso(6).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return datosProfesor;
@@ -269,10 +288,14 @@ public class ABMCCurso {
 				nivel = rs.getString(3);
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla curso(7).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla curso(7).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos curso(7).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos curso(7).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return (año + " " + nivel);
@@ -289,7 +312,8 @@ public class ABMCCurso {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

@@ -83,10 +83,11 @@ public class Estadisticas {
 
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla estadisticas (1).");
+			LogErrores.escribirLog("Error al acceder a la tabla estadisticas (1).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos Estadisticas (1).");
+			LogErrores.escribirLog("Error al acceder a la base de datos Estadisticas (1).");
 		} finally {
 			
 			cerrarConexiones();
@@ -120,10 +121,10 @@ public class Estadisticas {
 			}
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla estadisticas (2).");
+			LogErrores.escribirLog("Error al acceder a la tabla estadisticas (2).");
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos Estadisticas (2).");
+			LogErrores.escribirLog("Error al acceder a la base de datos Estadisticas (2).");
 		} finally {
 			
 			cerrarConexiones();
@@ -182,10 +183,11 @@ public class Estadisticas {
 
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla estadisticas (3).");
+			LogErrores.escribirLog("Error al acceder a la tabla estadisticas (3).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos Estadisticas (3).");
+			LogErrores.escribirLog("Error al acceder a la base de datos Estadisticas (3).");
 		} finally {
 			
 			cerrarConexiones();
@@ -227,10 +229,10 @@ public class Estadisticas {
 
 		} catch (SQLException e) {
 			
-			System.err.println("Error al acceder a la tabla estadisticas (4).");
+			LogErrores.escribirLog("Error al acceder a la tabla estadisticas (4).");
 		} catch (NullPointerException e) {
 			
-			System.err.println("Error al acceder a la base de datos Estadisticas (4).");
+			LogErrores.escribirLog("Error al acceder a la base de datos Estadisticas (4).");
 		} finally {
 			
 			cerrarConexiones();
@@ -250,7 +252,7 @@ public class Estadisticas {
 				cn.close();
 		} catch (Exception e2) {
 			
-			System.err.println("Error al intentar cerrar las conexiones.");
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

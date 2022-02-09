@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class VentanaIngresoUsuario extends JDialog {
 
@@ -61,8 +63,10 @@ public class VentanaIngresoUsuario extends JDialog {
 		contentPanel.add(txtPassword);
 		
 		JLabel txtError = new JLabel("");
+		txtError.setHorizontalAlignment(SwingConstants.CENTER);
+		txtError.setFont(new Font("Tahoma", Font.BOLD, 13));
 		txtError.setForeground(Color.RED);
-		txtError.setBounds(72, 24, 244, 14);
+		txtError.setBounds(10, 24, 383, 25);
 		contentPanel.add(txtError);
 
 		JPanel buttonPane = new JPanel();
@@ -76,16 +80,24 @@ public class VentanaIngresoUsuario extends JDialog {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if(login.probarContraseña() < 100) {
+				int respuesta = login.probarContraseña();
+				if(respuesta < 100) {
 					
 					dispose();
 				} else {
 					
-					txtError.setText("Nombre de usuario o password incorrecto.");
-					String cuerpo[] = {CheckUsuario.getIdUsuario(),"Nombre de usuario o cantraseña no reconocido. " + txtUsuario.getText(),""};
-					ABMCActividad.guardoNuevaActividad(cuerpo);
 					txtUsuario.setText(null);
 					txtPassword.setText(null);
+					
+					if(respuesta == 200) {
+						
+						txtError.setText("Error al acceder a la base de datos.");
+					} else {
+					
+						txtError.setText("Nombre de usuario o password incorrecto.");
+						String cuerpo[] = {CheckUsuario.getIdUsuario(),"Nombre de usuario o cantraseña no reconocido. " + txtUsuario.getText(),""};
+						ABMCActividad.guardoNuevaActividad(cuerpo);
+					}
 				}
 			}
 		});

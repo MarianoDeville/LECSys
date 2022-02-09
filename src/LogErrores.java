@@ -1,7 +1,5 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
@@ -9,44 +7,6 @@ import java.util.GregorianCalendar;
 
 public class LogErrores {
 
-	private File archivo = null; 
-
-	public void leerArchivo() {
-		
-		FileReader fr = null;
-		BufferedReader br = null;
-		String lineaLeida = null;
-		String nombreArchivo = Configuracion.LeerConfiguracion("LOG:");
-
-		try {
-
-			archivo = new File (nombreArchivo);
-			fr = new FileReader(archivo);
-			br = new BufferedReader(fr);
-			
-			while((lineaLeida = br.readLine()) != null) {
-				
-				System.out.println(lineaLeida);
-			}
-		} catch(Exception e){
-			
-			System.err.println("No se encuentra archivo.");
-		} finally {
-
-			try {
-				
-				if( null != fr ) {   
-					
-					fr.close();
-					br.close();
-				}                  
-			} catch (Exception e2) {
-				
-				e2.printStackTrace();
-			}
-		}
-	}
-	
 	static public void escribirLog(String contenido) {
 		
 		BufferedWriter bw = null;
@@ -59,6 +19,7 @@ public class LogErrores {
 							 + (fechaSistema.get(Calendar.AM_PM)==0? fechaSistema.get(Calendar.HOUR):fechaSistema.get(Calendar.HOUR)+12) 
 							 + ":" +(fechaSistema.get(Calendar.MINUTE)<10? "0" + fechaSistema.get(Calendar.MINUTE):fechaSistema.get(Calendar.MINUTE))
 							 + ":" +(fechaSistema.get(Calendar.SECOND)<10? "0" + fechaSistema.get(Calendar.SECOND):fechaSistema.get(Calendar.SECOND));
+	    System.err.println(contenido);
 
 	    try {
 	    	

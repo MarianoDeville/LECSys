@@ -18,8 +18,10 @@ public class ABMCDiasCurso {
 		
 		int cantColumnas=0;
 		if(valorId == null)
-			System.out.println("Dirección del registro igual a null.");
+			LogErrores.escribirLog("Dirección del registro igual a null.");
+		
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -29,16 +31,20 @@ public class ABMCDiasCurso {
 			rs = stm.executeQuery("SELECT * FROM lecsys.diascursado");
 			
 			while (rs.next()) {
+				
 				String temporal = rs.getInt(5) + "";	// idCurso
 				if(temporal.equals(valorId) || valorId.length() == 0)
 					cantColumnas++;
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla diascursado(1).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla diascursado(1).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCDiasCurso(1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return cantColumnas;
@@ -69,18 +75,23 @@ public class ABMCDiasCurso {
 				temporal[4] = rs.getInt(5) + "";	// idCurso
 
 				if(temporal[i].equals(valor)) {
+					
 					break;
 				} else {
+					
 					temporal[0] = null;
 				}
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla diascursado(2).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla diascursado(2).");
 			e.printStackTrace();
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCDiasCurso(2).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return temporal;
@@ -92,10 +103,10 @@ public class ABMCDiasCurso {
 		String matriz[][] = null;
 		
 		try {
+			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
 			rs = stm.executeQuery("SELECT * FROM lecsys.diascursado WHERE idCurso = " + valor);
-			
 			matriz = new String[numero][3];
 			int i=0;
 		
@@ -107,10 +118,13 @@ public class ABMCDiasCurso {
 				i++;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla diascursado(3).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla diascursado(3).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCDiasCurso(3).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -122,6 +136,7 @@ public class ABMCDiasCurso {
 		String matriz[][] = null;
 		
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -142,10 +157,13 @@ public class ABMCDiasCurso {
 				i++;
 			}
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla diascursado(4).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla diascursado(4).");
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(4).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCDiasCurso(4).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return matriz;
@@ -168,12 +186,15 @@ public class ABMCDiasCurso {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla diascurso(5).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla diascurso(5).");
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(5).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCDiasCurso(5).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return bandera;
@@ -183,11 +204,12 @@ public class ABMCDiasCurso {
 
 		boolean bandera = true;		
 		String comandoStatement = "DELETE FROM lecsys.diascursado WHERE "
-				+ "idCurso = "
-				+ valor
-				+ " ORDER BY idCurso LIMIT 10";
+								+ "idCurso = "
+								+ valor
+								+ " ORDER BY idCurso LIMIT 10";
 
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -197,12 +219,16 @@ public class ABMCDiasCurso {
 			stm.executeLargeUpdate(comandoStatement);
 
 		} catch (SQLException e) {
-			System.out.println("Error al acceder a la tabla diascurso(6).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla diascurso(6).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.out.println("Error al acceder a la base de datos ABMCDiasCurso(6).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCDiasCurso(6).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return bandera;
@@ -217,7 +243,8 @@ public class ABMCDiasCurso {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}

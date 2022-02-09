@@ -27,6 +27,7 @@ public class ABMCCobros {
 		armoWhere = "WHERE(" + armoWhere + "año = " + año + ")";
 	
 		try {
+			
 			cn = conexion.conectar();
 			
 			if(cn == null)
@@ -63,11 +64,14 @@ public class ABMCCobros {
 			}
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla cobros (1).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla cobros (1).");
+			LogErrores.escribirLog(comandoStatement);
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCCobros (1).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCobros (1).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 
@@ -92,13 +96,16 @@ public class ABMCCobros {
 			stm.executeLargeUpdate(comandoStatement);
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla cobros (2).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla cobros (2).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCCobros (2).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCobros (2).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -128,13 +135,16 @@ public class ABMCCobros {
 			stm.executeLargeUpdate(comandoStatement);
 		
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla cobros (3).");
-			System.out.println(comandoStatement);
+			
+			LogErrores.escribirLog("Error al acceder a la tabla cobros (3).");
+			LogErrores.escribirLog(comandoStatement);
 			bandera = false;
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCCobros (3).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCobros (3).");
 			bandera = false;
 		} finally {
+			
 			cerrarConexiones();
 		}
 		
@@ -143,7 +153,6 @@ public class ABMCCobros {
 			String cuerpo[] = {CheckUsuario.getIdUsuario(),"Carga del nro. de factura.", "Cobros"};
 			ABMCActividad.guardoNuevaActividad(cuerpo);
 		}
-		
 		return bandera;	
 	}
 
@@ -165,10 +174,13 @@ public class ABMCCobros {
 				resultado = rs.getInt(1);
 			
 		} catch (SQLException e) {
-			System.err.println("Error al acceder a la tabla cobros (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la tabla cobros (4).");
 		} catch (NullPointerException e) {
-			System.err.println("Error al acceder a la base de datos ABMCCobros (4).");
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos ABMCCobros (4).");
 		} finally {
+			
 			cerrarConexiones();
 		}
 		return resultado;
@@ -185,7 +197,8 @@ public class ABMCCobros {
 			if (cn != null)
 				cn.close();
 		} catch (Exception e2) {
-			System.err.println("Error al intentar cerrar las conexiones.");
+			
+			LogErrores.escribirLog("Error al intentar cerrar las conexiones.");
 			e2.printStackTrace();
 		}
 	}
