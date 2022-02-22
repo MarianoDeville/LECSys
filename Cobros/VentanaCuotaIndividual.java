@@ -19,8 +19,10 @@ public class VentanaCuotaIndividual extends JFrame {
 	private JLabel lblMensageError;
 	private JTextField txtValorInscripción;
 	private int inscripcion = 0;
+	private int descuento = 0;
 	private int totalCuota = 0;
 	private Calendar fechaSistema = new GregorianCalendar();
+	private JTextField txtDescEfectivo;
 
 	public VentanaCuotaIndividual(String lista[][]) {
 		
@@ -43,34 +45,34 @@ public class VentanaCuotaIndividual extends JFrame {
 		contentPane.add(lblMensageError);
 		
 		JLabel lblNombreYApellido = new JLabel("Nombre y apellido:");
-		lblNombreYApellido.setBounds(56, 48, 120, 20);
+		lblNombreYApellido.setBounds(50, 45, 120, 20);
 		contentPane.add(lblNombreYApellido);
 		
 		JTextField txtNombreApellido = new JTextField();
 		txtNombreApellido.setEditable(false);
-		txtNombreApellido.setBounds(173, 45, 200, 20);
+		txtNombreApellido.setBounds(170, 45, 200, 20);
 		contentPane.add(txtNombreApellido);
 		txtNombreApellido.setText(lista[0][1] + " " + lista[0][2]);
 		txtNombreApellido.setColumns(10);
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
-		lblTotalAPagar.setBounds(56, 126, 120, 20);
+		lblTotalAPagar.setBounds(50, 120, 120, 20);
 		contentPane.add(lblTotalAPagar);
 		
 		JTextField txtTotalPagar = new JTextField();
 		txtTotalPagar.setEditable(false);
 		txtTotalPagar.setColumns(10);
-		txtTotalPagar.setBounds(183, 123, 110, 20);
+		txtTotalPagar.setBounds(170, 120, 110, 20);
 		txtTotalPagar.setText(totalCuota + "");
 		contentPane.add(txtTotalPagar);
 		
 		JLabel lblInscripción = new JLabel("Inscripción");
-		lblInscripción.setBounds(56, 79, 120, 20);
+		lblInscripción.setBounds(50, 70, 120, 20);
 		contentPane.add(lblInscripción);
 		
 		txtValorInscripción = new JTextField();
 		txtValorInscripción.setColumns(10);
-		txtValorInscripción.setBounds(183, 79, 70, 20);
+		txtValorInscripción.setBounds(170, 70, 70, 20);
 		txtValorInscripción.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -79,6 +81,16 @@ public class VentanaCuotaIndividual extends JFrame {
             	txtTotalPagar.setText((inscripcion + totalCuota) + "");
             }});
 		contentPane.add(txtValorInscripción);
+		
+		JLabel lblDescPEfectivo = new JLabel("Desc. pago efectivo:");
+		lblDescPEfectivo.setBounds(50, 95, 120, 20);
+		contentPane.add(lblDescPEfectivo);
+		
+		txtDescEfectivo = new JTextField((String) null);
+		txtDescEfectivo.setEditable(true);
+		txtDescEfectivo.setColumns(10);
+		txtDescEfectivo.setBounds(170, 95, 70, 20);
+		contentPane.add(txtDescEfectivo);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(new ActionListener() {
@@ -107,7 +119,7 @@ public class VentanaCuotaIndividual extends JFrame {
 
 					String datosAlumno[] = ABMCAlumnos. buscarAlumno("ID", lista[0][0]);
 					int idGrupoFamiliar = Integer.parseInt(datosAlumno[10]);
-					txtTotalPagar.setText((inscripcion + totalCuota) + "");
+					txtTotalPagar.setText((inscripcion + totalCuota - descuento) + "");
 					
 					if(idGrupoFamiliar == 0) {
 						
@@ -121,7 +133,7 @@ public class VentanaCuotaIndividual extends JFrame {
 						String cuerpo[] = new String [10];
 						cuerpo[0] = idGrupoFamiliar + "";
 						cuerpo[1] = lista[0][1] + " " + lista[0][2];
-						cuerpo[2] = "Inscripción : " + inscripcion + " primer cuota: " + totalCuota;
+						cuerpo[2] = "Inscripción : " + inscripcion + " primer cuota: " + totalCuota + " descuento pago contado: " + descuento;
 						cuerpo[3] = fechaSistema.get(Calendar.DAY_OF_MONTH)+"";
 						cuerpo[4] = (fechaSistema.get(Calendar.MONTH)+1)+"";
 						cuerpo[5] = fechaSistema.get(Calendar.YEAR)+"";
@@ -162,10 +174,12 @@ public class VentanaCuotaIndividual extends JFrame {
 		try {
 			
 			inscripcion = Integer.parseInt(txtValorInscripción.getText());
+			descuento = Integer.parseInt(txtDescEfectivo.getText());
+			
 		}catch (Exception f) {
 			
 			bandera = false;
-			lblMensageError.setText("El campo Inscripción no puede estar vacío y debe ser un número");
+			lblMensageError.setText("Los campos Inscripción y descuanto no puede estar vacío y debe ser un número");
 		}
 		return bandera;
 	}

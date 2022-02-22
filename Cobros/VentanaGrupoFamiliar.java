@@ -26,10 +26,12 @@ public class VentanaGrupoFamiliar extends JFrame {
 	private JTextField txtValorInscripción;
 	private int totalCuota = 0;
 	private int inscripcion = 0;
-	private int descuento = 0;
+	private int descuentoGrupo = 0;
+	private int descuentoEfectivo = 0;
 	private Calendar fechaSistema = new GregorianCalendar();
 	private JTextField txtTotalPagar;
 	private JTextField txtDescuento;
+	private JTextField txtDescEfectivo;
 
 	public VentanaGrupoFamiliar(String lista[][]) {
 		
@@ -37,7 +39,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobrar a grupo familiar."+ CheckUsuario.getNombreUsuario());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+		setBounds(100, 100, 700, 540);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -50,76 +52,6 @@ public class VentanaGrupoFamiliar extends JFrame {
 			totalCuota += Integer.parseInt(lista[i][5]);
 		}
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				dispose();
-				
-				try {
-					
-					VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
-					frame.setVisible(true);
-				} catch (Exception d) {
-					
-					d.printStackTrace();
-				}
-			}
-		});
-		btnVolver.setBounds(450, 415, 130, 23);
-		contentPane.add(btnVolver);
-		
-		JButton btnGuardar = new JButton("Activar y cobrar");
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				if(checkCampos()) {
-
-					String familia[] = {txtNombreFamilia.getText(),cantIntegrantes+"","0","1"};
-					int registroCreado = ABMCGrupoFamiliar.crearGrupoFamilia(familia);
-	            	txtTotalPagar.setText((inscripcion * cantIntegrantes + totalCuota - descuento) + "");
-
-					if(registroCreado > 0) {
-						
-						for(int i = 0; i < lista.length; i++) {
-							ABMCAlumnos.actualizarGrupoFamiliar(lista[i][0], registroCreado + "", txtDescuento.getText());
-						}
-
-						String cuerpo[] = new String [10];
-						cuerpo[0] = registroCreado + "";
-						cuerpo[1] = txtNombreFamilia.getText();
-						cuerpo[2] = "Inscripción : " + inscripcion * cantIntegrantes + " primer cuota: " + (totalCuota - descuento);
-						cuerpo[3] = fechaSistema.get(Calendar.DAY_OF_MONTH)+"";
-						cuerpo[4] = (fechaSistema.get(Calendar.MONTH)+1)+"";
-						cuerpo[5] = fechaSistema.get(Calendar.YEAR)+"";
-						cuerpo[6] = fechaSistema.get(Calendar.HOUR) +":" +fechaSistema.get(Calendar.MINUTE);
-						cuerpo[7] = txtTotalPagar.getText();
-						cuerpo[8] = "";
-						cuerpo[9] = "0";
-						ABMCCobros.nuevoCobro(cuerpo);
-						
-						try {
-							
-							VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
-							frame.setVisible(true);
-							VentanaReciboCobro frame1 = new VentanaReciboCobro(cuerpo);
-							frame1.setVisible(true);
-						} catch (Exception d) {
-						
-							d.printStackTrace();
-						}
-						dispose();
-					} else {
-						
-						lblMensageError.setForeground(Color.RED);
-						lblMensageError.setText("Error al intentar guardar el registro.");
-					}
-				} 
-			}
-		});
-		btnGuardar.setBounds(80, 415, 130, 23);
-		contentPane.add(btnGuardar);
-		
 		JLabel lblNombreFamilia = new JLabel("Nombre de familia:");
 		lblNombreFamilia.setBounds(35, 325, 110, 20);
 		contentPane.add(lblNombreFamilia);
@@ -130,7 +62,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 		configurarJTextField(txtNombreFamilia, 40);
 		
 		lblMensageError = new JLabel("");
-		lblMensageError.setBounds(25, 380, 658, 25);
+		lblMensageError.setBounds(25, 405, 650, 25);
 		lblMensageError.setForeground(Color.RED);
 		lblMensageError.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(lblMensageError);
@@ -148,7 +80,7 @@ public class VentanaGrupoFamiliar extends JFrame {
             	
             	checkCampos();
             	inscripcion *= cantIntegrantes;
-            	txtTotalPagar.setText((inscripcion + totalCuota - descuento) + "");
+            	txtTotalPagar.setText((inscripcion + totalCuota - descuentoGrupo - descuentoEfectivo) + "");
             }});
 		contentPane.add(txtValorInscripción);
 				
@@ -182,36 +114,118 @@ public class VentanaGrupoFamiliar extends JFrame {
 		scrollTabla.setViewportView(tablaAlumnos);
 		
 		JLabel lblMontoAPagar = new JLabel("Monto a pagar:");
-		lblMontoAPagar.setBounds(390, 349, 110, 20);
+		lblMontoAPagar.setBounds(35, 375, 110, 20);
 		contentPane.add(lblMontoAPagar);
 		
 		txtTotalPagar = new JTextField();
 		txtTotalPagar.setEditable(false);
 		txtTotalPagar.setColumns(10);
-		txtTotalPagar.setBounds(500, 349, 110, 20);
+		txtTotalPagar.setBounds(145, 375, 110, 20);
 		txtTotalPagar.setText(totalCuota + "");
 		contentPane.add(txtTotalPagar);
 		
-		JLabel lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setBounds(390, 325, 110, 20);
+		JLabel lblDescuento = new JLabel("Descuento grupo:");
+		lblDescuento.setBounds(390, 325, 120, 20);
 		contentPane.add(lblDescuento);
 		
 		txtDescuento = new JTextField();
-		txtDescuento.setBounds(500, 325, 25, 20);
+		txtDescuento.setBounds(510, 325, 25, 20);
 		txtDescuento.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
             	
             	checkCampos();
             	inscripcion *= cantIntegrantes;
-            	txtTotalPagar.setText((inscripcion + totalCuota - descuento) + "");
+            	txtTotalPagar.setText((inscripcion + totalCuota - descuentoGrupo - descuentoEfectivo) + "");
             }});
 		contentPane.add(txtDescuento);
 		configurarJTextField(txtDescuento, 2);
 
 		JLabel lblPorcentaje = new JLabel("%");
-		lblPorcentaje.setBounds(530, 325, 20, 20);
+		lblPorcentaje.setBounds(540, 325, 20, 20);
 		contentPane.add(lblPorcentaje);
+		
+		JLabel lblDescPEfectivo = new JLabel("Desc. pago efectivo:");
+		lblDescPEfectivo.setBounds(390, 350, 120, 20);
+		contentPane.add(lblDescPEfectivo);
+		
+		txtDescEfectivo = new JTextField((String) null);
+		txtDescEfectivo.setEditable(true);
+		txtDescEfectivo.setColumns(10);
+		txtDescEfectivo.setBounds(510, 350, 100, 20);
+		contentPane.add(txtDescEfectivo);
+		
+		JButton btnGuardar = new JButton("Activar y cobrar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				if(checkCampos()) {
+
+					String familia[] = {txtNombreFamilia.getText(),cantIntegrantes+"","0","1"};
+					int registroCreado = ABMCGrupoFamiliar.crearGrupoFamilia(familia);
+	            	txtTotalPagar.setText((inscripcion * cantIntegrantes + totalCuota - descuentoGrupo - descuentoEfectivo) + "");
+
+					if(registroCreado > 0) {
+						
+						for(int i = 0; i < lista.length; i++) {
+							ABMCAlumnos.actualizarGrupoFamiliar(lista[i][0], registroCreado + "", txtDescuento.getText());
+						}
+
+						String cuerpo[] = new String [10];
+						cuerpo[0] = registroCreado + "";
+						cuerpo[1] = txtNombreFamilia.getText();
+						cuerpo[2] = "Inscripción : " + inscripcion * cantIntegrantes 
+									+ " primer cuota: " + (totalCuota - descuentoGrupo)
+									+ " descuento pago efectivo: " +  descuentoEfectivo;
+						cuerpo[3] = fechaSistema.get(Calendar.DAY_OF_MONTH)+"";
+						cuerpo[4] = (fechaSistema.get(Calendar.MONTH)+1)+"";
+						cuerpo[5] = fechaSistema.get(Calendar.YEAR)+"";
+						cuerpo[6] = fechaSistema.get(Calendar.HOUR) +":" +fechaSistema.get(Calendar.MINUTE);
+						cuerpo[7] = txtTotalPagar.getText();
+						cuerpo[8] = "";
+						cuerpo[9] = "0";
+						ABMCCobros.nuevoCobro(cuerpo);
+						
+						try {
+							
+							VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
+							frame.setVisible(true);
+							VentanaReciboCobro frame1 = new VentanaReciboCobro(cuerpo);
+							frame1.setVisible(true);
+						} catch (Exception d) {
+						
+							d.printStackTrace();
+						}
+						dispose();
+					} else {
+						
+						lblMensageError.setForeground(Color.RED);
+						lblMensageError.setText("Error al intentar guardar el registro.");
+					}
+				} 
+			}
+		});
+		btnGuardar.setBounds(80, 445, 130, 23);
+		contentPane.add(btnGuardar);
+		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				dispose();
+				
+				try {
+					
+					VentanaHabilitarCobrar frame = new VentanaHabilitarCobrar();
+					frame.setVisible(true);
+				} catch (Exception d) {
+					
+					d.printStackTrace();
+				}
+			}
+		});
+		btnVolver.setBounds(450, 445, 130, 23);
+		contentPane.add(btnVolver);
 	}
 	
 	private boolean checkCampos() {
@@ -234,12 +248,21 @@ public class VentanaGrupoFamiliar extends JFrame {
 		
 		try {
 			
-			descuento = Integer.parseInt(txtDescuento.getText());
-			descuento = (totalCuota*descuento)/100;
+			descuentoGrupo = Integer.parseInt(txtDescuento.getText());
+			descuentoGrupo = (totalCuota*descuentoGrupo)/100;
 		}catch (Exception f) {
 			
 			bandera = false;
-			lblMensageError.setText("El campo descuento debe ser un número entre 0 y 99");
+			lblMensageError.setText("El campo descuento debe ser un número entre 0 y 99.");
+		}
+		
+		try {
+
+			descuentoEfectivo = Integer.parseInt(txtDescEfectivo.getText());
+		}catch (Exception f) {
+			
+			bandera = false;
+			lblMensageError.setText("El campo descuento debe ser un número.");
 		}
 		
 		try {

@@ -116,7 +116,7 @@ public class VentanaIngresoUsuario extends JDialog {
 		buttonPane.add(btnSalir);
 	}
 	
-	public void nuevoIngreso () {
+	public static void nuevoIngreso () {
 		
 		try {
 			

@@ -29,6 +29,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 	private boolean debe;
 	private int recargo;
 	private Calendar fechaSistema = new GregorianCalendar();
+	private JTextField txtDescEfectivo;
 	
 	
 	public VentanaEfectuarCobro(String informacion[]) {
@@ -36,7 +37,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(LECSys.rutaImagenes + "LEC.jpg"));
 		setTitle("LECSys - Cobrar"+ CheckUsuario.getNombreUsuario());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 400, 350);
+		setBounds(100, 100, 400, 390);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -81,7 +82,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		contentPane.add(txtValorCuota);
 		txtValorCuota.setColumns(10);
 		
-		JLabel lblDescuento = new JLabel("Descuento:");
+		JLabel lblDescuento = new JLabel("Descuento grupo:");
 		lblDescuento.setBounds(25, 135, 130, 20);
 		contentPane.add(lblDescuento);
 		
@@ -112,29 +113,46 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 		lblSigno.setBounds(220, 160, 30, 20);
 		contentPane.add(lblSigno);
 		
+		JLabel lblDescPEfectivo = new JLabel("Desc. pago efectivo:");
+		lblDescPEfectivo.setBounds(25, 185, 130, 20);
+		contentPane.add(lblDescPEfectivo);
+		
+		txtDescEfectivo = new JTextField((String) null);
+		txtDescEfectivo.setEditable(true);
+		txtDescEfectivo.setColumns(10);
+		txtDescEfectivo.setBounds(155, 185, 100, 20);
+		txtDescEfectivo.addActionListener(new java.awt.event.ActionListener() {
+			
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				
+				actualizoMonto();
+			}
+		});
+		contentPane.add(txtDescEfectivo);
+				
 		JLabel lblMontoPagar = new JLabel("Monto a pagar:");
-		lblMontoPagar.setBounds(25, 185, 130, 20);
+		lblMontoPagar.setBounds(25, 210, 130, 20);
 		contentPane.add(lblMontoPagar);
 		
 		txtCalculoMontoPagar = new JTextField();
 		txtCalculoMontoPagar.setEditable(false);
-		txtCalculoMontoPagar.setBounds(155, 185, 100, 20);
+		txtCalculoMontoPagar.setBounds(155, 210, 100, 20);
 		contentPane.add(txtCalculoMontoPagar);
 		txtCalculoMontoPagar.setColumns(10);
 
 		JLabel lblFactura = new JLabel("Factura:");
-		lblFactura.setBounds(25, 210, 130, 20);
+		lblFactura.setBounds(25, 235, 130, 20);
 		contentPane.add(lblFactura);
 		
 		JTextField txtFactura = new JTextField();
-		txtFactura.setBounds(155, 210, 100, 20);
+		txtFactura.setBounds(155, 235, 100, 20);
 		contentPane.add(txtFactura);
 		txtFactura.setColumns(10);
 
 		lblMensageError = new JLabel("");
 		lblMensageError.setForeground(Color.RED);
 		lblMensageError.setBackground(Color.LIGHT_GRAY);
-		lblMensageError.setBounds(25, 235, 350, 25);
+		lblMensageError.setBounds(25, 270, 350, 25);
 		contentPane.add(lblMensageError);
 		
 		JButton btnCobrar = new JButton("Cobrar");
@@ -143,38 +161,44 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 				
 				if(!txtCalculoMontoPagar.getText().contentEquals("")) {
 
-					String cuerpo[] = new String [10];
-					cuerpo[0] = informacion[0];
-					cuerpo[1] = informacion[1];
-					cuerpo[2] = (String) comboBoxCantCuotas.getSelectedItem();
-					cuerpo[3] = fechaSistema.get(Calendar.DAY_OF_MONTH)+"";
-					cuerpo[4] = (fechaSistema.get(Calendar.MONTH)+1)+"";
-					cuerpo[5] = fechaSistema.get(Calendar.YEAR)+"";
-					cuerpo[6] = (fechaSistema.get(Calendar.AM_PM)==0? fechaSistema.get(Calendar.HOUR):fechaSistema.get(Calendar.HOUR)+12) +"" ;
-					cuerpo[6] += ":" +fechaSistema.get(Calendar.MINUTE);
-					cuerpo[7] = txtCalculoMontoPagar.getText();
-					cuerpo[8] = txtFactura.getText();
-					cuerpo[9] = recargo + "";
-
-					if(ABMCCobros.nuevoCobro(cuerpo)) {
-
-						ABMCGrupoFamiliar.modificarMeses(informacion[0], "-", comboBoxCantCuotas.getSelectedIndex()+"");
-						dispose();
+					if(txtDescEfectivo.getText().contentEquals("")  || isNumeric(txtDescEfectivo.getText())) {
 						
-						try {
+						String cuerpo[] = new String [10];
+						cuerpo[0] = informacion[0];
+						cuerpo[1] = informacion[1];
+						cuerpo[2] = (String) comboBoxCantCuotas.getSelectedItem();
+						cuerpo[3] = fechaSistema.get(Calendar.DAY_OF_MONTH)+"";
+						cuerpo[4] = (fechaSistema.get(Calendar.MONTH)+1)+"";
+						cuerpo[5] = fechaSistema.get(Calendar.YEAR)+"";
+						cuerpo[6] = (fechaSistema.get(Calendar.AM_PM)==0? fechaSistema.get(Calendar.HOUR):fechaSistema.get(Calendar.HOUR)+12) +"" ;
+						cuerpo[6] += ":" +fechaSistema.get(Calendar.MINUTE);
+						cuerpo[7] = txtCalculoMontoPagar.getText();
+						cuerpo[8] = txtFactura.getText();
+						cuerpo[9] = recargo + "";
+	
+						if(ABMCCobros.nuevoCobro(cuerpo)) {
+	
+							ABMCGrupoFamiliar.modificarMeses(informacion[0], "-", comboBoxCantCuotas.getSelectedIndex()+"");
+							dispose();
 							
-							VentanaCobrarCuota frame1 = new VentanaCobrarCuota();
-							frame1.setVisible(true);
-							VentanaReciboCobro frame2 = new VentanaReciboCobro(cuerpo);
-							frame2.setVisible(true);
-						} catch (Exception f) {
+							try {
+								
+								VentanaCobrarCuota frame1 = new VentanaCobrarCuota();
+								frame1.setVisible(true);
+								VentanaReciboCobro frame2 = new VentanaReciboCobro(cuerpo);
+								frame2.setVisible(true);
+							} catch (Exception f) {
+								
+								f.printStackTrace();
+							}
+	
+						} else {
 							
-							f.printStackTrace();
+							lblMensageError.setText("Error al intentar guardar en la base de datos.");
 						}
-
 					} else {
 						
-						lblMensageError.setText("Error al intentar guardar en la base de datos.");
+						lblMensageError.setText("El descuento debe ser numérico.");	
 					}
 						
 				} else {
@@ -183,7 +207,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 				}
 			}
 		});
-		btnCobrar.setBounds(25, 270, 89, 23);
+		btnCobrar.setBounds(25, 305, 89, 23);
 		contentPane.add(btnCobrar);
 		
 		JButton btnVolver = new JButton("Volver");
@@ -202,7 +226,7 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 				}
 			}
 		});
-		btnVolver.setBounds(246, 270, 89, 23);
+		btnVolver.setBounds(246, 305, 89, 23);
 		contentPane.add(btnVolver);
 	}
 	
@@ -260,8 +284,25 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
        	}
        	
        	montoCalculado *= cantMeses;
+       	if(!txtDescEfectivo.getText().contentEquals("") 
+       		&& isNumeric(txtDescEfectivo.getText())) {
+       		
+       		montoCalculado -= Integer.parseInt(txtDescEfectivo.getText());
+       	}
     	txtCalculoMontoPagar.setText(montoCalculado+"");
     	lblMensageError.setText(null);
+	}
+	
+	private static boolean isNumeric(String cadena) {
+		
+		try {
+			
+			Double.parseDouble(cadena);
+			return true;
+		} catch (NumberFormatException e) {
+			
+			return false;
+		}
 	}
 	
 	@Override

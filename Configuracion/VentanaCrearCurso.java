@@ -83,13 +83,14 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 				};
 				boolean bandera = false;
 				
-				if(txtLunesHorario.getText().length() != 0 ||
+				if((txtLunesHorario.getText().length() != 0 ||
 					txtMartesHorario.getText().length() != 0 ||
 					txtMiercolesHorario.getText().length() != 0 ||
 					txtJuevesHorario.getText().length() != 0 ||
 					txtViernesHorario.getText().length() != 0 ||
-					txtSabadoHorario.getText().length() != 0 &&
-					!txtCuota.getText().contentEquals("")) {
+					txtSabadoHorario.getText().length() != 0 ) &&
+					(txtCuota.getText().length() != 0 ||
+					isNumeric(txtCuota.getText()))) {
 
 					bandera = ABMCCurso.crearCurso(valorCurso);
 					String idCurso = ABMCCurso.getUltimoId() + "";			// Obtengo el id del registro que acabo de cargar.
@@ -372,6 +373,18 @@ public class VentanaCrearCurso extends JDialog implements ItemListener{
 			}
 			DefaultComboBoxModel<String> comboBoxModelo = new DefaultComboBoxModel<String>(listaProfesores);
 			comboBoxProfesor.setModel(comboBoxModelo);
+		}
+	}
+	
+	private static boolean isNumeric(String cadena) {
+		
+		try {
+	
+			Double.parseDouble(cadena);
+			return true;
+		} catch (NumberFormatException e){
+			
+			return false;
 		}
 	}
 

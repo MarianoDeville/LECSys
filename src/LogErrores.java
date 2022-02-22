@@ -30,7 +30,7 @@ public class LogErrores {
 
 	        fw = new FileWriter(archivo.getAbsoluteFile(), true);		// flag true, indica adjuntar información al archivo.
 	        bw = new BufferedWriter(fw);
-	        bw.write(dateEvento + " - " + contenido + "\n");
+	        bw.write(dateEvento + " - " + contenido + "\r\n");
 	    } catch (IOException e) {
 	    	
 	    	System.err.println("No se pudo escribir en el archivo.");

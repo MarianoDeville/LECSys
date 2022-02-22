@@ -45,6 +45,7 @@ public class VentanaConfiguracion extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana usuarios.");
 					e.printStackTrace();
 				}
 			}
@@ -68,6 +69,7 @@ public class VentanaConfiguracion extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception d) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana curso.");
 					d.printStackTrace();
 				}
 			}
@@ -91,6 +93,7 @@ public class VentanaConfiguracion extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana estadística.");
 					e.printStackTrace();
 				}
 			}
@@ -114,6 +117,7 @@ public class VentanaConfiguracion extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana actividades.");
 					e.printStackTrace();
 				}
 			}
@@ -137,6 +141,7 @@ public class VentanaConfiguracion extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception e) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana cierre.");
 					e.printStackTrace();
 				}			
 			}
@@ -160,6 +165,7 @@ public class VentanaConfiguracion extends JFrame {
 					frame.setVisible(true);
 				} catch (Exception d) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana listado alumnos.");
 					d.printStackTrace();
 				}
 			}
@@ -190,8 +196,7 @@ public class VentanaConfiguracion extends JFrame {
 			
 			CheckUsuario.guardarEstado();
 			recuperar = true;
-			VentanaIngresoUsuario entrando = new VentanaIngresoUsuario();
-			entrando.nuevoIngreso();
+			VentanaIngresoUsuario.nuevoIngreso();
 			nivelAcceso = CheckUsuario.getNivelNivelAcceso();
 		}
 	
@@ -206,6 +211,7 @@ public class VentanaConfiguracion extends JFrame {
 						frame.setVisible(true);
 					} catch (Exception e) {
 						
+						LogErrores.escribirLog("Error al abrir la ventana configuración.");
 						e.printStackTrace();
 					}
 				}

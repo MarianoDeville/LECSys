@@ -52,6 +52,7 @@ public class VentanaPrincipal {
 								frame.setVisible(true);
 							} catch (Exception e) {
 								
+								LogErrores.escribirLog("Error al abrir la ventana alumnos.");
 								e.printStackTrace();
 							}
 						}
@@ -86,6 +87,7 @@ public class VentanaPrincipal {
 								frame.setVisible(true);
 							} catch (Exception e) {
 								
+								LogErrores.escribirLog("Error al abrir la ventana profesores.");
 								e.printStackTrace();
 							}
 						}
@@ -139,6 +141,7 @@ public class VentanaPrincipal {
 								frame.setVisible(true);
 							} catch (Exception e) {
 								
+								LogErrores.escribirLog("Error al abrir la ventana cobros.");
 								e.printStackTrace();
 							}
 						}
@@ -174,6 +177,7 @@ public class VentanaPrincipal {
 								frame.setVisible(true);
 							} catch (Exception e) {
 								
+								LogErrores.escribirLog("Error al abrir la ventana pagos.");
 								e.printStackTrace();
 							}
 						}
@@ -251,8 +255,7 @@ public class VentanaPrincipal {
 		btnReLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				VentanaIngresoUsuario entrando = new VentanaIngresoUsuario();
-				entrando.nuevoIngreso();
+				VentanaIngresoUsuario.nuevoIngreso();
 				frmVentanaPrincipal.setTitle("LEC-SYS"+ CheckUsuario.getNombreUsuario());
 			}
 		});

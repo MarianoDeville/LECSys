@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 /*								UMLet 14.3										*/
 /*		Estado:					Instalado en el cliente.						*/
 /*		Fecha creación:			12/09/2020										*/
-/*		Última modificación:	09/02/2022										*/
+/*		Última modificación:	22/02/2022										*/
 /********************************************************************************/
 
 public class LECSys {
@@ -23,13 +23,12 @@ public class LECSys {
 	public static void main(String[] args) {
 		
 		Configuracion.generoIni();
-		VentanaIngresoUsuario entrando = new VentanaIngresoUsuario();
-		entrando.nuevoIngreso();
+		VentanaIngresoUsuario.nuevoIngreso();
 
 		if(CheckUsuario.getNivelNivelAcceso() == 100)
 			System.exit(0);
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.01\nRev. 090222.1325");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.02\nRev. 220222.1800");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,6 +39,7 @@ public class LECSys {
 					window.frmVentanaPrincipal.setVisible(true);
 				} catch (Exception e) {
 					
+					LogErrores.escribirLog("Error al abrir la ventana principal.");
 					e.printStackTrace();
 				}
 			}
