@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 
@@ -28,6 +29,7 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 	private DefaultComboBoxModel<String> listado;
 	private JTextField txtCantAlumnos;
 	private JButton btnImprimir;
+	private JCheckBox chckbxActivos;
 	
 	public VentanaAlumnosCurso() {
 
@@ -40,6 +42,19 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		chckbxActivos = new JCheckBox("Activos");
+		chckbxActivos.setSelected(true);
+		chckbxActivos.setBounds(885, 115, 97, 23);
+		chckbxActivos.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+            	
+            	actualizarTabla((String)comboBoxCriterio.getSelectedItem(), respuesta[comboBoxValor.getSelectedIndex()][0]);
+            }
+        });
+		contentPane.add(chckbxActivos);
 		
 		comboBoxCriterio = new JComboBox<String>();
 		comboBoxCriterio.setModel(new DefaultComboBoxModel<String>(new String[] {"CURSO", "PROFESOR"}));
@@ -115,14 +130,14 @@ public class VentanaAlumnosCurso extends JFrame implements ItemListener {
 				}
 			}
 		});
-		btnImprimir.setBounds(885, 110, 90, 23);
+		btnImprimir.setBounds(885, 80, 90, 23);
 		contentPane.add(btnImprimir);
 	}
 	
 	private void actualizarTabla(String campo, String valor) {
 		
 		String titulo [] = {"Legajo", "Apellido", "Nombre", "Dirección", "Teléfono", "e-mail"};
-		String respuesta[][] = ABMCAlumnos.getAlumnos(campo, valor, true, "apellido");
+		String respuesta[][] = ABMCAlumnos.getAlumnos(campo, valor, chckbxActivos.isSelected(), "apellido");
 		Object cuerpo[][];
 		
 		if(respuesta != null) {

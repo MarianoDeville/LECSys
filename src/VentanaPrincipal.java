@@ -29,6 +29,22 @@ public class VentanaPrincipal {
 		if(Estadisticas.nuevoMes())
 			ABMCGrupoFamiliar.modificarMeses("", "+", "1");
 		
+		String listadoCumpleaños [][] = ABMCPersona.listadoCumpleAños();
+		
+		if(listadoCumpleaños != null) {
+			
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						VentanaCumpleaños frame = new VentanaCumpleaños(listadoCumpleaños);
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+
 		String cuerpo[] = {CheckUsuario.getIdUsuario(),"Arranque del sistema","Principal"};
 		ABMCActividad.guardoNuevaActividad(cuerpo);
 

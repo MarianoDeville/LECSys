@@ -13,7 +13,7 @@ public class ABMCPersona {
 	private static Connection cn = null;
 	private static Statement stm = null;
 	private static ResultSet rs = null;	
-	
+		
 	public static int crearPersona(String valor[]) {
 		
 		int registro = 0;
@@ -51,6 +51,59 @@ public class ABMCPersona {
 			cerrarConexiones();
 		}
 		return registro;
+	}
+	
+	public static String [][] listadoCumpleAños() {
+		
+		int cantRegistros = 0;
+		
+		String armoWhere = "WHERE DAY(fechaNacimiento)=DAY(NOW()) AND MONTH(fechaNacimiento)=MONTH(NOW())";
+		String comandoStatement = "SELECT count(*) FROM lecsys.persona " + armoWhere;
+		String respuesta[][] = null;
+
+		try {
+			
+			cn = conexion.conectar();
+			
+			if(cn == null)
+				return null;
+			
+			stm = cn.createStatement();
+			rs = stm.executeQuery(comandoStatement);
+			
+			if(rs.next())
+				cantRegistros = rs.getInt(1);
+			
+			if(cantRegistros == 0) {
+				
+				cerrarConexiones();
+				return null;
+			}
+			
+			respuesta = new String[cantRegistros][2];
+			comandoStatement = "SELECT nombre, apellido FROM lecsys.persona " + armoWhere;
+			rs = stm.executeQuery(comandoStatement);
+			int i=0;
+			
+			while (rs.next()) {
+				
+				respuesta[i][0] = rs.getString(1);
+				respuesta[i][1] = rs.getString(2);
+				i++;
+			}
+		
+		} catch (SQLException e) {
+			
+			LogErrores.escribirLog("Error al acceder a la tabla persona(2).");
+			LogErrores.escribirLog(comandoStatement);
+		} catch (NullPointerException e) {
+			
+			LogErrores.escribirLog("Error al acceder a la base de datos  ABMCPersona(2).");
+		} finally {
+			
+			cerrarConexiones();
+		}
+		return respuesta;
 	}
 	
 	private static void cerrarConexiones() {

@@ -81,25 +81,25 @@ public class VentanaReciboCobro extends JFrame {
 		JLabel lblTitulo = new JLabel("RECIBO");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitulo.setBounds(340, 15, 200, 25);
+		lblTitulo.setBounds(340, 15, 205, 25);
 		contentPane.add(lblTitulo);
 		
 		lblFecha = new JLabel("");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFecha.setBounds(340, 70, 200, 25);
+		lblFecha.setBounds(340, 70, 205, 25);
 		lblFecha.setText("Fecha: " + cuerpo[3] + "/" + cuerpo[4] + "/" + cuerpo[5]);
 		contentPane.add(lblFecha);
 		
 		lblNombre = new JLabel("");
 		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNombre.setBounds(25, 250, 373, 25);
+		lblNombre.setBounds(25, 250, 520, 25);
 		lblNombre.setText("Recibí de " + cuerpo[1]);
 		contentPane.add(lblNombre);
 		
 		lblConcepto = new JLabel("");
 		lblConcepto.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblConcepto.setBounds(25, 275, 373, 25);
+		lblConcepto.setBounds(25, 275, 520, 25);
 		
 		if(cuerpo[9].contentEquals("0"))
 			
@@ -111,14 +111,14 @@ public class VentanaReciboCobro extends JFrame {
 		
 		lblMontoTotal = new JLabel("");
 		lblMontoTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMontoTotal.setBounds(25, 300, 405, 25);
+		lblMontoTotal.setBounds(20, 275, 520, 25);
 		lblMontoTotal.setText("La suma de pesos " + cuerpo[7]);
 		contentPane.add(lblMontoTotal);
 		
 		JLabel lblNro = new JLabel("");
 		lblNro.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNro.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNro.setBounds(340, 40, 200, 25);
+		lblNro.setBounds(340, 40, 205, 25);
 		lblNro.setText("Nro.: " + numeroRecibo());
 		contentPane.add(lblNro);
 		

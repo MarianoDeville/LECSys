@@ -253,29 +253,46 @@ public class VentanaCrearDocente extends JDialog {
 			
 			i = false;
 			lblMensageError.setText("El nombre debe tener más de dos caracteres.");
-		}else if(txtApellido.getText().length() < 2) {
+		} else if(txtApellido.getText().length() < 2) {
 			
 			i = false;
 			lblMensageError.setText("El apellido debe tener más de dos caracteres.");
-		}else if(txtDni.getText().length() < 7 ||
+		} else if(txtDni.getText().length() < 7 ||
 				!isNumeric(txtDni.getText())) {
 			
 			i = false;
 			lblMensageError.setText("Error en el formato del DNI (solamente números).");
-		}else if(txtDireccion.getText().length() == 0) {
+		} else if(txtDireccion.getText().length() == 0) {
 			
 			i = false;
 			lblMensageError.setText("La dirección no puede estar vacía.");
-		}else if(txtTelefono.getText().length() == 0 ||
+		} else if(txtTelefono.getText().length() == 0 ||
 				!isNumeric(txtTelefono.getText())) {
 			
 			i = false;
 			lblMensageError.setText("Error en el formato del teléfono (solamente números).");
-		}else if(txtSueldo.getText().length() < 2 ||
+		} else if(txtSueldo.getText().length() < 2 ||
 				!isNumeric(txtSueldo.getText())) {
 			
 			i = false;
 			lblMensageError.setText("Error, ingrese sueldo.");
+		} else if(Integer.parseInt(txtAño.getText()) < 1900 ||
+				!isNumeric(txtTelefono.getText())) {
+			
+			i = false;
+			lblMensageError.setText("Valor de año no admitido.");
+		} else if(txtDia.getText().length() == 0 || 
+				 Integer.parseInt(txtDia.getText()) < 1 ||
+				 Integer.parseInt(txtDia.getText()) > 31) {
+			
+			i = false;
+			lblMensageError.setText("Error en el formato del día.");
+		} else if(txtMes.getText().length() == 0 || 
+				 Integer.parseInt(txtMes.getText()) < 1 ||
+				 Integer.parseInt(txtMes.getText()) > 12) {
+			
+			i = false;
+			lblMensageError.setText("Error en el formato del mes.");
 		}
 		return i;
 	}
