@@ -240,10 +240,16 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 			debe = false;
 		
 		String meses[]= {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-		String listaCuotasDeuda[] = new String[cantMeses + 1];
+		String listaCuotasDeuda[] = new String[cantMeses == 0? 2 : cantMeses + 1];
+		
 		listaCuotasDeuda[0] = "Seleccione uno";
+		
+		if(cantMeses == 0)
+		
+			listaCuotasDeuda[1] = meses[fechaSistema.get(Calendar.MONTH)+1];
 
-		if(listaCuotasDeuda.length > 1) {
+
+		if(cantMeses > 0) {
 
 			if(fechaSistema.get(Calendar.MONTH)+1 >= cantMeses) {
 

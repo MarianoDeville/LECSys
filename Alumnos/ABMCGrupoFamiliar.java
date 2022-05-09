@@ -10,18 +10,23 @@ public class ABMCGrupoFamiliar {
 	private static Statement stm = null;
 	private static ResultSet rs = null;
 		
-	public static String [][] getGruposFamilias() {
+	public static String [][] getGruposFamilias(boolean sinDeuda) {
 
 		int cantColumnas=0;
 		String matriz[][] = null;
 		String armoWhere = "WHERE(grupoFamiliar.estado = 1 && deuda > 0) ";
-		String comandoStatement = "SELECT count(*) FROM lecsys.grupoFamiliar ";
+		
+		if(sinDeuda)
+			
+			armoWhere = "WHERE(grupoFamiliar.estado = 1 && deuda = 0) ";
+		
+		String comandoStatement = "SELECT count(*) FROM lecsys.grupoFamiliar " +armoWhere;
 				
 		try {
 			
 			cn = conexion.conectar();
 			stm = cn.createStatement();
-			rs = stm.executeQuery(comandoStatement + armoWhere);
+			rs = stm.executeQuery(comandoStatement);
 			
 			if (rs.next())
 				cantColumnas = rs.getInt(1);

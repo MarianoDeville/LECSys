@@ -234,13 +234,16 @@ public class VentanaPagar extends JFrame implements ItemListener {
 	
 	private void configurarJTextField(Component nombre, int cantidadCaracteres) {
 		
-		((JTextField) nombre).setColumns(cantidadCaracteres);
-		nombre.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				
-				if(((JTextField) nombre).getText().length() >= cantidadCaracteres)
-					e.consume();
-			}
-		});
+		if(comboBoxConcepto.getSelectedIndex() > 1) {
+		
+			((JTextField) nombre).setColumns(cantidadCaracteres);
+			nombre.addKeyListener(new KeyAdapter() {
+				public void keyTyped(KeyEvent e) {
+					
+					if(((JTextField) nombre).getText().length() >= cantidadCaracteres)
+						e.consume();
+				}
+			});
+		}
 	}
 }

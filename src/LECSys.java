@@ -28,7 +28,7 @@ public class LECSys {
 		if(CheckUsuario.getNivelNivelAcceso() == 100)
 			System.exit(0);
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.05\nRev. 09052022.1322");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.05\nRev. 09052022.1720");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

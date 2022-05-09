@@ -8,16 +8,20 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.print.PrinterException;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
-public class VentanaCobrarCuota extends JFrame {
+public class VentanaCobrarCuota extends JFrame  {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tablaFlia;
 	private Object cuerpo[][];
 	private String respuesta[][];
+	private JCheckBox chckbxCobroAdelantado;
 
 	public VentanaCobrarCuota() {
 		
@@ -30,6 +34,17 @@ public class VentanaCobrarCuota extends JFrame {
 		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		chckbxCobroAdelantado = new JCheckBox("Cobro adelantado");
+		chckbxCobroAdelantado.setBounds(796, 140, 120, 23);
+		chckbxCobroAdelantado.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+            	actualizoTabla();
+            }
+        });
+		contentPane.add(chckbxCobroAdelantado);
 		
 		JScrollPane scrollTabla = new JScrollPane();
 		scrollTabla.setBounds(1, 11, 770, 540);
@@ -117,7 +132,7 @@ public class VentanaCobrarCuota extends JFrame {
 	private void actualizoTabla() {
 		
 		String titulo [] = {"Nombre", "Integrantes", "Cuotas", "Valor cuota", "Descuento" , "Monto total", "Sel."};
-		respuesta = ABMCGrupoFamiliar.getGruposFamilias();
+		respuesta = ABMCGrupoFamiliar.getGruposFamilias(chckbxCobroAdelantado.isSelected());
 				
 		if(respuesta != null) {
 			
@@ -183,4 +198,5 @@ public class VentanaCobrarCuota extends JFrame {
 		tablaFlia.getColumnModel().getColumn(6).setPreferredWidth(30);
 		tablaFlia.getColumnModel().getColumn(6).setMaxWidth(50);
 	}
+	
 }
