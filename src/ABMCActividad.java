@@ -67,19 +67,21 @@ public class ABMCActividad {
 		}
 	}
 	
-	public static String [][] getActividad() {
+	public static String [][] getActividad(String mes, String año) {
 		
 		int cantRegistros = 0;
 		String matriz[][] = null;
-		String comandoStatement = "SELECT count(*) FROM lecsys.registroActividad WHERE idUsuarios > 0";
-
+		String armoWhere = "WHERE registroActividad.idUsuarios > 0 AND fecha BETWEEN '"
+							+ año + "-" + mes + "-01' AND '" + año + "-" + mes + "-31' ";
+		String comandoStatement = "SELECT count(*) FROM lecsys.registroActividad " + armoWhere;
+		
 		try {
 			
 			cn = conexion.conectar();
 			
 			if(cn == null)
 				return null;
-			
+		
 			stm = cn.createStatement();
 			rs = stm.executeQuery(comandoStatement);
 			
@@ -95,11 +97,12 @@ public class ABMCActividad {
 			comandoStatement = "SELECT fecha, hora, registroActividad.idUsuarios, nombre, acción, modulo, ip "
 							  + "FROM lecsys.registroActividad "
 							  + "JOIN lecsys.usuarios on  registroActividad.idUsuarios = usuarios.idUsuarios "
+							  + armoWhere
 							  + "ORDER BY idRegistroActividad DESC";
 			rs = stm.executeQuery(comandoStatement);
 			matriz = new String[cantRegistros][6];
 			int i=0;
-			
+	
 			while (rs.next()) {
 				
 				matriz[i][0] = rs.getString(1);

@@ -194,16 +194,18 @@ public class VentanaHabilitarCobrar extends JFrame {
 	private void actualizarTabla() {
 
 		boolean estado = chckbxTodos.isSelected();
-		boolean inscripción = chckbxReinscripcion.isSelected();
+		boolean reinscripcion = chckbxReinscripcion.isSelected();
 	
-		String titulo [] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Seleccionar"};
+		String titulo [] = null;
 		
-		if(inscripción) {
+		if(reinscripcion) {
 			
-			respuesta = ABMCAlumnos.getAlumnos("ESTADOFAMILIA", "0", false, "idAlumno");
+			titulo = new String [] {"Nombre", "Integrantes",  "Descuento" , "Seleccionar"};
+			respuesta = ABMCGrupoFamiliar.getGruposFamilias();
 			btnCrearGrupo.setEnabled(false);
 		} else {
-			
+		
+			titulo = new String [] {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Seleccionar"};
 			respuesta = ABMCAlumnos.getAlumnos("GRUPOFAMILIAR", "0", false, "idAlumno");
 			btnCrearGrupo.setEnabled(true);
 		}
@@ -214,58 +216,92 @@ public class VentanaHabilitarCobrar extends JFrame {
 			
 			for(int i = 0 ; i < respuesta.length ; i++) {
 				
-				cuerpo[i][0] = respuesta[i][0];
-				cuerpo[i][1] = respuesta[i][1];
-				cuerpo[i][2] = respuesta[i][2];
-				cuerpo[i][3] = respuesta[i][3];
-				cuerpo[i][4] = respuesta[i][4];
-				cuerpo[i][5] = false;
+				cuerpo[i][0] = (reinscripcion)?respuesta[i][1]:respuesta[i][0];
+				cuerpo[i][1] = (reinscripcion)?respuesta[i][3]:respuesta[i][1];
+				cuerpo[i][2] = (reinscripcion)?respuesta[i][5]:respuesta[i][2];
+				cuerpo[i][3] = (reinscripcion)?false:respuesta[i][3];
+				
+				if(!reinscripcion) {
+					
+					cuerpo[i][4] = respuesta[i][4];
+					cuerpo[i][5] = false;
+				}
 			}
 		} else
 			cuerpo = null;
 		
-		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo) {
+		DefaultTableModel tablaModelo;
+		
+		if(reinscripcion) {
 			
-			private static final long serialVersionUID = 1L;
-			public Class<?> getColumnClass(int column) {
+			tablaModelo = new DefaultTableModel(cuerpo, titulo) {
 				
-			        if(column == 5)
-			        	return Boolean.class;
-			        else
-			        	return String.class;
-		    }
-			
-			boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false, true
+				private static final long serialVersionUID = 1L;
+				public Class<?> getColumnClass(int column) {
+					
+				        if(column == 3)
+				        	return Boolean.class;
+				        else
+				        	return String.class;
+			    }
+				
+				boolean[] columnEditables = new boolean[] {
+						false, false, false, true
+				};
+				
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
 			};
+		} else {
 			
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		};
+			tablaModelo = new DefaultTableModel(cuerpo, titulo) {
+				
+				private static final long serialVersionUID = 1L;
+				public Class<?> getColumnClass(int column) {
+					
+				        if(column == 5)
+				        	return Boolean.class;
+				        else
+				        	return String.class;
+			    }
+				
+				boolean[] columnEditables = new boolean[] {
+						false, false, false, false, false, true
+				};
+				
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			};			
+		}
 		tablaAlumnos.setModel(tablaModelo);
-		tablaAlumnos.getColumnModel().getColumn(0).setPreferredWidth(50);
-		tablaAlumnos.getColumnModel().getColumn(0).setMinWidth(30);
-		tablaAlumnos.getColumnModel().getColumn(0).setMaxWidth(50);
-		tablaAlumnos.getColumnModel().getColumn(1).setPreferredWidth(140);
-		tablaAlumnos.getColumnModel().getColumn(1).setMaxWidth(180);
-		tablaAlumnos.getColumnModel().getColumn(2).setPreferredWidth(140);
-		tablaAlumnos.getColumnModel().getColumn(2).setMaxWidth(180);
-		tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(160);
-		tablaAlumnos.getColumnModel().getColumn(3).setMinWidth(60);
-		tablaAlumnos.getColumnModel().getColumn(3).setMaxWidth(300);
-		tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(160);
-		tablaAlumnos.getColumnModel().getColumn(4).setMinWidth(50);
-		tablaAlumnos.getColumnModel().getColumn(4).setMaxWidth(300);
-		tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(70);
-		tablaAlumnos.getColumnModel().getColumn(5).setMinWidth(50);
-		tablaAlumnos.getColumnModel().getColumn(5).setMaxWidth(70);
+	
+		if(!reinscripcion) {
+			
+			tablaAlumnos.getColumnModel().getColumn(0).setPreferredWidth(50);
+			tablaAlumnos.getColumnModel().getColumn(0).setMinWidth(30);
+			tablaAlumnos.getColumnModel().getColumn(0).setMaxWidth(50);
+			tablaAlumnos.getColumnModel().getColumn(1).setPreferredWidth(140);
+			tablaAlumnos.getColumnModel().getColumn(1).setMaxWidth(180);
+			tablaAlumnos.getColumnModel().getColumn(2).setPreferredWidth(140);
+			tablaAlumnos.getColumnModel().getColumn(2).setMaxWidth(180);
+			tablaAlumnos.getColumnModel().getColumn(3).setPreferredWidth(160);
+			tablaAlumnos.getColumnModel().getColumn(3).setMinWidth(60);
+			tablaAlumnos.getColumnModel().getColumn(3).setMaxWidth(300);
+			tablaAlumnos.getColumnModel().getColumn(4).setPreferredWidth(160);
+			tablaAlumnos.getColumnModel().getColumn(4).setMinWidth(50);
+			tablaAlumnos.getColumnModel().getColumn(4).setMaxWidth(300);
+			tablaAlumnos.getColumnModel().getColumn(5).setPreferredWidth(70);
+			tablaAlumnos.getColumnModel().getColumn(5).setMinWidth(50);
+			tablaAlumnos.getColumnModel().getColumn(5).setMaxWidth(70);
+		}
 		
 		if(cuerpo != null) {
 			
 			for(int i = 0 ; i < cuerpo.length ; i++) {
 				
-				tablaAlumnos.setValueAt(estado, i, 5);;
+				tablaAlumnos.setValueAt(estado, i, (reinscripcion)?3:5);;
 			}
 		}
 	}

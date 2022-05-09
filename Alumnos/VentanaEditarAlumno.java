@@ -497,10 +497,11 @@ public class VentanaEditarAlumno extends JFrame implements ItemListener {
 		if(checkCampos()) {
 						
 			if(!estado.contentEquals(estadoAnterior)) {
-				
+		
 				String respuesta[] = ABMCAlumnos.buscarAlumno("ID", txtLegajo.getText());
 				String idGrupoFamiliar = respuesta[10];
 				if(Integer.parseInt(idGrupoFamiliar) > 0)
+
 					ABMCGrupoFamiliar.modificarIntegrantes(idGrupoFamiliar, estado.contentEquals("1")?"+":"-");
 			}
 

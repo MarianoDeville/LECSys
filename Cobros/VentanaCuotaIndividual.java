@@ -78,7 +78,7 @@ public class VentanaCuotaIndividual extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	
             	inscripcion = Integer.parseInt(txtValorInscripción.getText());
-            	txtTotalPagar.setText((inscripcion + totalCuota) + "");
+            	txtTotalPagar.setText((inscripcion + totalCuota - descuento) + "");
             }});
 		contentPane.add(txtValorInscripción);
 		
@@ -90,6 +90,14 @@ public class VentanaCuotaIndividual extends JFrame {
 		txtDescEfectivo.setEditable(true);
 		txtDescEfectivo.setColumns(10);
 		txtDescEfectivo.setBounds(170, 95, 70, 20);
+		txtDescEfectivo.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	
+            	inscripcion = Integer.parseInt(txtValorInscripción.getText());
+            	descuento = Integer.parseInt(txtDescEfectivo.getText());
+            	txtTotalPagar.setText((inscripcion + totalCuota - descuento) + "");
+            }});
 		contentPane.add(txtDescEfectivo);
 		
 		JButton btnVolver = new JButton("Volver");
@@ -123,13 +131,13 @@ public class VentanaCuotaIndividual extends JFrame {
 					
 					if(idGrupoFamiliar == 0) {
 						
-						String familia[] = {lista[0][2] + ", " + lista[0][1],"1","0","1"};
+						String familia[] = {lista[0][2] + ", " + lista[0][1],"1","0","1","0"};
 						idGrupoFamiliar = ABMCGrupoFamiliar.crearGrupoFamilia(familia);						
 					}
 					
 					if(idGrupoFamiliar > 0) {
 						
-						ABMCAlumnos.actualizarGrupoFamiliar(lista[0][0], idGrupoFamiliar + "", "0");
+						ABMCAlumnos.actualizarGrupoFamiliar(lista[0][0], idGrupoFamiliar + "");
 						String cuerpo[] = new String [10];
 						cuerpo[0] = idGrupoFamiliar + "";
 						cuerpo[1] = lista[0][1] + " " + lista[0][2];

@@ -262,11 +262,11 @@ public class ABMCAlumnos {
 		return nombre;	
 	}
 	
-	public static boolean actualizarGrupoFamiliar(String idAlumno, String idGrupoFamiliar, String descuento) {
+	public static boolean actualizarGrupoFamiliar(String idAlumno, String idGrupoFamiliar) {
 		
 		boolean bandera = true;		
-		String comandoStatement = "UPDATE lecsys.alumnos SET idGrupoFamiliar = " + idGrupoFamiliar + ", estado = 1, descuento = " + descuento
-								+ " WHERE idAlumno = "+ idAlumno;
+		String comandoStatement = "UPDATE lecsys.alumnos SET idGrupoFamiliar = " + idGrupoFamiliar + ", estado = 1 "
+								+ "WHERE idAlumno = "+ idAlumno;
 		
 		try {
 			

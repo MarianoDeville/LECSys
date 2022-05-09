@@ -83,6 +83,10 @@ public class VentanaGrupoFamiliar extends JFrame {
             	txtTotalPagar.setText((inscripcion + totalCuota - descuentoGrupo - descuentoEfectivo) + "");
             }});
 		contentPane.add(txtValorInscripción);
+		
+		JLabel lblPP = new JLabel("P/P");
+		lblPP.setBounds(215, 350, 46, 20);
+		contentPane.add(lblPP);
 				
 		JScrollPane scrollTabla = new JScrollPane();
 		scrollTabla.setBounds(1, 30, 680, 284);
@@ -153,6 +157,14 @@ public class VentanaGrupoFamiliar extends JFrame {
 		txtDescEfectivo.setEditable(true);
 		txtDescEfectivo.setColumns(10);
 		txtDescEfectivo.setBounds(510, 350, 100, 20);
+		txtDescEfectivo.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+            	
+            	checkCampos();
+            	inscripcion *= cantIntegrantes;
+            	txtTotalPagar.setText((inscripcion + totalCuota - descuentoGrupo - descuentoEfectivo) + "");
+            }});
 		contentPane.add(txtDescEfectivo);
 		
 		JButton btnGuardar = new JButton("Activar y cobrar");
@@ -161,14 +173,14 @@ public class VentanaGrupoFamiliar extends JFrame {
 
 				if(checkCampos()) {
 
-					String familia[] = {txtNombreFamilia.getText(),cantIntegrantes+"","0","1"};
+					String familia[] = {txtNombreFamilia.getText(),cantIntegrantes+"","0","1", txtDescuento.getText()};
 					int registroCreado = ABMCGrupoFamiliar.crearGrupoFamilia(familia);
 	            	txtTotalPagar.setText((inscripcion * cantIntegrantes + totalCuota - descuentoGrupo - descuentoEfectivo) + "");
 
 					if(registroCreado > 0) {
 						
 						for(int i = 0; i < lista.length; i++) {
-							ABMCAlumnos.actualizarGrupoFamiliar(lista[i][0], registroCreado + "", txtDescuento.getText());
+							ABMCAlumnos.actualizarGrupoFamiliar(lista[i][0], registroCreado + "");
 						}
 
 						String cuerpo[] = new String [10];
@@ -232,6 +244,7 @@ public class VentanaGrupoFamiliar extends JFrame {
 		
 		boolean bandera = true;
 		lblMensageError.setForeground(Color.RED);
+		lblMensageError.setText("");
 		
 		if(txtNombreFamilia.getText().length() < 3) {
 			

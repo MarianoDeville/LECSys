@@ -99,19 +99,19 @@ public class VentanaReciboCobro extends JFrame {
 		
 		lblConcepto = new JLabel("");
 		lblConcepto.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblConcepto.setBounds(25, 275, 520, 25);
-		
+		lblConcepto.setBounds(25, 300, 520, 25);
+		contentPane.add(lblConcepto);
 		if(cuerpo[9].contentEquals("0"))
 			
 			lblConcepto.setText("En concepto de: " + cuerpo[2]);
 		else
 			
 			lblConcepto.setText("En concepto de: " + cuerpo[2] + " y recargo por mora.");
-		contentPane.add(lblConcepto);
+		
 		
 		lblMontoTotal = new JLabel("");
 		lblMontoTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMontoTotal.setBounds(20, 275, 520, 25);
+		lblMontoTotal.setBounds(25, 275, 520, 25);
 		lblMontoTotal.setText("La suma de pesos " + cuerpo[7]);
 		contentPane.add(lblMontoTotal);
 		

@@ -274,16 +274,33 @@ public class VentanaEfectuarCobro extends JFrame implements ItemListener {
 	private void actualizoMonto() {
 		
 		int cantMeses = comboBoxCantCuotas.getSelectedIndex();
+		int totalMeses = comboBoxCantCuotas.getItemCount();
        	montoCalculado = (valorCuotas - descuento);
        	recargo = 0;
-       	
+ 
        	if(debe) {
        		
        		recargo = montoCalculado * Integer.parseInt(txtRecargo.getText()) / 100;
-       		montoCalculado += recargo;
-       	}
+       		
+       		if(cantMeses == 1) {
+       			
+       			montoCalculado += recargo;
+       			montoCalculado *= cantMeses;
+       		} else {
+       			
+       			montoCalculado *= cantMeses;
+       			
+       			if(cantMeses == (totalMeses - 1))
+       				
+       				montoCalculado += (recargo * (cantMeses - 1));
+       			else
+       				
+       				montoCalculado += (recargo * cantMeses);
+       		}
+       	} else
+       		
+       		montoCalculado *= cantMeses;
        	
-       	montoCalculado *= cantMeses;
        	if(!txtDescEfectivo.getText().contentEquals("") 
        		&& isNumeric(txtDescEfectivo.getText())) {
        		

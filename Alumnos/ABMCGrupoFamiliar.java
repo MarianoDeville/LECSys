@@ -30,7 +30,8 @@ public class ABMCGrupoFamiliar {
 				return null;
 			
 			matriz = new String[cantColumnas][6];
-			comandoStatement = "SELECT grupoFamiliar.idGrupoFamiliar, grupoFamiliar.nombreFamilia, integrantes , deuda, SUM(precio), descuento FROM lecsys.alumnos " + 
+			comandoStatement = "SELECT grupoFamiliar.idGrupoFamiliar, grupoFamiliar.nombreFamilia, integrantes , deuda, SUM(precio), descuento " +
+								"FROM lecsys.alumnos " + 
 								"JOIN lecsys.grupoFamiliar ON alumnos.idGrupoFamiliar = grupoFamiliar.idGrupoFamiliar " + 
 								"JOIN lecsys.curso ON alumnos.idCurso = curso.idCurso " + 
 								"JOIN lecsys.valorCuota ON curso.idCurso = valorCuota.idCurso " + 
@@ -68,8 +69,8 @@ public class ABMCGrupoFamiliar {
 	public static int crearGrupoFamilia(String valor[]) {
 
 		int resultado = 0;
-		String comandoStatement = "INSERT INTO lecsys.grupoFamiliar (nombreFamilia, integrantes, deuda, estado) "
-								+ "VALUES ('" + valor[0] + "', '" + valor[1] + "', '" + valor[2] + "', '" + valor[3] + "')";
+		String comandoStatement = "INSERT INTO lecsys.grupoFamiliar (nombreFamilia, integrantes, deuda, estado, descuento) "
+								+ "VALUES ('" + valor[0] + "', '" + valor[1] + "', '" + valor[2] + "', '" + valor[3] + "', '" + valor[4] + "')";
 
 		try {
 
@@ -99,7 +100,7 @@ public class ABMCGrupoFamiliar {
 	
 	public static String [] getGrupoFamiliar(String idGrupoFamiliar) {
 		
-		String respuesta[] = new String[5];		
+		String respuesta[] = new String[6];		
 		
 		try {
 			
@@ -109,11 +110,12 @@ public class ABMCGrupoFamiliar {
 				
 			if(rs.next()) {
 				
-				respuesta[0] = rs.getInt(1) + "";
-				respuesta[1] = rs.getString(2);
-				respuesta[2] = rs.getInt(3) + "";
-				respuesta[3] = rs.getInt(4) + "";
-				respuesta[4] = rs.getInt(5) + "";
+				respuesta[0] = rs.getInt(1) + "";	// idGrupoFamiliar
+				respuesta[1] = rs.getString(2);		// nombreFamilia
+				respuesta[2] = rs.getInt(3) + "";	// integrantes
+				respuesta[3] = rs.getInt(4) + "";	// deuda
+				respuesta[4] = rs.getInt(5) + "";	// estado
+				respuesta[5] = rs.getInt(6) + "";	// descuento
 			}
 			
 		} catch (SQLException e) {
@@ -130,16 +132,16 @@ public class ABMCGrupoFamiliar {
 	}
 	
 	public static boolean modificarIntegrantes(String idGrupoFamiliar, String accion) {
-		
+	
 		String comandoStatement = "";
 		String respuesta[] = getGrupoFamiliar(idGrupoFamiliar);
-		int integrantes = Integer.parseInt(respuesta[3]);
+		int integrantes = Integer.parseInt(respuesta[2]);
 
 		if(integrantes > 0 || accion.contentEquals("+"))
-			comandoStatement = "UPDATE lecsys.grupofamiliar SET integrantes=integrantes" + accion + "1 WHERE idGrupoFamiliar = " + idGrupoFamiliar;	
+			comandoStatement = "UPDATE lecsys.grupofamiliar SET integrantes = integrantes " + accion + " 1 WHERE idGrupoFamiliar = " + idGrupoFamiliar;	
 		else
 			return false;
-		
+
 		try {
 			
 			cn = conexion.conectar();
@@ -152,7 +154,13 @@ public class ABMCGrupoFamiliar {
 				stm.executeLargeUpdate(comandoStatement);
 			}
 
-			if(accion.contentEquals("+") && respuesta[5].contentEquals("0")) {
+			if(integrantes == 2 && accion.contentEquals("-")) {
+				
+				comandoStatement = "UPDATE lecsys.grupofamiliar SET descuento = 0 WHERE idGrupoFamiliar = " + idGrupoFamiliar;
+				stm.executeLargeUpdate(comandoStatement);
+			}
+			
+			if(accion.contentEquals("+") && respuesta[4].contentEquals("0")) {
 				
 				comandoStatement = "UPDATE lecsys.grupofamiliar SET estado = 1 WHERE idGrupoFamiliar = " + idGrupoFamiliar;
 				stm.executeLargeUpdate(comandoStatement);

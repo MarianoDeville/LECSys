@@ -6,9 +6,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -74,7 +77,7 @@ public class VentanaPagar extends JFrame implements ItemListener {
 		txtNombre.setEditable(false);
 		txtNombre.setBounds(105, 60, 120, 20);
 		contentPane.add(txtNombre);
-		txtNombre.setColumns(10);
+		configurarJTextField(txtNombre, 40);
 		
 		JLabel lblConcepto = new JLabel("Concepto:");
 		lblConcepto.setBounds(25, 85, 80, 20);
@@ -103,7 +106,7 @@ public class VentanaPagar extends JFrame implements ItemListener {
 		txtFactura = new JTextField();
 		txtFactura.setBounds(105, 135, 120, 20);
 		contentPane.add(txtFactura);
-		txtFactura.setColumns(10);
+		configurarJTextField(txtComentario, 20);
 		
 		JLabel lblComentario = new JLabel("Comentario:");
 		lblComentario.setBounds(25, 160, 80, 20);
@@ -112,7 +115,7 @@ public class VentanaPagar extends JFrame implements ItemListener {
 		txtComentario = new JTextField();
 		txtComentario.setBounds(105, 160, 200, 20);
 		contentPane.add(txtComentario);
-		txtComentario.setColumns(10);
+		configurarJTextField(txtComentario, 45);
 		
 		lblMensageError = new JLabel("");
 		lblMensageError.setForeground(Color.RED);
@@ -227,5 +230,17 @@ public class VentanaPagar extends JFrame implements ItemListener {
 			
 			return false;
 		}
+	}
+	
+	private void configurarJTextField(Component nombre, int cantidadCaracteres) {
+		
+		((JTextField) nombre).setColumns(cantidadCaracteres);
+		nombre.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				
+				if(((JTextField) nombre).getText().length() >= cantidadCaracteres)
+					e.consume();
+			}
+		});
 	}
 }
