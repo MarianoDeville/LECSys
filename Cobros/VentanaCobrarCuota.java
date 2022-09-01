@@ -13,6 +13,9 @@ import java.awt.event.ItemListener;
 import java.awt.print.PrinterException;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaCobrarCuota extends JFrame  {
 
@@ -22,6 +25,7 @@ public class VentanaCobrarCuota extends JFrame  {
 	private Object cuerpo[][];
 	private String respuesta[][];
 	private JCheckBox chckbxCobroAdelantado;
+	private JTextField busqueda;
 
 	public VentanaCobrarCuota() {
 		
@@ -34,6 +38,18 @@ public class VentanaCobrarCuota extends JFrame  {
 		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		busqueda = new JTextField();
+		busqueda.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				actualizoTabla();
+			}
+		});
+		busqueda.setBounds(796, 175, 110, 23);
+		contentPane.add(busqueda);
+		busqueda.setColumns(10);
 		
 		chckbxCobroAdelantado = new JCheckBox("Cobro adelantado");
 		chckbxCobroAdelantado.setBounds(796, 140, 120, 23);
@@ -132,7 +148,7 @@ public class VentanaCobrarCuota extends JFrame  {
 	private void actualizoTabla() {
 		
 		String titulo [] = {"Nombre", "Integrantes", "Cuotas", "Valor cuota", "Descuento" , "Monto total", "Sel."};
-		respuesta = ABMCGrupoFamiliar.getGruposFamilias(chckbxCobroAdelantado.isSelected());
+		respuesta = ABMCGrupoFamiliar.getGruposFamilias(chckbxCobroAdelantado.isSelected(), busqueda.getText());
 				
 		if(respuesta != null) {
 			
@@ -198,5 +214,4 @@ public class VentanaCobrarCuota extends JFrame  {
 		tablaFlia.getColumnModel().getColumn(6).setPreferredWidth(30);
 		tablaFlia.getColumnModel().getColumn(6).setMaxWidth(50);
 	}
-	
 }

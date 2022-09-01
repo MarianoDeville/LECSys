@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 /********************************************************************************/
 /*			Sistema de gestión offline para academias - LECSys					*/
 /*------------------------------------------------------------------------------*/
-/*		Revisión:				1.05											*/
+/*		Revisión:				1.06											*/
 /*		IDE:					Eclipse IDE Ver. 2021-12 (4.22.0).				*/
 /*		Lenguaje:				Java SE-1.8										*/
 /*		Versionado:				git - github.com								*/
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 /*								UMLet 14.3										*/
 /*		Estado:					Instalado en el cliente.						*/
 /*		Fecha creación:			12/09/2020										*/
-/*		Última modificación:	09/05/2022										*/
+/*		Última modificación:	01/09/2022										*/
 /********************************************************************************/
 
 public class LECSys {
@@ -28,7 +28,7 @@ public class LECSys {
 		if(CheckUsuario.getNivelNivelAcceso() == 100)
 			System.exit(0);
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.05\nRev. 09052022.1720");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.06\nRev. 01092022.1320");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

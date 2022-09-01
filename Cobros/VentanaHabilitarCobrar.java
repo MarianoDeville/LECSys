@@ -201,7 +201,7 @@ public class VentanaHabilitarCobrar extends JFrame {
 		if(reinscripcion) {
 			
 			titulo = new String [] {"Nombre", "Integrantes",  "Descuento" , "Seleccionar"};
-			respuesta = ABMCGrupoFamiliar.getGruposFamilias(false);
+			respuesta = ABMCGrupoFamiliar.getGruposFamilias(false,"");
 			btnCrearGrupo.setEnabled(false);
 		} else {
 		
